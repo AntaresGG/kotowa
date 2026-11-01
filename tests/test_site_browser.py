@@ -1,5 +1,6 @@
 """Opt-in browser checks for a built site (OPENJLPT_SITE); no external session is used."""
 import functools
+import json
 import os
 import re
 import threading
@@ -181,10 +182,51 @@ def test_site_chinese_search_downloads_and_mobile():
                 page.reload()
                 sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 2 studied")
                 assert page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')") == forgotten_session
-                # A completed session stays completed rather than adding 20 new cards.
-                page.evaluate("localStorage.setItem('openjlpt:fc:vocab:N5:session', JSON.stringify({day:new Date().toDateString(),ids:[],done:20,flipped:false}))")
+                # Finish a real group; refresh preserves completion until explicitly continued.
+                for remaining in range(19, 0, -1):
+                    page.locator('#fc-flip').click()
+                    page.locator('#fc-good').click()
+                    sync.expect(page.locator('#fc-status')).to_contain_text(f'{remaining - 1} to review')
                 page.reload()
                 sync.expect(page.locator("#fc-back")).to_contain_text("Session complete!")
+                sync.expect(page.locator('#fc-good')).to_be_disabled()
+                sync.expect(page.locator('#fc-flip')).to_be_disabled()
+                sync.expect(page.locator('#fc-again')).to_be_disabled()
+                sync.expect(page.locator('#fc-next')).to_be_enabled()
+                completed_progress = page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5')")
+                page.locator('#fc-choose').click()
+                sync.expect(page.locator('#fc-level button[data-v="N5"]')).to_be_focused()
+                page.locator('#fc-kind button[data-v="kanji"]').click()
+                sync.expect(page.locator('#fc-front')).to_have_text(next_kanji)
+                sync.expect(page.locator('#fc-complete')).to_be_hidden()
+                page.locator('#fc-kind button[data-v="vocab"]').click()
+                sync.expect(page.locator('#fc-back')).to_contain_text('Session complete!')
+                page.locator('#fc-home').click()
+                sync.expect(page).to_have_url('http://127.0.0.1:8765/')
+                page.goto('http://127.0.0.1:8765/flashcards.html')
+                sync.expect(page.locator('#fc-back')).to_contain_text('Session complete!')
+                # Space activates the focused action instead of being swallowed by the flip shortcut.
+                page.locator('#fc-next').focus()
+                page.locator('#fc-next').press('Space')
+                sync.expect(page.locator('#fc-status')).to_contain_text('20 to review · 20 studied')
+                sync.expect(page.locator('#fc-complete')).to_be_hidden()
+                sync.expect(page.locator('#fc-flip')).to_be_enabled()
+                assert page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5')") == completed_progress
+                next_group = page.evaluate("JSON.parse(localStorage.getItem('openjlpt:fc:vocab:N5:session'))")
+                assert not set(next_group['ids']).intersection(json.loads(completed_progress))
+                page.reload()
+                sync.expect(page.locator('#fc-status')).to_contain_text('20 to review · 20 studied')
+                assert page.evaluate("JSON.parse(localStorage.getItem('openjlpt:fc:vocab:N5:session'))") == next_group
+                # No new group is offered when every card is scheduled for a future review.
+                cards = page.request.get('http://127.0.0.1:8765/data/vocab-n5.json').json()
+                page.evaluate("""cards => {
+                    localStorage.setItem('openjlpt:fc:vocab:N5', JSON.stringify(Object.fromEntries(
+                        cards.map(card => [card[0], {box: 1, due: Date.now() + 86400000}]))));
+                }""", cards)
+                page.reload()
+                sync.expect(page.locator('#fc-back')).to_contain_text('Come back later for due reviews')
+                sync.expect(page.locator('#fc-next')).to_be_disabled()
+                sync.expect(page.locator('#fc-choose')).to_be_enabled()
                 page.on("dialog", lambda dialog: dialog.accept())
                 page.locator("#fc-reset").click()
                 sync.expect(page.locator("#fc-status")).to_contain_text("20 to review · 0 studied")

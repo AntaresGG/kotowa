@@ -41,11 +41,13 @@
   }
   function $(id) { return document.getElementById(id); }
 
-  function start() {
+  function start(newSession) {
     var request = ++requestId;
     try { localStorage.setItem('openjlpt:fc:selection', JSON.stringify({ level: state.level, kind: state.kind })); } catch (e) { /* private mode */ }
     state.current = null;
     state.flipped = false;
+    $('fc-complete').hidden = true;
+    ['fc-again', 'fc-flip', 'fc-good'].forEach(function (id) { $(id).disabled = true; });
     $('fc-card').classList.remove('flipped');
     $('fc-front').textContent = '';
     $('fc-back').textContent = '';
@@ -56,7 +58,7 @@
         if (request !== requestId) return;
         state.deck = rows;
         state.progress = loadProgress();
-        var saved = restoreSession(rows);
+        var saved = newSession === true ? null : restoreSession(rows);
         if (saved) {
           next();
           if (saved.flipped) flip();
@@ -111,9 +113,18 @@
     state.current = state.queue.shift() || null;
     saveSession();
     var row = state.current;
+    $('fc-complete').hidden = !!row;
+    ['fc-again', 'fc-flip', 'fc-good'].forEach(function (id) { $(id).disabled = !row; });
     if (!row) {
+      var available = state.deck.some(function (card) {
+        var progress = state.progress[card[0]];
+        return !progress || progress.due <= Date.now();
+      });
+      $('fc-next').disabled = !available;
       $('fc-front').innerHTML = '🎉';
-      $('fc-back').innerHTML = '<p>Session complete! Come back later for due reviews, or pick another deck.</p>';
+      $('fc-back').textContent = available
+        ? 'Session complete! Continue with the next group, or choose another deck.'
+        : 'Session complete! Come back later for due reviews, or choose another deck.';
       $('fc-card').classList.add('flipped');
       return;
     }
@@ -198,6 +209,11 @@
     $('fc-flip').addEventListener('click', flip);
     $('fc-again').addEventListener('click', function () { grade(false); });
     $('fc-good').addEventListener('click', function () { grade(true); });
+    $('fc-next').addEventListener('click', function () { start(true); });
+    $('fc-choose').addEventListener('click', function () {
+      $('fc-level').querySelector('button[aria-pressed="true"]').focus();
+      $('fc-level').scrollIntoView({ block: 'center' });
+    });
     $('fc-reset').addEventListener('click', function () {
       if (confirm('Reset progress for this deck?')) {
         state.progress = {}; saveProgress();
@@ -206,7 +222,7 @@
       }
     });
     document.addEventListener('keydown', function (e) {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.target.closest('input, textarea, select, button, a, [contenteditable="true"]')) return;
       if (e.key === ' ') { e.preventDefault(); flip(); }
       else if (e.key === '1') grade(false);
       else if (e.key === '2') grade(true);
