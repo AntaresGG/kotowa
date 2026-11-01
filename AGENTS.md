@@ -17,5 +17,6 @@
 - Create contrib/* branches from a freshly fetched upstream/main, with isolated patches and tests. Track source SHAs and dependencies in UPSTREAM_CONTRIBUTIONS.md.
 - Evaluate upstream changes before applying them to product main; neither code nor data refreshes are automatically merged. Separate contrib/* branches remain specific to the upstream contribution fork, not ordinary product work.
 - PC commit/push precedes Mac pull/deploy. Preserve browser storage keys, entry IDs and Anki IDs during branding and version changes.
+- Owner preference (2026-11-01): after every committed change in this repository, immediately push and deploy the same revision to Mac mini, including documentation-only changes. Follow docs/DEPLOY-MACOS.md and verify the live revision and affected behavior before reporting completion. This deployment is authorized without asking again; report any actual blocker.
 - Product branding is Kotowa · 词和; repository and distribution name is kotowa. Preserve the openjlpt Python import/CLI alias, legacy export filenames, Yomitan dictionary title and deployment service identifiers for compatibility. Keep upstream OpenJLPT attribution.
 - GitHub Releases are the distribution channel. npm/PyPI/Hugging Face publication and public Pages hosting require separate explicit configuration.
