@@ -224,8 +224,8 @@
     document.addEventListener('keydown', function (e) {
       if (e.target.closest('input, textarea, select, button, a, [contenteditable="true"]')) return;
       if (e.key === ' ') { e.preventDefault(); flip(); }
-      else if (e.key === '1') grade(false);
-      else if (e.key === '2') grade(true);
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); grade(false); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); grade(true); }
     });
     start();
   });

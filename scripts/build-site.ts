@@ -613,9 +613,9 @@ function toolPages(): void {
 </div>
 </div>
 <div class="btn-row" style="justify-content:center">
-<button class="btn" type="button" id="fc-again">✗ Again <span class="kbd">1</span></button>
+<button class="btn" type="button" id="fc-again">✗ Again <span class="kbd">←</span></button>
 <button class="btn" type="button" id="fc-flip">Show <span class="kbd">space</span></button>
-<button class="btn primary" type="button" id="fc-good">✓ Knew it <span class="kbd">2</span></button>
+<button class="btn primary" type="button" id="fc-good">✓ Knew it <span class="kbd">→</span></button>
 </div>
 <p><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">Reset progress for this deck</button></p>
 </div>`,
