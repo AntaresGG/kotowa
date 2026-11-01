@@ -284,6 +284,73 @@ def test_site_chinese_search_downloads_and_mobile():
                 source_rows = page.request.get('http://127.0.0.1:8765/data/vocab-n3.json').json()
                 assert len(new_session['ids']) == len(set(new_session['ids'])) == 20
                 assert set(new_session['ids']) != {row[0] for row in source_rows[:20]}
+                # Seed self-ratings to exercise overlapping deck/session metrics independently.
+                page.unroute('**/data/vocab-n4.json')
+                n4_cards = page.request.get('http://127.0.0.1:8765/data/vocab-n4.json').json()
+                page.evaluate("""cards => {
+                    localStorage.setItem('openjlpt:fc:selection', JSON.stringify({level: 'N4', kind: 'vocab'}));
+                    localStorage.setItem('openjlpt:fc:shuffle', 'false');
+                    const progress = Object.fromEntries(cards.slice(0, 60).map(card => [card[0], {box: 1, due: 0}]));
+                    progress['removed-card'] = {box: 5, due: 0};
+                    localStorage.setItem('openjlpt:fc:vocab:N4', JSON.stringify(progress));
+                    localStorage.setItem('openjlpt:fc:vocab:N4:session', JSON.stringify({
+                        day: new Date().toDateString(), ids: cards.slice(0, 20).map(card => card[0]), done: 0
+                    }));
+                }""", n4_cards)
+                page.reload()
+                sync.expect(page.locator('#fc-status')).to_contain_text('20 to review · 60 studied · 0 / 630 learned')
+                sync.expect(page.locator('#fc-studied-percent')).to_have_text('9.5%')
+                sync.expect(page.locator('#fc-new-count')).to_have_text('570')
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('60')
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('0')
+                sync.expect(page.locator('#fc-donut')).to_have_attribute('aria-label', '570 not started, 60 learning, 0 learned; 60 of 630 studied')
+                sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '0')
+                # Revealing a card does not rate it; a second Knew it promotes it to Learned.
+                page.locator('#fc-card').press('ArrowRight')
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('0')
+                page.locator('#fc-card').press('ArrowRight')
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('1')
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('59')
+                sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '5')
+                sync.expect(page.locator('#fc-remaining')).to_have_text('19')
+                # A due, previously learned card returns to Learning on Again, without reducing Studied.
+                page.evaluate("""id => {
+                    const key = 'openjlpt:fc:vocab:N4';
+                    const progress = JSON.parse(localStorage.getItem(key));
+                    progress[id] = {box: 2, due: 0};
+                    localStorage.setItem(key, JSON.stringify(progress));
+                    localStorage.setItem(key + ':session', JSON.stringify({day: new Date().toDateString(), ids: [id], done: 0}));
+                }""", n4_cards[0][0])
+                page.reload()
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('1')
+                page.locator('#fc-card').press('Space')
+                page.locator('#fc-card').press('ArrowLeft')
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('0')
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('60')
+                sync.expect(page.locator('#fc-studied')).to_have_text('60')
+                sync.expect(page.locator('#fc-remaining')).to_have_text('1')
+                page.reload()
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('60')
+                for appearance in ('theme1', 'theme2'):
+                    page.locator('#theme-switch').press('ArrowRight' if appearance == 'theme2' else 'ArrowLeft')
+                    for scheme in ('light', 'dark'):
+                        page.emulate_media(color_scheme=scheme)
+                        for width in (320, 390, 1024):
+                            page.set_viewport_size({'width': width, 'height': 900})
+                            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), (appearance, scheme, width)
+                            assert page.locator('#fc-overview').evaluate('el => el.scrollWidth <= el.clientWidth + 1')
+                page.locator('#fc-card').press('Space')
+                page.locator('#fc-card').press('ArrowRight')
+                sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '100')
+                sync.expect(page.locator('#fc-session-caption')).to_have_text('1 / 1 completed · Session complete')
+                page.locator('#fc-next').click()
+                sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '0')
+                sync.expect(page.locator('#fc-studied')).to_have_text('60')
+                page.locator('#fc-reset').click()
+                sync.expect(page.locator('#fc-studied-percent')).to_have_text('0%')
+                sync.expect(page.locator('#fc-new-count')).to_have_text('630')
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('0')
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('0')
                 assert not errors, errors
             finally:
                 browser.close()

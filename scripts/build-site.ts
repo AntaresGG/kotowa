@@ -600,10 +600,32 @@ function toolPages(): void {
 <div class="seg" id="fc-level" role="group" aria-label="Level">${LEVEL_NAMES.map((l, i) => `<button type="button" data-v="${l}" aria-pressed="${i === 0}">${l}</button>`).join('')}</div>
 <div class="seg" id="fc-kind" role="group" aria-label="Deck"><button type="button" data-v="vocab" aria-pressed="true">Words</button><button type="button" data-v="kanji" aria-pressed="false">Kanji</button><button type="button" data-v="grammar" aria-pressed="false">Grammar</button></div>
 </div>
-<div class="fc-progress"><div id="fc-bar"></div></div>
+<section id="fc-overview" class="fc-overview" aria-label="Study progress" hidden>
+<div class="fc-overview-heading"><strong id="fc-deck-name"></strong><span class="muted">Self-rated progress</span></div>
+<div class="fc-deck-progress">
+<div class="fc-donut" id="fc-donut" role="img" aria-label="Deck progress"><div aria-hidden="true"><strong id="fc-studied-percent"></strong><span>studied</span></div></div>
+<div class="fc-deck-breakdown">
+<p class="fc-studied"><strong id="fc-studied"></strong><span class="muted"> / <span id="fc-deck-total"></span> studied</span></p>
+<dl class="fc-legend">
+<div><dt><i class="fc-dot fc-new" aria-hidden="true"></i>Not started</dt><dd id="fc-new-count"></dd></div>
+<div><dt><i class="fc-dot fc-learning" aria-hidden="true"></i>Learning</dt><dd id="fc-learning-count"></dd></div>
+<div><dt><i class="fc-dot fc-learned" aria-hidden="true"></i>Learned</dt><dd id="fc-learned-count"></dd></div>
+</dl>
+</div>
+</div>
+<div class="fc-session">
+<div class="fc-session-heading"><strong>This session</strong><span><strong id="fc-remaining"></strong> to review</span></div>
+<div class="fc-progress" id="fc-session-progress" role="progressbar" aria-label="Session completion" aria-valuemin="0" aria-valuemax="100"><div id="fc-bar"></div></div>
+<p id="fc-session-caption" class="muted"></p>
+</div>
+<details class="fc-progress-help"><summary>What do these numbers mean?</summary>
+<p><strong>To review</strong> is the number of cards left in this session, including new cards and due reviews. Again keeps a card in this queue.</p>
+<p><strong>Studied</strong> includes every card rated at least once: Learning + Learned. <strong>Learned</strong> means choosing Knew it at least twice since the last Again. This is self-rated recall, not a quiz result; learned cards still need review.</p>
+<p>Again moves a learned card back to Learning. Progress is per deck; your session resumes when you return today.</p>
+</details>
+</section>
 <p><label title="Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly."><input type="checkbox" id="fc-shuffle"> Shuffle</label></p>
-<p class="muted" id="fc-status">Loading…</p>
-<p class="muted">Studied counts cards you have rated; learned counts cards answered correctly at least twice since the last Again. Your current session resumes when you return to this deck today.</p>
+<p class="muted" id="fc-status" role="status">Loading…</p>
 <div class="card fc-card" id="fc-card" tabindex="0" aria-live="polite"><div class="fc-front" lang="ja" id="fc-front"></div><div class="fc-back" id="fc-back"></div></div>
 <div id="fc-complete" hidden>
 <div class="btn-row" style="justify-content:center">

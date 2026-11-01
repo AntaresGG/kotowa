@@ -46,6 +46,8 @@
     try { localStorage.setItem('openjlpt:fc:selection', JSON.stringify({ level: state.level, kind: state.kind })); } catch (e) { /* private mode */ }
     state.current = null;
     state.flipped = false;
+    $('fc-overview').hidden = true;
+    $('fc-status').classList.remove('sr-only');
     $('fc-complete').hidden = true;
     ['fc-again', 'fc-flip', 'fc-good'].forEach(function (id) { $(id).disabled = true; });
     $('fc-card').classList.remove('flipped');
@@ -94,22 +96,48 @@
     saveSession();
   }
 
-  function learned() {
-    var n = 0;
-    for (var k in state.progress) if (state.progress[k].box >= 2) n++;
-    return n;
-  }
-  function studied() {
-    return state.deck.filter(function (row) { return !!state.progress[row[0]]; }).length;
+  function renderProgress() {
+    var studied = 0, learned = 0;
+    state.deck.forEach(function (row) {
+      var progress = state.progress[row[0]];
+      if (progress) {
+        studied++;
+        if (progress.box >= 2) learned++;
+      }
+    });
+    var deckTotal = state.deck.length;
+    var learning = studied - learned;
+    var fresh = deckTotal - studied;
+    var studiedPercent = deckTotal ? studied / deckTotal * 100 : 0;
+    var learnedPercent = deckTotal ? learned / deckTotal * 100 : 0;
+    var remaining = state.queue.length;
+    var sessionTotal = state.done + remaining;
+    var sessionPercent = sessionTotal ? state.done / sessionTotal * 100 : 100;
+    var deckName = state.level + ' ' + ({ vocab: 'words', kanji: 'kanji', grammar: 'grammar' })[state.kind];
+    $('fc-overview').hidden = false;
+    $('fc-status').classList.add('sr-only');
+    $('fc-status').textContent = deckName + ' · ' + remaining + ' to review · ' + studied + ' studied · ' + learned + ' / ' + deckTotal + ' learned';
+    $('fc-deck-name').textContent = deckName;
+    $('fc-studied').textContent = studied;
+    $('fc-deck-total').textContent = deckTotal;
+    $('fc-studied-percent').textContent = Number(studiedPercent.toFixed(1)) + '%';
+    $('fc-new-count').textContent = fresh;
+    $('fc-learning-count').textContent = learning;
+    $('fc-learned-count').textContent = learned;
+    $('fc-donut').style.setProperty('--learned-end', learnedPercent + '%');
+    $('fc-donut').style.setProperty('--studied-end', studiedPercent + '%');
+    $('fc-donut').setAttribute('aria-label', fresh + ' not started, ' + learning + ' learning, ' + learned + ' learned; ' + studied + ' of ' + deckTotal + ' studied');
+    $('fc-remaining').textContent = remaining;
+    $('fc-bar').style.width = sessionPercent + '%';
+    $('fc-session-progress').setAttribute('aria-valuenow', String(Math.round(sessionPercent)));
+    $('fc-session-progress').setAttribute('aria-valuetext', state.done + ' completed, ' + remaining + ' remaining');
+    $('fc-session-caption').textContent = state.done + ' / ' + sessionTotal + ' completed' + (remaining ? ' · New cards + due reviews' : ' · Session complete');
   }
 
   function next() {
     state.flipped = false;
     $('fc-card').classList.remove('flipped');
-    var total = state.done + state.queue.length;
-    $('fc-bar').style.width = (total ? (state.done / total) * 100 : 100) + '%';
-    $('fc-status').textContent = state.level + ' ' + ({ vocab: 'words', kanji: 'kanji', grammar: 'grammar' })[state.kind] + ' · ' +
-      state.queue.length + ' to review · ' + studied() + ' studied · ' + learned() + ' / ' + state.deck.length + ' learned';
+    renderProgress();
     state.current = state.queue.shift() || null;
     saveSession();
     var row = state.current;
