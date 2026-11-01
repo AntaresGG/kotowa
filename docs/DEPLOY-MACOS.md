@@ -24,3 +24,20 @@ Verify from a second LAN device: homepage, Chinese search, grammar pages, flashc
 To stop: `launchctl bootout gui/$(id -u)/io.openjlpt.lan`. To start again: `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.openjlpt.lan.plist`.
 
 To roll back content on the same URL, atomically replace `current` with a symlink to the checked `previous` target using Python's `os.replace`; Caddy serves the selected directory on subsequent requests. Keep the corresponding previous Git revision for subsequent maintenance. Changes to the listening address/configuration require redeployment, not just a content rollback.
+
+## Additional Tailscale access
+
+Keep the LAN deployment and add a persistent, tailnet-only HTTPS proxy to its loopback listener. On the Mac, inspect existing mappings before choosing an unused HTTPS port:
+
+```sh
+TS=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+"$TS" serve status
+"$TS" serve --bg --https=8446 http://127.0.0.1:8086
+"$TS" serve status
+```
+
+Use the HTTPS URL printed by Serve from a device connected to the tailnet. Do not enable Funnel. Existing Serve mappings must be preserved. To remove only this endpoint, run `"$TS" serve --https=8446 off`; do not reset the shared Serve configuration. See the [Tailscale Serve reference](https://tailscale.com/docs/reference/tailscale-cli/serve).
+
+Navigation and download links resolve on the current origin, allowing both LAN and Tailscale access to the same release. `SITE_URL` remains the canonical URL used for metadata and copyable API examples. Yomitan's embedded update URL is also fixed at export time; use a reachable URL when building those exports (omit `SITE_URL` to use GitHub Release assets). Browser progress is stored per origin and does not automatically transfer between the LAN and Tailscale URLs.
+
+Verify the HTTPS homepage, search data, grammar pages, flashcards, downloads and missing-file 404 from another tailnet device, then check the LAN endpoint again. Serve's background configuration persists across Tailscale restarts; the underlying Caddy service still requires the Mac user's login session.

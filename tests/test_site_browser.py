@@ -3,12 +3,28 @@ import functools
 import os
 import re
 import threading
+from urllib.parse import urljoin, urlsplit
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import pytest
 
 pytestmark = pytest.mark.skipif(not os.environ.get("OPENJLPT_SITE"), reason="Set OPENJLPT_SITE to a built static site")
+
+
+def test_download_links_follow_access_origin():
+    site = Path(os.environ["OPENJLPT_SITE"]).resolve()
+    for path in ("data.html", "n5/vocab.html", "n5/grammar.html", "n5/kanji.html"):
+        html = (site / path).read_text(encoding="utf-8")
+        links = [href for href in re.findall(r'href="([^"]+)"', html)
+                 if "dataset/" in href or "downloads/" in href]
+        assert links, path
+        for base in ("http://lan.example:8086/", "https://tailnet.example:8446/", "https://example.org/kotowa/"):
+            for href in links:
+                resolved = urljoin(urljoin(base, path), href)
+                assert resolved.startswith(base), (path, href, resolved)
+                relative = urlsplit(resolved).path.removeprefix(urlsplit(base).path)
+                assert (site / relative).is_file(), (path, href)
 
 
 def test_site_chinese_search_downloads_and_mobile():
@@ -127,7 +143,7 @@ def test_site_chinese_search_downloads_and_mobile():
                 page.set_viewport_size({"width": 390, "height": 844})
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
                 page.goto("http://127.0.0.1:8765/data.html")
-                links = page.locator('a[href*="/dataset/"], a[href*="/downloads/"]')
+                links = page.locator('a[href*="dataset/"], a[href*="downloads/"]')
                 urls = set(links.evaluate_all("(items) => items.map(x => x.href)"))
                 assert urls
                 for url in urls:

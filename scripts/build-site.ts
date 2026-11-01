@@ -184,7 +184,7 @@ const pages: string[] = [];
 function writePage(p: Page): void {
   const depth = p.path.split('/').length - 1;
   // The 404 page is served at arbitrary missing paths, so it needs absolute links.
-  const root = p.path === '404.html' ? SITE_URL : '../'.repeat(depth);
+  const root = p.path === '404.html' ? new URL(SITE_URL).pathname : '../'.repeat(depth);
   const url = absolute(p.path);
   const nav = NAV.map(([href, label]) => `<a href="${root}${href}"${p.active === href ? ' aria-current="page"' : ''}>${label}</a>`).join('');
   const scripts = ['assets/app.js', ...(p.scripts ?? [])].map((s) => `<script src="${root}${s}" defer></script>`).join('');
@@ -462,7 +462,7 @@ function listTools(lc: string, kind: 'vocab' | 'grammar', target: string, readin
 <input class="filter" type="search" placeholder="Filter (kanji, kana, romaji or English)…" data-filter="${target}" aria-label="Filter">
 ${kind === 'vocab' ? `<label><input type="checkbox" data-hide="r" data-target="${target}"> Hide readings</label>` : ''}
 <label><input type="checkbox" data-hide="m" data-target="${target}"> Hide meanings</label>
-<span class="dl">Download: <a href="${cdnBase}/dataset/csv/${kind}-${lc}.csv">CSV</a> · <a href="${cdnBase}/dataset/json/${kind}/${lc}.json">JSON</a> · <a href="../downloads/openjlpt-${lc}-${kind}.apkg">Anki</a></span>
+<span class="dl">Download: <a href="../dataset/csv/${kind}-${lc}.csv">CSV</a> · <a href="../dataset/json/${kind}/${lc}.json">JSON</a> · <a href="../downloads/openjlpt-${lc}-${kind}.apkg">Anki</a></span>
 </div>`;
 }
 
@@ -518,7 +518,7 @@ ${v.map((x) => `<tr data-s="${esc(`${x.word} ${x.reading} ${x.romaji} ${x.meanin
       description: `All ${k.length} JLPT ${level} kanji with on'yomi, kun'yomi, English meanings, stroke counts, radicals, stroke order and example words.`,
       body: `${crumbs(root, [[`JLPT ${level}`, `${lc}/index.html`], ['Kanji']])}
 <h1>JLPT ${level} kanji <span class="muted" style="font-size:0.6em">${k.length}</span></h1>
-<p class="muted">Most frequent first. <a href="${cdnBase}/dataset/csv/kanji-${lc}.csv">CSV</a> · <a href="${cdnBase}/dataset/json/kanji/${lc}.json">JSON</a> · <a href="${root}downloads/openjlpt-${lc}-kanji.apkg">Anki deck</a></p>
+<p class="muted">Most frequent first. <a href="../dataset/csv/kanji-${lc}.csv">CSV</a> · <a href="../dataset/json/kanji/${lc}.json">JSON</a> · <a href="${root}downloads/openjlpt-${lc}-kanji.apkg">Anki deck</a></p>
 <div class="kanji-grid">${k.map((x) => `<a href="${root}${kanjiPath(x.character)}" title="${esc(x.meanings.slice(0, 3).join(', '))}" lang="ja">${esc(x.character)}<small>${esc(x.meanings[0] ?? '')}</small></a>`).join('')}</div>`,
     });
 
@@ -643,10 +643,10 @@ function toolPages(): void {
 <table class="list"><thead><tr><th>Level</th><th>Vocabulary</th><th>Kanji</th><th>Grammar</th></tr></thead><tbody>
 ${LEVEL_NAMES.map((l) => {
   const lc = l.toLowerCase();
-  return `<tr><td>${lvl(l)}</td>${(['vocab', 'kanji', 'grammar'] as const).map((k) => `<td><a href="${cdn}/dataset/json/${k}/${lc}.json">JSON</a> · <a href="${cdn}/dataset/csv/${k}-${lc}.csv">CSV</a></td>`).join('')}</tr>`;
+  return `<tr><td>${lvl(l)}</td>${(['vocab', 'kanji', 'grammar'] as const).map((k) => `<td><a href="dataset/json/${k}/${lc}.json">JSON</a> · <a href="dataset/csv/${k}-${lc}.csv">CSV</a></td>`).join('')}</tr>`;
 }).join('')}
 </tbody></table>
-<div class="btn-row"><a class="btn primary" href="${SITE_URL}downloads/openjlpt-data.zip">⬇ Everything: JSON + CSV + SQLite (zip)</a><a class="btn" href="${SITE_URL}dataset/openjlpt.sqlite">⬇ SQLite database</a></div>
+<div class="btn-row"><a class="btn primary" href="downloads/openjlpt-data.zip">⬇ Everything: JSON + CSV + SQLite (zip)</a><a class="btn" href="dataset/openjlpt.sqlite">⬇ SQLite database</a></div>
 <p class="muted small">Spreadsheet or pandas? Every CSV loads straight from the CDN: <code>pd.read_csv("${cdn}/dataset/csv/vocab-n5.csv")</code></p>
 <h2 id="anki">Anki decks</h2>
 <p>Ready-made <a href="https://apps.ankiweb.net/">Anki</a> decks with furigana, example sentences and text-to-speech. Re-importing a newer version updates your cards and keeps your review history.</p>
@@ -719,7 +719,7 @@ WHERE vocab_fts MATCH 'weather';</code></pre>
     title: 'Page not found | Kotowa · 词和',
     description: 'Page not found.',
     noindex: true,
-    body: `<h1>Page not found</h1><p class="lead">That page doesn't exist. Try the <a href="${SITE_URL}">search on the home page</a>.</p>`,
+    body: `<h1>Page not found</h1><p class="lead">That page doesn't exist. Try the <a href="${new URL(SITE_URL).pathname}">search on the home page</a>.</p>`,
   });
 }
 
