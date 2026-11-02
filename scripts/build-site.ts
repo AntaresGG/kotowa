@@ -596,6 +596,8 @@ function toolPages(): void {
     body: `<div class="fc">
 <h1>Flashcards</h1>
 <p class="muted">Spaced repetition in your browser. Progress is stored on this device only.</p>
+<div class="seg" id="fc-mode" role="group" aria-label="Study mode"><button type="button" data-v="daily" aria-pressed="true">Daily review</button><button type="button" data-v="focus" aria-pressed="false">★ Focused review</button></div>
+<p class="muted" id="fc-mode-help"></p>
 <div class="btn-row" style="justify-content:center">
 <div class="seg" id="fc-level" role="group" aria-label="Level">${LEVEL_NAMES.map((l, i) => `<button type="button" data-v="${l}" aria-pressed="${i === 0}">${l}</button>`).join('')}</div>
 <div class="seg" id="fc-kind" role="group" aria-label="Deck"><button type="button" data-v="vocab" aria-pressed="true">Words</button><button type="button" data-v="kanji" aria-pressed="false">Kanji</button><button type="button" data-v="grammar" aria-pressed="false">Grammar</button></div>
@@ -619,13 +621,15 @@ function toolPages(): void {
 <p id="fc-session-caption" class="muted"></p>
 </div>
 <details class="fc-progress-help"><summary>What do these numbers mean?</summary>
-<p><strong>To review</strong> is the number of cards left in this session, including new cards and due reviews. Again keeps a card in this queue.</p>
+<p><strong>To review</strong> is the number of cards left in this session. Daily review includes new cards and due reviews; Focused review includes your saved cards. Again keeps a card in this queue.</p>
 <p><strong>Studied</strong> includes every card rated at least once: Learning + Learned. <strong>Learned</strong> means choosing Knew it at least twice since the last Again. This is self-rated recall, not a quiz result; learned cards still need review.</p>
-<p>Again moves a learned card back to Learning. Progress is per deck; your session resumes when you return today.</p>
+<p>These deck totals track daily review only: Again moves a learned card back to Learning. Focused review does not change these totals or your daily schedule. Progress is per deck; each mode resumes its own session when you return today.</p>
 </details>
 </section>
 <p><label title="Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly."><input type="checkbox" id="fc-shuffle"> Shuffle</label></p>
 <p class="muted" id="fc-status" role="status">Loading…</p>
+<p><button class="btn" type="button" id="fc-mark" aria-pressed="false" disabled>☆ Save for focused review</button></p>
+<p class="muted" id="fc-focus-message" role="status"></p>
 <div class="card fc-card" id="fc-card" tabindex="0" aria-live="polite"><div class="fc-front" lang="ja" id="fc-front"></div><div class="fc-back" id="fc-back"></div></div>
 <div id="fc-complete" hidden>
 <div class="btn-row" style="justify-content:center">
@@ -640,6 +644,12 @@ function toolPages(): void {
 <button class="btn primary" type="button" id="fc-good">✓ Knew it <span class="kbd">→</span></button>
 </div>
 <p><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">Reset progress for this deck</button></p>
+<details id="fc-focus-library" class="fc-focus-library" hidden>
+<summary>★ Saved cards in this deck (<span id="fc-focus-count">0</span>)</summary>
+<p class="muted">Use the level and deck selectors to view your saved collection. Stored in this browser only.</p>
+<p id="fc-focus-empty" class="muted">No saved cards yet. Use ☆ above a flashcard to add it.</p>
+<ul id="fc-focus-list"></ul>
+</details>
 </div>`,
   });
 

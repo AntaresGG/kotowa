@@ -23,6 +23,8 @@
 
 支持中文搜索、间隔重复闪卡、跨牌组切换及刷新后的进度保存、持久化 Shuffle，以及 JSON、CSV、SQLite、Anki 和 Yomitan 导出。保留原英文字段、稳定 ID，以及 JavaScript/TypeScript 和 Python API。
 
+闪卡支持「重点复习库」：点击卡片上方的 ☆ 标记需要强化的内容，在 **Focused review** 中按等级与类别集中练习，或展开 **Saved cards in this deck** 查看、移除。强化练习不受到期时间限制，不改变日常间隔复习进度；答对不会自动取消标记，重置日常进度也保留标记。标记和练习会话仅保存在当前浏览器、当前站点地址下，不跨设备或 LAN/HTTPS 地址同步；清除浏览器站点数据会丢失这些记录。
+
 ## 获取与安装
 
 从 [GitHub Releases](https://github.com/AntaresGG/kotowa/releases) 下载数据、Anki 牌组、Yomitan 词典及 JavaScript/Python 安装包。独立版本为 **v0.4.0**；继承的 v0.1.0、v0.2.0 标签属于上游历史。本项目未发布到 npm/PyPI，注册表中的 `openjlpt` 是上游产品。

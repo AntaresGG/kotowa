@@ -267,6 +267,15 @@ table.list td.r { font-family: var(--jp); color: var(--muted); white-space: nowr
 .fc-progress-help { margin-top: 12px; color: var(--muted); font-size: 12px; }
 .fc-progress-help summary { cursor: pointer; }
 .fc-progress-help p { margin: 8px 0 0; }
+.fc-focus-library { margin-top: 24px; text-align: left; }
+.fc-focus-library summary { cursor: pointer; }
+.fc-focus-library ul { list-style: none; padding: 0; max-height: 320px; overflow-y: auto; }
+.fc-focus-library li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.fc-focus-library li a { overflow-wrap: anywhere; min-width: 0; }
+.fc-focus-library li button { flex-shrink: 0; }
+#fc-mark[aria-pressed='true'] { background: var(--text); color: var(--bg); }
+#fc-focus-message:empty { display: none; }
+#fc-reset[hidden] { display: none; }
 @media (max-width: 380px) {
   .fc-overview { padding: 14px; }
   .fc-deck-progress { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; }

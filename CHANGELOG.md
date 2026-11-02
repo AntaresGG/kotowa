@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a browser-local focused-review collection: toggle saved cards from either flashcard face, browse and remove cards by level/deck, and practice them anytime with resumable sessions independent of the daily spaced-repetition schedule.
+
 - Rename the product and repository to Kotowa · 词和 (`AntaresGG/kotowa`), with updated website branding, metadata and documentation. Distribution names become `kotowa`; add the `kotowa` CLI while retaining the `openjlpt` alias and Python import. Browser storage keys, Anki IDs, dictionary identity and legacy export filenames remain compatible.
 - Complete N5/N4 Chinese vocabulary and grammar with GPT-6.1 Terra authoring and AI review: 1,104 additional words and 149 additional grammar points, including translations of their examples. N5–N1 now cover all 7,811 words and 526 grammar points; kanji Chinese meanings remain outside this change.
 - Add guarded beginner example, reading and meaning corrections while preserving entry IDs and source attribution. Record review provenance and dictionary evidence without implying independent human review.
