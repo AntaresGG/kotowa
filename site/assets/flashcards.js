@@ -91,6 +91,7 @@
 
   function start(newSession) {
     var request = ++requestId;
+    document.dispatchEvent(new CustomEvent('kotowa:study', { detail: { loading: true } }));
     try { localStorage.setItem('openjlpt:fc:selection', JSON.stringify({ level: state.level, kind: state.kind, mode: state.mode })); } catch (e) { /* private mode */ }
     state.current = null;
     state.flipped = false;
@@ -143,7 +144,10 @@
         state.done = 0;
         next();
       }).catch(function () {
-        if (request === requestId) $('fc-status').textContent = 'Unable to load this deck. Select it again to retry.';
+        if (request === requestId) {
+          $('fc-status').textContent = 'Unable to load this deck. Select it again to retry.';
+          document.dispatchEvent(new CustomEvent('kotowa:study', { detail: { error: true } }));
+        }
       });
   }
 
@@ -196,6 +200,11 @@
     $('fc-session-progress').setAttribute('aria-valuenow', String(Math.round(sessionPercent)));
     $('fc-session-progress').setAttribute('aria-valuetext', state.done + ' completed, ' + remaining + ' remaining');
     $('fc-session-caption').textContent = state.done + ' / ' + sessionTotal + ' completed' + (remaining ? (state.mode === 'focus' ? ' · Focused review' : ' · New cards + due reviews') : ' · Session complete');
+    document.dispatchEvent(new CustomEvent('kotowa:study', { detail: {
+      studied: studied, total: deckTotal, done: state.done, sessionTotal: sessionTotal,
+      studiedPercent: studiedPercent, sessionPercent: sessionPercent,
+      deck: deckName, mode: state.mode
+    } }));
   }
 
   function next() {

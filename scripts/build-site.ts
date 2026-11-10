@@ -43,6 +43,7 @@ const SITE_URL = (process.env.SITE_URL ?? 'https://AntaresGG.github.io/kotowa/')
 const REPO = process.env.REPO_URL ?? 'https://github.com/AntaresGG/kotowa';
 const THEME_VERSION = createHash('sha256').update(readFileSync(join(ROOT, 'site/assets/theme.js'))).digest('hex').slice(0, 12);
 const STYLE_VERSION = createHash('sha256').update(readFileSync(join(ROOT, 'site/assets/style.css'))).digest('hex').slice(0, 12);
+const SILVER_VERSION = createHash('sha256').update(readFileSync(join(ROOT, 'site/assets/silver-era.css'))).digest('hex').slice(0, 12);
 const LEVEL_NAMES = LEVELS.map((l) => l.level);
 const readJson = <T>(p: string): T => JSON.parse(readFileSync(p, 'utf8'));
 
@@ -180,6 +181,49 @@ interface Page {
 }
 
 const pages: string[] = [];
+const scriptVersions = new Map<string, string>();
+
+/** Shared receiver faceplate; readings come from the dataset or the active flashcard deck. */
+function silverReceiver(root: string, path: string): string {
+  const flashcards = path === 'flashcards.html';
+  const meter = (id: string, label: string, subtitle: string, value: number, maximum: number) => {
+    const point = (angle: number, radius: number) => {
+      const radians = angle * Math.PI / 180;
+      return [120 + Math.sin(radians) * radius, 146 - Math.cos(radians) * radius];
+    };
+    const ticks = Array.from({ length: 26 }, (_, i) => {
+      const [x1, y1] = point(-55 + i * 4.4, i % 5 === 0 ? 99 : 105);
+      const [x2, y2] = point(-55 + i * 4.4, 112);
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+    }).join('');
+    const numbers = Array.from({ length: 6 }, (_, i) => {
+      const [x, y] = point(-55 + i * 22, 86);
+      return `<text x="${x}" y="${y}" text-anchor="middle">${maximum * i / 5}</text>`;
+    }).join('');
+    return `<div class="se-meter-unit">
+<div class="se-meter" id="${id}" role="meter" aria-labelledby="${id}-label" aria-valuemin="0" aria-valuemax="${maximum}"${flashcards ? ' aria-valuetext="Loading deck"' : ` aria-valuenow="${value}"`} data-reading="${flashcards ? '' : value}" style="--needle-angle:${flashcards ? -55 : -55 + value / maximum * 110}deg">
+<svg viewBox="0 0 240 152" aria-hidden="true" focusable="false"><path d="M28.25 81.76 A112 112 0 0 1 211.75 81.76" class="se-meter-arc"/><g class="se-meter-ticks">${ticks}</g><g class="se-meter-numbers">${numbers}</g><text x="120" y="104" text-anchor="middle" class="se-meter-title">${subtitle}</text><text x="120" y="120" text-anchor="middle" class="se-meter-subtitle">${flashcards ? 'PROGRESS / %' : 'COLLECTION / COUNT'}</text><line x1="120" y1="146" x2="120" y2="37" class="se-needle"/><circle cx="120" cy="146" r="6" class="se-pivot"/></svg>
+</div><div class="se-meter-caption"><span id="${id}-label">${label}</span><output>${flashcards ? '—' : value.toLocaleString('en-US')}</output></div></div>`;
+  };
+  const c = meta.counts;
+  const vocabularyMax = Math.ceil(c.vocab.total / 5000) * 5000;
+  const kanjiMax = Math.ceil(c.kanji.total / 500) * 500;
+  return `<section class="silver-only se-receiver" aria-label="Kotowa learning receiver">
+<div class="se-nameplate"><span>JAPANESE STUDY SYSTEM</span><a href="${root}index.html" aria-label="Kotowa home">KOTOWA <small>词和</small></a><div class="se-nameplate-end"><span class="se-model">N<span>5</span> — N<span>1</span></span><button type="button" class="se-panel-toggle" id="se-panel-toggle" aria-expanded="true" aria-controls="se-faceplate">收起面板</button></div></div>
+<div id="se-faceplate">
+<div class="se-instruments">
+<div class="se-controls"><span class="se-label">READING CONTROL · 阅读调节</span><div class="se-control-pair">
+<label class="se-dial" for="se-text-size"><span class="se-label">字号</span><span class="se-dial-scale"><span class="se-knob" aria-hidden="true"></span><input id="se-text-size" type="range" min="0" max="2" step="1" value="1" aria-label="阅读字号" aria-valuetext="标准"></span><output id="se-size-label" for="se-text-size">标准</output></label>
+<label class="se-furigana"><span class="se-label">振假名</span><span class="se-toggle"><input type="checkbox" data-furigana aria-label="显示振假名" checked><span class="se-toggle-lever" aria-hidden="true"></span></span><span class="se-toggle-caption"><i class="se-lamp" aria-hidden="true"></i><span>FURIGANA</span></span></label>
+</div></div>
+<div class="se-meter-pair" id="se-meters" aria-busy="${flashcards}">${meter('se-meter-left', flashcards ? '已学习 · 本牌组' : '词汇收录', flashcards ? 'STUDIED' : 'WORDS', c.vocab.total, flashcards ? 100 : vocabularyMax)}${meter('se-meter-right', flashcards ? '本轮完成' : '汉字收录', flashcards ? 'SESSION' : 'KANJI', c.kanji.total, flashcards ? 100 : kanjiMax)}</div>
+<div class="se-source"><span class="se-label">SOURCE SELECTOR · 学习信源</span><div class="se-source-keys"><a href="${root}index.html"${path === 'index.html' ? ' aria-current="page"' : ''}>词典</a><a href="${root}flashcards.html"${flashcards ? ' aria-current="page"' : ''}>闪卡</a><a href="${root}analyzer.html"${path === 'analyzer.html' ? ' aria-current="page"' : ''}>分析</a></div><div class="se-counter"><span class="se-label">GRAMMAR<br>语法收录</span><output>${String(c.grammar.total).padStart(4, '0')}</output></div><span class="se-label se-serial">SILVER ERA · ことばを、少しずつ。</span></div>
+</div>
+<div class="se-tuner"><span class="se-label">JLPT BAND</span><div class="se-tuner-track">${LEVEL_NAMES.map((level) => `<a href="${root}${level.toLowerCase()}/index.html"${path.startsWith(level.toLowerCase() + '/') ? ' aria-current="page"' : ''}><i aria-hidden="true"></i>${level}</a>`).join('')}</div><span class="se-label">N5 BEGINNER → N1 ADVANCED</span></div>
+<div class="se-fascia-footer"><span>SONY 银色时代</span><span id="se-context">${flashcards ? '正在载入牌组…' : 'VOCABULARY · KANJI · GRAMMAR'}</span></div>
+</div>
+</section>`;
+}
 
 function writePage(p: Page): void {
   const depth = p.path.split('/').length - 1;
@@ -187,7 +231,11 @@ function writePage(p: Page): void {
   const root = p.path === '404.html' ? new URL(SITE_URL).pathname : '../'.repeat(depth);
   const url = absolute(p.path);
   const nav = NAV.map(([href, label]) => `<a href="${root}${href}"${p.active === href ? ' aria-current="page"' : ''}>${label}</a>`).join('');
-  const scripts = ['assets/app.js', ...(p.scripts ?? [])].map((s) => `<script src="${root}${s}" defer></script>`).join('');
+  const scripts = ['assets/app.js', 'assets/silver-era.js', ...(p.scripts ?? [])].map((s) => {
+    const version = scriptVersions.get(s) ?? createHash('sha256').update(readFileSync(join(ROOT, 'site', s))).digest('hex').slice(0, 12);
+    scriptVersions.set(s, version);
+    return `<script src="${root}${s}?v=${version}" defer></script>`;
+  }).join('');
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -210,6 +258,7 @@ ${p.noindex ? '<meta name="robots" content="noindex">' : ''}
 <link rel="icon" href="${root}assets/favicon.svg" type="image/svg+xml">
 <script src="${root}assets/theme.js?v=${THEME_VERSION}"></script>
 <link rel="stylesheet" href="${root}assets/style.css?v=${STYLE_VERSION}">
+<link rel="stylesheet" href="${root}assets/silver-era.css?v=${SILVER_VERSION}">
 ${scripts}
 </head>
 <body data-root="${root}">
@@ -217,12 +266,14 @@ ${scripts}
 <a class="brand" href="${root}index.html"><img class="brand-mark" src="${root}assets/favicon.svg" width="28" height="28" alt=""><span class="brand-name">Kotowa · 词和</span></a>
 ${p.path === 'index.html' ? '' : `<form class="hsearch" action="${root}index.html" role="search"><input type="search" name="q" placeholder="Search words, kanji, grammar…" aria-label="Search"></form>`}
 <nav class="nav" aria-label="Main">${nav}</nav>
-<button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="紫雾主题 / Lilac Mist" title="暖纸 Warm Paper ↔ 紫雾 Lilac Mist"><span class="theme-thumb" aria-hidden="true"></span><span class="theme-option theme-paper" aria-hidden="true"><i></i>暖纸</span><span class="theme-option theme-mist" aria-hidden="true"><i></i>紫雾</span></button>
+<div class="appearance-picker" role="group" aria-label="外观主题"><button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="紫雾主题 / Lilac Mist" title="暖纸 Warm Paper ↔ 紫雾 Lilac Mist"><span class="theme-thumb" aria-hidden="true"></span><span class="theme-option theme-paper" aria-hidden="true"><i></i>暖纸</span><span class="theme-option theme-mist" aria-hidden="true"><i></i>紫雾</span></button><button class="theme-silver" id="theme-silver" type="button" aria-pressed="false" title="SONY 银色时代"><i aria-hidden="true"></i>银色时代</button></div>
 <a class="gh-btn" href="${REPO}" rel="noopener">${GITHUB_ICON}<span>Star on GitHub</span></a>
 </div></header>
 <main><div class="wrap">
+${silverReceiver(root, p.path)}
+<div class="page-content">
 ${p.body}
-</div></main>
+</div></div></main>
 <footer class="site-footer"><div class="wrap">
 <p><strong>Kotowa · 词和</strong> — N5–N1 中文日语学习。 <a href="${REPO}">GitHub</a> · <a href="${root}data.html">Download the data</a> · <a href="${REPO}/issues/new/choose">Report an error</a></p>
 <p>Data <a href="${REPO}/blob/main/LICENSE">CC BY-SA 4.0</a>. Level lists by <a href="https://www.tanos.co.uk/jlpt/">Jonathan Waller</a> (CC BY);

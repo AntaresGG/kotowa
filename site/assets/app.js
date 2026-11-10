@@ -42,7 +42,9 @@
     document.querySelectorAll('[data-furigana]').forEach(function (box) {
       box.checked = !furiOff;
       box.addEventListener('change', function () {
+        furiOff = !box.checked;
         document.documentElement.classList.toggle('no-furigana', !box.checked);
+        document.querySelectorAll('[data-furigana]').forEach(function (other) { other.checked = box.checked; });
         try { localStorage.setItem('openjlpt-furigana', box.checked ? 'on' : 'off'); } catch (err) { /* storage blocked */ }
       });
     });

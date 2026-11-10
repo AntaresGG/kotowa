@@ -48,7 +48,7 @@ def test_site_chinese_search_downloads_and_mobile():
                 page.goto("http://127.0.0.1:8765/")
                 sync.expect(page).to_have_title(re.compile("Kotowa · 词和"))
                 sync.expect(page.locator(".brand")).to_have_text("Kotowa · 词和")
-                sync.expect(page.locator('link[rel="stylesheet"]')).to_have_attribute("href", re.compile(r"assets/style\.css\?v=[a-f0-9]{12}$"))
+                sync.expect(page.locator('link[rel="stylesheet"][href*="assets/style.css"]')).to_have_attribute("href", re.compile(r"assets/style\.css\?v=[a-f0-9]{12}$"))
                 for width in (320, 390, 768, 1024, 1440):
                     page.set_viewport_size({"width": width, "height": 844})
                     assert page.locator(".brand-name").evaluate("""el => {
