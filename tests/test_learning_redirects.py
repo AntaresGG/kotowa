@@ -14,6 +14,9 @@ def test_redirects_preserve_query_and_scope_the_migration_frame_policy():
         assert f'location ^~ /{old}/ ' in source
         assert f'return 301 "https://study.example.org/learn/{new}/$is_args$args";' in source
     assert 'location = /_kotowa-migration/' in source
+    assert 'rewrite ^ /_kotowa-migration/index.html last;' in source
+    assert 'location = /_kotowa-migration/index.html' in source
+    assert source.index('location = /_kotowa-migration/index.html') < source.index('    alias ')
     assert 'frame-ancestors https://study.example.org' in source
     assert 'Cache-Control "no-store" always' in source
     assert 'X-Frame-Options' not in source

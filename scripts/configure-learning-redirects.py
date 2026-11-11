@@ -32,6 +32,9 @@ def build_snippet(site_url: str, bridge: Path) -> str:
             lines.append(f'location {location} {{ return 301 {redirect}; }}')
     lines.extend([
         'location = /_kotowa-migration/ {',
+        '    rewrite ^ /_kotowa-migration/index.html last;',
+        '}',
+        'location = /_kotowa-migration/index.html {',
         f'    alias {quote(str(bridge))};',
         '    default_type text/html;',
         '    add_header Cache-Control "no-store" always;',
