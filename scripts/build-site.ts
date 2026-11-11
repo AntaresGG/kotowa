@@ -678,9 +678,9 @@ function toolPages(): void {
 <p id="fc-session-caption" class="muted"></p>
 </div>
 <details class="fc-progress-help"><summary>${ui("What do these numbers mean?")}</summary>
-<p><strong>${ui("To review")}</strong> ${ui("is the number of cards left in this session. Daily review includes new cards and due reviews; Focused review includes your saved cards. Again keeps a card in this queue.")}</p>
-<p><strong>${ui("Studied")}</strong> ${ui("includes every card rated at least once: Learning + Learned.")} <strong>${ui("Learned")}</strong> ${ui("means choosing Knew it at least twice since the last Again. This is self-rated recall, not a quiz result; learned cards still need review.")}</p>
-<p>${ui("These deck totals track daily review only: Again moves a learned card back to Learning. Focused review does not change these totals or your daily schedule. Progress is per deck; each mode resumes its own session when you return today.")}</p>
+<p><strong>${ui("To review")}</strong> ${ui("counts cards not yet marked Knew it in this session. Previous and Next browse the whole session without changing progress, including cards already marked Knew it.")}</p>
+<p><strong>${ui("Studied")}</strong> ${ui("includes every card rated at least once: Learning + Learned.")} <strong>${ui("Learned")}</strong> ${ui("means choosing Knew it in at least two daily sessions. Each card is rated once per session. This is self-rated recall, not a quiz result; learned cards still need review.")}</p>
+<p>${ui("Only Knew it records a rating and advances to an unfinished card. These deck totals track daily review only; Focused review does not change them or your daily schedule. Each mode resumes its own session when you return today.")}</p>
 </details>
 </section>
 <p><label ${uiAttr("title", "Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly.")}><input type="checkbox" id="fc-shuffle"> ${ui("Shuffle")}</label></p>
@@ -696,9 +696,10 @@ function toolPages(): void {
 </div>
 </div>
 <div class="btn-row" style="justify-content:center">
-<button class="btn" type="button" id="fc-again"> ${ui("✗ Again")}<span class="kbd">←</span></button>
-<button class="btn" type="button" id="fc-flip"> ${ui("Show")}<span class="kbd"> ${ui("space")}</span></button>
-<button class="btn primary" type="button" id="fc-good"> ${ui("✓ Knew it")}<span class="kbd">→</span></button>
+<button class="btn" type="button" id="fc-previous" aria-keyshortcuts="ArrowLeft">${ui("Previous")} <span class="kbd">←</span></button>
+<button class="btn" type="button" id="fc-flip" aria-keyshortcuts="ArrowUp">${ui("Show")} <span class="kbd">↑</span></button>
+<button class="btn" type="button" id="fc-forward" aria-keyshortcuts="ArrowRight">${ui("Next")} <span class="kbd">→</span></button>
+<button class="btn primary" type="button" id="fc-good" aria-keyshortcuts="ArrowDown" aria-pressed="false">${ui("✓ Knew it")} <span class="kbd">↓</span></button>
 </div>
 <p><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">${ui("Reset progress for this deck")}</button></p>
 <details id="fc-focus-library" class="fc-focus-library" hidden>

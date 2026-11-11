@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Separate flashcard browsing from self-ratings: Previous (←), Show (↑), Next (→) and Knew it (↓). Keep the full session available for browsing, restore its position after reload, and rate each card only once per session.
+
 - Add Chinese/English interface switching across navigation, search, flashcards, text analysis, downloads and appearance controls. Follow the browser language initially, remember explicit choices and sync tabs without changing study progress or learning content.
 
 - Add a browser-local focused-review collection: toggle saved cards from either flashcard face, browse and remove cards by level/deck, and practice them anytime with resumable sessions independent of the daily spaced-repetition schedule.

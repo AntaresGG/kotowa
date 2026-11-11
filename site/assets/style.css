@@ -409,7 +409,6 @@ textarea.analyze { width: 100%; min-height: 160px; font-family: var(--jp); font-
 .formation { border-left: 3px solid var(--blue); }
 .note { border-color: var(--orange); background: var(--orange-soft); }
 .fc-progress div { background: var(--blue); }
-#fc-again { color: var(--orange-ink); background: var(--orange-soft); }
 
 /* Theme 2: lavender workspace, rounded white panels, purple actions and lime progress. */
 :root[data-appearance='theme2'] {

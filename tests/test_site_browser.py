@@ -153,15 +153,17 @@ def test_site_chinese_search_downloads_and_mobile():
                     assert response.status == 200, url
                 page.goto("http://127.0.0.1:8765/flashcards.html")
                 sync.expect(page.locator("#fc-front")).not_to_be_empty()
-                sync.expect(page.locator('#fc-again .kbd')).to_have_text('←')
-                sync.expect(page.locator('#fc-good .kbd')).to_have_text('→')
+                sync.expect(page.locator('#fc-previous .kbd')).to_have_text('←')
+                sync.expect(page.locator('#fc-flip .kbd')).to_have_text('↑')
+                sync.expect(page.locator('#fc-forward .kbd')).to_have_text('→')
+                sync.expect(page.locator('#fc-good .kbd')).to_have_text('↓')
                 initial_session = page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')")
                 page.locator('#fc-card').press('1')
                 page.locator('#fc-card').press('2')
                 assert page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')") == initial_session
-                page.locator('#fc-card').press('Space')
+                page.locator('#fc-card').press('ArrowUp')
                 sync.expect(page.locator("body")).not_to_contain_text(hidden_metadata)
-                page.locator('#fc-card').press('ArrowRight')
+                page.locator('#fc-card').press('ArrowDown')
                 sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 1 studied · 0 / 674 learned")
                 next_word = page.locator("#fc-front").inner_text()
                 page.locator('#fc-kind button[data-v="kanji"]').click()
@@ -183,11 +185,14 @@ def test_site_chinese_search_downloads_and_mobile():
                 sync.expect(page.locator("#fc-card")).to_have_class(re.compile("flipped"))
                 sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 1 studied")
                 page.locator('#fc-card').press('ArrowLeft')
-                sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 2 studied")
-                forgotten_session = page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')")
+                sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 1 studied")
+                sync.expect(page.locator('#fc-good')).to_be_disabled()
+                page.locator('#fc-card').press('ArrowRight')
+                sync.expect(page.locator('#fc-front')).to_have_text(next_word)
+                browsing_session = page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')")
                 page.reload()
-                sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 2 studied")
-                assert page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')") == forgotten_session
+                sync.expect(page.locator("#fc-status")).to_contain_text("19 to review · 1 studied")
+                assert page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5:session')") == browsing_session
                 # Finish a real group; refresh preserves completion until explicitly continued.
                 for remaining in range(19, 0, -1):
                     page.locator('#fc-flip').click()
@@ -197,7 +202,8 @@ def test_site_chinese_search_downloads_and_mobile():
                 sync.expect(page.locator("#fc-back")).to_contain_text("Session complete!")
                 sync.expect(page.locator('#fc-good')).to_be_disabled()
                 sync.expect(page.locator('#fc-flip')).to_be_disabled()
-                sync.expect(page.locator('#fc-again')).to_be_disabled()
+                sync.expect(page.locator('#fc-previous')).to_be_enabled()
+                sync.expect(page.locator('#fc-forward')).to_be_disabled()
                 sync.expect(page.locator('#fc-next')).to_be_enabled()
                 completed_progress = page.evaluate("localStorage.getItem('openjlpt:fc:vocab:N5')")
                 page.locator('#fc-choose').click()
@@ -306,14 +312,14 @@ def test_site_chinese_search_downloads_and_mobile():
                 sync.expect(page.locator('#fc-donut')).to_have_attribute('aria-label', '570 not started, 60 learning, 0 learned; 60 of 630 studied')
                 sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '0')
                 # Revealing a card does not rate it; a second Knew it promotes it to Learned.
-                page.locator('#fc-card').press('ArrowRight')
+                page.locator('#fc-card').press('ArrowUp')
                 sync.expect(page.locator('#fc-learned-count')).to_have_text('0')
-                page.locator('#fc-card').press('ArrowRight')
+                page.locator('#fc-card').press('ArrowDown')
                 sync.expect(page.locator('#fc-learned-count')).to_have_text('1')
                 sync.expect(page.locator('#fc-learning-count')).to_have_text('59')
                 sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '5')
                 sync.expect(page.locator('#fc-remaining')).to_have_text('19')
-                # A due, previously learned card returns to Learning on Again, without reducing Studied.
+                # Browsing a due, learned card preserves its rating and deck totals.
                 page.evaluate("""id => {
                     const key = 'openjlpt:fc:vocab:N4';
                     const progress = JSON.parse(localStorage.getItem(key));
@@ -323,14 +329,14 @@ def test_site_chinese_search_downloads_and_mobile():
                 }""", n4_cards[0][0])
                 page.reload()
                 sync.expect(page.locator('#fc-learned-count')).to_have_text('1')
-                page.locator('#fc-card').press('Space')
+                page.locator('#fc-card').press('ArrowUp')
                 page.locator('#fc-card').press('ArrowLeft')
-                sync.expect(page.locator('#fc-learned-count')).to_have_text('0')
-                sync.expect(page.locator('#fc-learning-count')).to_have_text('60')
+                sync.expect(page.locator('#fc-learned-count')).to_have_text('1')
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('59')
                 sync.expect(page.locator('#fc-studied')).to_have_text('60')
                 sync.expect(page.locator('#fc-remaining')).to_have_text('1')
                 page.reload()
-                sync.expect(page.locator('#fc-learning-count')).to_have_text('60')
+                sync.expect(page.locator('#fc-learning-count')).to_have_text('59')
                 for appearance in ('theme1', 'theme2'):
                     page.locator('#theme-switch').press('ArrowRight' if appearance == 'theme2' else 'ArrowLeft')
                     for scheme in ('light', 'dark'):
@@ -339,8 +345,8 @@ def test_site_chinese_search_downloads_and_mobile():
                             page.set_viewport_size({'width': width, 'height': 900})
                             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), (appearance, scheme, width)
                             assert page.locator('#fc-overview').evaluate('el => el.scrollWidth <= el.clientWidth + 1')
-                page.locator('#fc-card').press('Space')
-                page.locator('#fc-card').press('ArrowRight')
+                page.locator('#fc-card').press('ArrowUp')
+                page.locator('#fc-card').press('ArrowDown')
                 sync.expect(page.locator('#fc-session-progress')).to_have_attribute('aria-valuenow', '100')
                 sync.expect(page.locator('#fc-session-caption')).to_have_text('1 / 1 completed · Session complete')
                 page.locator('#fc-next').click()

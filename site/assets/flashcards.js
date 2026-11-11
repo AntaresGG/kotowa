@@ -5,7 +5,7 @@
   var t = I18n.t;
   var BOXES = [0, 1, 3, 7, 16, 35]; // days until the next review, per box
   var DAY = 86400000;
-  var state = { level: 'N5', kind: 'vocab', mode: 'daily', deck: [], queue: [], progress: {}, current: null, flipped: false, done: 0, shuffle: false };
+  var state = { level: 'N5', kind: 'vocab', mode: 'daily', deck: [], queue: [], index: 0, completed: [], progress: {}, current: null, flipped: false, done: 0, shuffle: false };
   var requestId = 0;
   var focusKey = 'kotowa:fc:focus:v1';
   var focus = {};
@@ -48,10 +48,19 @@
       I18n.text($('fc-focus-message'), "Browser storage is unavailable. Changes will last only while this page stays open.");
     }
     if (state.mode === 'focus' && removing) {
+      var currentId = state.current && state.current[0];
+      var flipped = state.flipped;
       state.queue = state.queue.filter(function (row) { return row[0] !== id; });
-      if (!state.current || state.current[0] === id) { next(); return; }
-      renderProgress(state.queue.length + (state.current ? 1 : 0));
-      saveSession();
+      if (state.completed.includes(id)) {
+        state.completed = state.completed.filter(function (value) { return value !== id; });
+        state.done--;
+      }
+      var currentIndex = state.queue.findIndex(function (row) { return row[0] === currentId; });
+      state.index = currentIndex >= 0 ? currentIndex : Math.min(state.index, Math.max(0, state.queue.length - 1));
+      if (!remaining()) state.index = state.queue.length;
+      showCurrent();
+      if (flipped && state.current && state.current[0] === currentId) flip();
+      return;
     }
     renderFocus();
   }
@@ -64,9 +73,9 @@
     try { localStorage.setItem(storageKey(), JSON.stringify(state.progress)); } catch (e) { /* private mode */ }
   }
   function saveSession() {
-    var ids = (state.current ? [state.current] : []).concat(state.queue).map(function (row) { return row[0]; });
+    var ids = state.queue.map(function (row) { return row[0]; });
     try {
-      localStorage.setItem(sessionKey(), JSON.stringify({ day: new Date().toDateString(), ids: ids, done: state.done, flipped: state.flipped, shuffle: state.shuffle }));
+      localStorage.setItem(sessionKey(), JSON.stringify({ day: new Date().toDateString(), ids: ids, index: state.index, completed: state.completed, done: state.done, flipped: state.flipped, shuffle: state.shuffle }));
     } catch (e) { /* private mode */ }
   }
   function restoreSession(rows) {
@@ -75,9 +84,14 @@
       if (!saved || saved.day !== new Date().toDateString() || !Array.isArray(saved.ids) || !Number.isInteger(saved.done) || saved.done < 0) return null;
       var byId = new Map(rows.map(function (row) { return [row[0], row]; }));
       var now = Date.now();
-      state.queue = saved.ids.filter(function (id) {
-        return byId.has(id) && (state.mode === 'focus' || !state.progress[id] || state.progress[id].due <= now);
+      var completed = Array.isArray(saved.completed) ? saved.completed : [];
+      state.queue = Array.from(new Set(saved.ids)).filter(function (id) {
+        return byId.has(id) && (completed.includes(id) || state.mode === 'focus' || !state.progress[id] || state.progress[id].due <= now);
       }).map(function (id) { return byId.get(id); });
+      state.completed = state.queue.filter(function (row) { return completed.includes(row[0]); }).map(function (row) { return row[0]; });
+      var currentId = saved.ids[Number.isInteger(saved.index) ? saved.index : 0];
+      state.index = state.queue.findIndex(function (row) { return row[0] === currentId; });
+      if (state.index < 0) state.index = Math.min(Number.isInteger(saved.index) ? Math.max(0, saved.index) : 0, state.queue.length);
       state.done = saved.done;
       return saved;
     } catch (e) { return null; }
@@ -103,11 +117,15 @@
     document.dispatchEvent(new CustomEvent('kotowa:study', { detail: { loading: true } }));
     try { localStorage.setItem('openjlpt:fc:selection', JSON.stringify({ level: state.level, kind: state.kind, mode: state.mode })); } catch (e) { /* private mode */ }
     state.current = null;
+    state.queue = [];
+    state.completed = [];
+    state.index = 0;
+    state.done = 0;
     state.flipped = false;
     $('fc-overview').hidden = true;
     $('fc-status').classList.remove('sr-only');
     $('fc-complete').hidden = true;
-    ['fc-again', 'fc-flip', 'fc-good', 'fc-mark'].forEach(function (id) { $(id).disabled = true; });
+    ['fc-previous', 'fc-flip', 'fc-forward', 'fc-good', 'fc-mark'].forEach(function (id) { $(id).disabled = true; });
     $('fc-focus-library').hidden = true;
     I18n.text($('fc-focus-message'), '');
     $('fc-reset').hidden = state.mode === 'focus';
@@ -127,7 +145,7 @@
         if (state.mode === 'focus') rows = focusedRows();
         var saved = newSession === true ? null : restoreSession(rows);
         if (saved) {
-          next();
+          showCurrent();
           if (saved.flipped) flip();
           if (!!saved.shuffle !== state.shuffle) orderRemaining();
           return;
@@ -136,7 +154,9 @@
           state.queue = rows.slice();
           if (state.shuffle) shuffle(state.queue);
           state.done = 0;
-          next();
+          state.completed = [];
+          state.index = 0;
+          showCurrent();
           return;
         }
         var now = Date.now();
@@ -149,7 +169,9 @@
         if (state.shuffle) { shuffle(due); shuffle(fresh); }
         state.queue = due.concat(fresh.slice(0, Math.max(0, 20 - due.length)));
         state.done = 0;
-        next();
+        state.completed = [];
+        state.index = 0;
+        showCurrent();
       }).catch(function () {
         if (request === requestId) {
           I18n.text($('fc-status'), "Unable to load this deck. Select it again to retry.");
@@ -163,15 +185,21 @@
   }
   function orderRemaining() {
     if (!state.current) return;
-    if (state.shuffle) shuffle(state.queue);
+    var tail = state.queue.slice(state.index + 1);
+    if (state.shuffle) shuffle(tail);
     else {
       var order = new Map(state.deck.map(function (row, i) { return [row[0], i]; }));
-      state.queue.sort(function (a, b) { return order.get(a[0]) - order.get(b[0]); });
+      tail.sort(function (a, b) { return order.get(a[0]) - order.get(b[0]); });
     }
+    state.queue = state.queue.slice(0, state.index + 1).concat(tail);
     saveSession();
   }
 
-  function renderProgress(remaining) {
+  function remaining() {
+    return state.queue.length - state.completed.length;
+  }
+
+  function renderProgress() {
     var studied = 0, learned = 0;
     state.deck.forEach(function (row) {
       var progress = state.progress[row[0]];
@@ -185,13 +213,13 @@
     var fresh = deckTotal - studied;
     var studiedPercent = deckTotal ? studied / deckTotal * 100 : 0;
     var learnedPercent = deckTotal ? learned / deckTotal * 100 : 0;
-    if (remaining === undefined) remaining = state.queue.length;
-    var sessionTotal = state.done + remaining;
+    var left = remaining();
+    var sessionTotal = state.done + left;
     var sessionPercent = sessionTotal ? state.done / sessionTotal * 100 : 100;
     var deckName = state.level + ' ' + t(({ vocab: 'words', kanji: 'kanji', grammar: 'grammar' })[state.kind]);
     $('fc-overview').hidden = false;
     $('fc-status').classList.add('sr-only');
-    I18n.text($('fc-status'), '{deck} · {remaining} to review · {studied} studied · {learned} / {total} learned', { deck: deckName, remaining: remaining, studied: studied, learned: learned, total: deckTotal });
+    I18n.text($('fc-status'), '{deck} · {remaining} to review · {studied} studied · {learned} / {total} learned', { deck: deckName, remaining: left, studied: studied, learned: learned, total: deckTotal });
     $('fc-deck-name').textContent = deckName;
     $('fc-studied').textContent = studied;
     $('fc-deck-total').textContent = deckTotal;
@@ -202,11 +230,11 @@
     $('fc-donut').style.setProperty('--learned-end', learnedPercent + '%');
     $('fc-donut').style.setProperty('--studied-end', studiedPercent + '%');
     $('fc-donut').setAttribute('aria-label', t('{fresh} not started, {learning} learning, {learned} learned; {studied} of {total} studied', { fresh: fresh, learning: learning, learned: learned, studied: studied, total: deckTotal }));
-    $('fc-remaining').textContent = remaining;
+    $('fc-remaining').textContent = left;
     $('fc-bar').style.width = sessionPercent + '%';
     $('fc-session-progress').setAttribute('aria-valuenow', String(Math.round(sessionPercent)));
-    $('fc-session-progress').setAttribute('aria-valuetext', t('{done} completed, {remaining} remaining', { done: state.done, remaining: remaining }));
-    I18n.text($('fc-session-caption'), '{done} / {total} completed · {mode}', { done: state.done, total: sessionTotal, mode: t(remaining ? (state.mode === 'focus' ? 'Focused review' : 'New cards + due reviews') : 'Session complete') });
+    $('fc-session-progress').setAttribute('aria-valuetext', t('{done} completed, {remaining} remaining', { done: state.done, remaining: left }));
+    I18n.text($('fc-session-caption'), '{done} / {total} completed · {mode}', { done: state.done, total: sessionTotal, mode: t(left ? (state.mode === 'focus' ? 'Focused review' : 'New cards + due reviews') : 'Session complete') });
     document.dispatchEvent(new CustomEvent('kotowa:study', { detail: {
       studied: studied, total: deckTotal, done: state.done, sessionTotal: sessionTotal,
       studiedPercent: studiedPercent, sessionPercent: sessionPercent,
@@ -214,16 +242,21 @@
     } }));
   }
 
-  function next() {
+  function showCurrent() {
     state.flipped = false;
     $('fc-card').classList.remove('flipped');
+    state.current = state.queue[state.index] || null;
     renderProgress();
-    state.current = state.queue.shift() || null;
     renderFocus();
     saveSession();
     var row = state.current;
     $('fc-complete').hidden = !!row;
-    ['fc-again', 'fc-flip', 'fc-good'].forEach(function (id) { $(id).disabled = !row; });
+    $('fc-previous').disabled = !state.queue.length || state.index === 0;
+    $('fc-forward').disabled = !row || (state.index === state.queue.length - 1 && remaining() > 0);
+    $('fc-flip').disabled = !row;
+    var completed = !!row && state.completed.includes(row[0]);
+    $('fc-good').disabled = !row || completed;
+    $('fc-good').setAttribute('aria-pressed', String(completed));
     if (!row) {
       var available = state.mode === 'focus' ? focusedRows().length > 0 : state.deck.some(function (card) {
         var progress = state.progress[card[0]];
@@ -272,20 +305,31 @@
     saveSession();
   }
 
-  function grade(knew) {
+  function navigate(offset) {
+    var index = state.index + offset;
+    var maximum = state.queue.length - (remaining() ? 1 : 0);
+    if (index < 0 || index > maximum || !state.queue.length) return;
+    state.index = index;
+    showCurrent();
+  }
+
+  function grade() {
     var row = state.current;
-    if (!row) return;
-    if (!state.flipped) { flip(); return; }
+    if (!row || state.completed.includes(row[0])) return;
     if (state.mode === 'daily') {
       var p = state.progress[row[0]] || { box: 0, due: 0 };
-      p.box = knew ? Math.min(p.box + 1, BOXES.length - 1) : 0;
+      p.box = Math.min(p.box + 1, BOXES.length - 1);
       p.due = Date.now() + BOXES[p.box] * DAY;
       state.progress[row[0]] = p;
       saveProgress();
     }
-    if (!knew) state.queue.splice(Math.min(3, state.queue.length), 0, row); // see it again soon
-    else state.done++;
-    next();
+    state.completed.push(row[0]);
+    state.done++;
+    var index = state.index;
+    do { index = (index + 1) % state.queue.length; }
+    while (index !== state.index && state.completed.includes(state.queue[index][0]));
+    state.index = remaining() ? index : state.queue.length;
+    showCurrent();
   }
 
   function segment(id, key) {
@@ -302,7 +346,7 @@
   document.addEventListener('kotowa:language', function () {
     renderMode();
     renderFocus();
-    if (!$('fc-overview').hidden) renderProgress(state.queue.length + (state.current ? 1 : 0));
+    if (!$('fc-overview').hidden) renderProgress();
   });
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -336,8 +380,9 @@
     });
     $('fc-card').addEventListener('click', flip);
     $('fc-flip').addEventListener('click', flip);
-    $('fc-again').addEventListener('click', function () { grade(false); });
-    $('fc-good').addEventListener('click', function () { grade(true); });
+    $('fc-previous').addEventListener('click', function () { navigate(-1); });
+    $('fc-forward').addEventListener('click', function () { navigate(1); });
+    $('fc-good').addEventListener('click', grade);
     $('fc-next').addEventListener('click', function () { start(true); });
     $('fc-choose').addEventListener('click', function () {
       $('fc-level').querySelector('button[aria-pressed="true"]').focus();
@@ -352,9 +397,10 @@
     });
     document.addEventListener('keydown', function (e) {
       if (e.target.closest('input, textarea, select, button, a, [contenteditable="true"]')) return;
-      if (e.key === ' ') { e.preventDefault(); flip(); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); grade(false); }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); grade(true); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); if (!e.repeat) flip(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); navigate(1); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); if (!e.repeat) grade(); }
     });
     start();
   });

@@ -191,7 +191,6 @@
 [data-appearance='silver-era'] .fc-progress { border-radius: 1px; background: #bfb6a3; box-shadow: inset 0 1px 3px #4f412d55; }
 [data-appearance='silver-era'] .fc-progress div { background: linear-gradient(#859769, #4d623b); }
 [data-appearance='silver-era'] #fc-mark[aria-pressed='true'] { background: linear-gradient(#8c7443, #68512d); color: #fff5d8; }
-[data-appearance='silver-era'] #fc-again { color: #75431f; }
 [data-appearance='silver-era'] .kbd { border-radius: 2px; border-color: #a59b86; }
 [data-appearance='silver-era'] table.list th { background: #cdc7b8; color: #544c3f; font-size: 12px; letter-spacing: .04em; }
 [data-appearance='silver-era'] table.list tbody tr:nth-child(even) { background: #f7f1e63d; }

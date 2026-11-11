@@ -78,7 +78,7 @@ def test_focused_collection_and_independent_sessions(browser, site_url):
     expect(page.locator("#fc-reset")).to_be_hidden()
     expect(page.locator("#fc-remaining")).to_have_text("2")
     page.locator("#fc-flip").click()
-    page.locator("#fc-again").click()
+    page.locator("#fc-forward").click()
     expect(page.locator("#fc-front")).to_have_text(second)
     expect(page.locator("#fc-remaining")).to_have_text("2")
     page.locator("#fc-shuffle").check()
