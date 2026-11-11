@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Compact the Silver Era desktop flashcard console: retain the card dimensions, shorten the receiver, arrange study controls in a toolbar and place progress beside the card.
+
 - Separate flashcard browsing from self-ratings: Previous (←), Show (↑), Next (→) and Knew it (↓). Keep the full session available for browsing, restore its position after reload, and rate each card only once per session.
 
 - Add Chinese/English interface switching across navigation, search, flashcards, text analysis, downloads and appearance controls. Follow the browser language initially, remember explicit choices and sync tabs without changing study progress or learning content.

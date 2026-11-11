@@ -266,7 +266,7 @@ ${p.noindex ? '<meta name="robots" content="noindex">' : ''}
 <link rel="stylesheet" href="${root}assets/silver-era.css?v=${SILVER_VERSION}">
 ${scripts}
 </head>
-<body data-root="${root}">
+<body data-root="${root}"${p.path === 'flashcards.html' ? ' class="flashcard-page"' : ''}>
 <header class="site-header"><div class="wrap">
 <a class="brand" href="${root}index.html"><img class="brand-mark" src="${root}assets/favicon.svg" width="28" height="28" alt=""><span class="brand-name">Kotowa · 词和</span></a>
 ${p.path === 'index.html' ? '' : `<form class="hsearch" action="${root}index.html" role="search"><input type="search" name="q" ${uiAttr("placeholder", "Search words, kanji, grammar…")} ${uiAttr("aria-label", "Search")}></form>`}
@@ -651,14 +651,23 @@ function toolPages(): void {
     description: 'Free JLPT flashcards in your browser: vocabulary, kanji and grammar for N5 to N1 with spaced repetition. No sign-up; progress is saved locally.',
     scripts: ['assets/flashcards.js'],
     body: `<div class="fc">
+<div class="fc-heading">
 <h1>${ui("Flashcards")}</h1>
 <p class="muted">${ui("Spaced repetition in your browser. Progress is stored on this device only.")}</p>
+</div>
+<div class="fc-setup">
 <div class="seg" id="fc-mode" role="group" ${uiAttr("aria-label", "Study mode")}><button type="button" data-v="daily" aria-pressed="true">${ui("Daily review")}</button><button type="button" data-v="focus" aria-pressed="false">${ui("★ Focused review")}</button></div>
 <p class="muted" id="fc-mode-help"></p>
-<div class="btn-row" style="justify-content:center">
+<div class="btn-row fc-deck-controls" style="justify-content:center">
 <div class="seg" id="fc-level" role="group" ${uiAttr("aria-label", "Level")}>${LEVEL_NAMES.map((l, i) => `<button type="button" data-v="${l}" aria-pressed="${i === 0}">${l}</button>`).join('')}</div>
 <div class="seg" id="fc-kind" role="group" ${uiAttr("aria-label", "Deck")}><button type="button" data-v="vocab" aria-pressed="true">${ui("Words")}</button><button type="button" data-v="kanji" aria-pressed="false">${ui("Kanji")}</button><button type="button" data-v="grammar" aria-pressed="false">${ui("Grammar")}</button></div>
 </div>
+<p class="fc-shuffle"><label ${uiAttr("title", "Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly.")}><input type="checkbox" id="fc-shuffle"> ${ui("Shuffle")}</label></p>
+<p class="fc-save"><button class="btn" type="button" id="fc-mark" aria-pressed="false" disabled>${ui("☆ Save for focused review")}</button></p>
+</div>
+<p class="muted" id="fc-status" role="status">${ui("Loading…")}</p>
+<p class="muted" id="fc-focus-message" role="status"></p>
+<div class="fc-workspace">
 <section id="fc-overview" class="fc-overview" ${uiAttr("aria-label", "Study progress")} hidden>
 <div class="fc-overview-heading"><strong id="fc-deck-name"></strong><span class="muted">${ui("Self-rated progress")}</span></div>
 <div class="fc-deck-progress">
@@ -683,10 +692,7 @@ function toolPages(): void {
 <p>${ui("Only Knew it records a rating and advances to an unfinished card. These deck totals track daily review only; Focused review does not change them or your daily schedule. Each mode resumes its own session when you return today.")}</p>
 </details>
 </section>
-<p><label ${uiAttr("title", "Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly.")}><input type="checkbox" id="fc-shuffle"> ${ui("Shuffle")}</label></p>
-<p class="muted" id="fc-status" role="status">${ui("Loading…")}</p>
-<p><button class="btn" type="button" id="fc-mark" aria-pressed="false" disabled>${ui("☆ Save for focused review")}</button></p>
-<p class="muted" id="fc-focus-message" role="status"></p>
+<div class="fc-stage">
 <div class="card fc-card" id="fc-card" tabindex="0" aria-live="polite"><div class="fc-front" lang="ja" id="fc-front"></div><div class="fc-back" id="fc-back"></div></div>
 <div id="fc-complete" hidden>
 <div class="btn-row" style="justify-content:center">
@@ -695,19 +701,21 @@ function toolPages(): void {
 <a class="btn" href="index.html" id="fc-home">${ui("Back to home")}</a>
 </div>
 </div>
-<div class="btn-row" style="justify-content:center">
+<div class="btn-row fc-actions" style="justify-content:center">
 <button class="btn" type="button" id="fc-previous" aria-keyshortcuts="ArrowLeft">${ui("Previous")} <span class="kbd">←</span></button>
 <button class="btn" type="button" id="fc-flip" aria-keyshortcuts="ArrowUp">${ui("Show")} <span class="kbd">↑</span></button>
 <button class="btn" type="button" id="fc-forward" aria-keyshortcuts="ArrowRight">${ui("Next")} <span class="kbd">→</span></button>
 <button class="btn primary" type="button" id="fc-good" aria-keyshortcuts="ArrowDown" aria-pressed="false">${ui("✓ Knew it")} <span class="kbd">↓</span></button>
 </div>
-<p><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">${ui("Reset progress for this deck")}</button></p>
+</div>
+<p class="fc-reset"><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">${ui("Reset progress for this deck")}</button></p>
 <details id="fc-focus-library" class="fc-focus-library" hidden>
 <summary>${ui("★ Saved cards in this deck")} (<span id="fc-focus-count">0</span>)</summary>
 <p class="muted">${ui("Use the level and deck selectors to view your saved collection. Stored in this browser only.")}</p>
 <p id="fc-focus-empty" class="muted">${ui("No saved cards yet. Use ☆ above a flashcard to add it.")}</p>
 <ul id="fc-focus-list"></ul>
 </details>
+</div>
 </div>`,
   });
 

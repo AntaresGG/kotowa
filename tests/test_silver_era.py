@@ -137,3 +137,58 @@ def test_silver_storage_sync_and_blocked_storage(browser, site_url):
     expect(page.locator('html')).to_have_class(re.compile('no-furigana'))
     assert not errors
     blocked.close()
+
+
+@pytest.mark.parametrize('language', ['zh-CN', 'en-US'])
+def test_silver_desktop_flashcards_fit_without_shrinking_cards(browser, site_url, language):
+    # A 4K display at 200% has about 1920 CSS pixels; reserve height for Edge chrome.
+    context = browser.new_context(locale=language, viewport={'width': 1920, 'height': 960}, device_scale_factor=2)
+    page = context.new_page()
+    errors = []
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    page.goto(site_url + 'flashcards.html')
+    expect(page.locator('#fc-good')).to_be_enabled()
+    page.locator('#theme-silver').click()
+    page.locator('#fc-flip').click()
+    # Removing only the layout scope recovers the original Silver Era card dimensions.
+    baseline = page.evaluate("""() => {
+        document.body.classList.remove('flashcard-page');
+        const {width, height} = document.querySelector('#fc-card').getBoundingClientRect();
+        document.body.classList.add('flashcard-page');
+        window.scrollTo(0, 0);
+        return {width, height};
+    }""")
+    card = page.locator('#fc-card').bounding_box()
+    assert abs(card['width'] - baseline['width']) < 1
+    assert abs(card['height'] - baseline['height']) < 1
+
+    def fits():
+        assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1')
+        assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+        assert page.evaluate("getComputedStyle(document.documentElement).overflowY !== 'hidden'")
+        for selector in ('.se-receiver', '#fc-mode', '#fc-level', '#fc-kind', '#fc-shuffle',
+                         '#fc-mark', '#fc-card', '#fc-good', '#fc-reset', '#fc-focus-library', '.site-footer'):
+            expect(page.locator(selector)).to_be_in_viewport()
+            box = page.locator(selector).bounding_box()
+            assert box['y'] >= 0 and box['y'] + box['height'] <= 961, selector
+
+    fits()
+    page.locator('.fc-progress-help summary').click()
+    fits()
+    page.locator('.fc-progress-help summary').click()
+    page.locator('#fc-mark').click()
+    page.locator('#fc-focus-library summary').click()
+    fits()
+    page.locator('#fc-focus-library summary').click()
+    # The reading-size control still enlarges the card, without cutting off the page.
+    page.locator('#se-text-size').press('End')
+    assert page.locator('#fc-card').bounding_box()['width'] > card['width']
+    fits()
+    page.locator('#se-text-size').press('ArrowLeft')
+    for kind in ('kanji', 'grammar', 'vocab'):
+        page.locator(f'#fc-kind [data-v="{kind}"]').click()
+        expect(page.locator('#fc-good')).to_be_enabled()
+        page.locator('#fc-flip').click()
+        fits()
+    assert not errors, errors
+    context.close()

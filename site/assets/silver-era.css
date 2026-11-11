@@ -274,6 +274,82 @@
 @media (prefers-reduced-motion: reduce) {
   .se-knob, .se-toggle-lever { transition: none; }
 }
+/* Desktop study console: retain the full-size card and use the space beside it. */
+@media screen and (min-width: 1200px) {
+  [data-appearance='silver-era'] .flashcard-page .site-header .wrap {
+    max-width: 1440px; min-height: 40px; padding: 4px 16px; gap: 8px; flex-wrap: nowrap;
+  }
+  [data-appearance='silver-era'] .flashcard-page .nav { flex: 0 0 auto; width: auto; margin-left: auto; }
+  [data-appearance='silver-era'] .flashcard-page .nav a { padding: 4px 6px; }
+  [data-appearance='silver-era'] .flashcard-page .hsearch { min-width: 80px; flex: 1; }
+  [data-appearance='silver-era'] .flashcard-page .language-picker select { height: 32px; padding: 4px 8px; font-size: 12px; }
+  [data-appearance='silver-era'] .flashcard-page main { width: min(1440px, calc(100% - 32px)); margin-bottom: 6px; padding-top: 5px; padding-bottom: 8px; }
+  [data-appearance='silver-era'] .flashcard-page .se-nameplate { min-height: 36px; padding: 4px 22px; }
+  [data-appearance='silver-era'] .flashcard-page .se-nameplate > a { font-size: 24px; }
+  [data-appearance='silver-era'] .flashcard-page .se-nameplate small { font-size: 10px; }
+  [data-appearance='silver-era'] .flashcard-page .se-model span { font-size: 15px; }
+  [data-appearance='silver-era'] .flashcard-page .se-instruments {
+    grid-template-columns: minmax(180px, 1fr) 300px minmax(200px, 1fr); gap: 24px; padding: 6px 24px;
+  }
+  [data-appearance='silver-era'] .flashcard-page .se-control-pair { margin-top: 4px; gap: 16px; }
+  [data-appearance='silver-era'] .flashcard-page .se-dial,
+  [data-appearance='silver-era'] .flashcard-page .se-furigana { gap: 4px; }
+  [data-appearance='silver-era'] .flashcard-page .se-dial-scale { width: 58px; height: 58px; }
+  [data-appearance='silver-era'] .flashcard-page .se-knob { width: 42px; height: 42px; }
+  [data-appearance='silver-era'] .flashcard-page .se-toggle { width: 36px; height: 58px; }
+  [data-appearance='silver-era'] .flashcard-page .se-toggle-lever { width: 26px; height: 26px; transform: translateY(11px); }
+  [data-appearance='silver-era'] .flashcard-page .se-toggle input:checked + .se-toggle-lever { transform: translateY(-11px); }
+  [data-appearance='silver-era'] .flashcard-page .se-meter-pair { padding: 6px 8px 0; gap: 10px; }
+  [data-appearance='silver-era'] .flashcard-page .se-meter { border-width: 4px; }
+  [data-appearance='silver-era'] .flashcard-page .se-meter-caption { padding: 5px 0; gap: 4px; font-size: 9px; }
+  [data-appearance='silver-era'] .flashcard-page .se-meter-caption output { padding: 2px 4px; font-size: 13px; }
+  [data-appearance='silver-era'] .flashcard-page .se-source { justify-self: center; width: 220px; gap: 6px; }
+  [data-appearance='silver-era'] .flashcard-page .se-source-keys a { padding: 5px; }
+  [data-appearance='silver-era'] .flashcard-page .se-counter { padding-top: 5px; }
+  [data-appearance='silver-era'] .flashcard-page .se-counter output { padding: 2px 7px; font-size: 17px; }
+  [data-appearance='silver-era'] .flashcard-page .se-tuner { gap: 16px; padding: 3px 24px; }
+  [data-appearance='silver-era'] .flashcard-page .se-tuner-track { background-position: center 4px, center; }
+  [data-appearance='silver-era'] .flashcard-page .se-tuner-track i { top: 2px; height: 7px; }
+  [data-appearance='silver-era'] .flashcard-page .se-tuner-track a { padding: 12px 8px 2px; font-size: 10px; line-height: 1; }
+  [data-appearance='silver-era'] .flashcard-page .se-fascia-footer { padding: 3px 22px; }
+  [data-appearance='silver-era'] .flashcard-page .page-content { margin-top: 6px; padding: 8px 12px; }
+  [data-appearance='silver-era'] .flashcard-page .fc { max-width: none; }
+  [data-appearance='silver-era'] .flashcard-page .fc-heading { display: flex; align-items: baseline; gap: 16px; text-align: left; }
+  [data-appearance='silver-era'] .flashcard-page .fc-heading h1 { margin: 0; font-size: 18px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-heading p { margin: 0; font-size: 11px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-setup { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 10px; margin: 4px 0; }
+  [data-appearance='silver-era'] .flashcard-page .fc-setup .seg { padding: 3px; gap: 3px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-setup .seg button { padding: 4px 10px; font-size: 12px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-deck-controls { flex-wrap: nowrap; gap: 8px; margin: 0; }
+  [data-appearance='silver-era'] .flashcard-page .fc-shuffle,
+  [data-appearance='silver-era'] .flashcard-page .fc-save { margin: 0; font-size: 12px; }
+  [data-appearance='silver-era'] .flashcard-page #fc-mark { padding: 6px 10px; font-size: 12px; }
+  [data-appearance='silver-era'] .flashcard-page #fc-mode-help { order: 1; flex-basis: 100%; margin: 0; text-align: left; font-size: 11px; line-height: 1.4; }
+  [data-appearance='silver-era'] .flashcard-page #fc-focus-message { margin: 4px 0; font-size: 11px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 850px; grid-template-rows: min-content min-content 1fr; gap: 8px 16px; align-items: start; text-align: left; }
+  [data-appearance='silver-era'] .flashcard-page .fc-stage { grid-column: 2; grid-row: 1 / span 3; min-width: 0; text-align: center; }
+  [data-appearance='silver-era'] .flashcard-page .fc-overview { margin: 0; padding: 12px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-overview-heading { font-size: 11px; gap: 8px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-deck-progress { grid-template-columns: 64px minmax(0, 1fr); gap: 12px; padding: 10px 0; }
+  [data-appearance='silver-era'] .flashcard-page .fc-donut { width: 64px; height: 64px; padding: 6px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-donut strong { font-size: 17px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-donut span { font-size: 9px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-studied { margin-bottom: 3px; font-size: 11px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-studied > strong { font-size: 18px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-legend { font-size: 11px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-legend > div { padding: 0; }
+  [data-appearance='silver-era'] .flashcard-page .fc-session { padding-top: 8px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-session-heading { font-size: 11px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-session p,
+  [data-appearance='silver-era'] .flashcard-page .fc-progress-help { font-size: 10px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-progress-help { margin-top: 8px; }
+  [data-appearance='silver-era'] .flashcard-page .fc-actions { margin: 10px 0 0; }
+  [data-appearance='silver-era'] .flashcard-page .fc-reset { grid-column: 1; margin: 0; }
+  [data-appearance='silver-era'] .flashcard-page .fc-focus-library { grid-column: 1; margin: 0; font-size: 12px; }
+  [data-appearance='silver-era'] .flashcard-page .site-footer { padding: 0 0 4px; font-size: 9px; line-height: 1.3; }
+  [data-appearance='silver-era'] .flashcard-page .site-footer .wrap { max-width: 1440px; }
+  [data-appearance='silver-era'] .flashcard-page .site-footer p { margin: 0; }
+}
 @media print {
   .se-receiver { display: none !important; }
   [data-appearance='silver-era'] main { width: 100%; border: 0; padding: 0; margin: 0; background: #fff; box-shadow: none; }
