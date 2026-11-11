@@ -1,0 +1,1026 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "wc-4d74fe5534e4",
+      "word": "私",
+      "reading": "わたし",
+      "romaji": "watashi",
+      "category": "pro",
+      "examples": [
+        "私は学生です。",
+        "私の名前は田中です。",
+        "これは私のです。"
+      ]
+    },
+    {
+      "id": "wc-bf67dab0f08c",
+      "word": "僕",
+      "reading": "ぼく",
+      "romaji": "boku",
+      "category": "pro",
+      "vocab_id": "1587d6fbcf",
+      "examples": []
+    },
+    {
+      "id": "wc-21629dd04cc1",
+      "word": "俺",
+      "reading": "おれ",
+      "romaji": "ore",
+      "category": "pro",
+      "vocab_id": "1d05a03cd3",
+      "examples": []
+    },
+    {
+      "id": "wc-3ae7b601da46",
+      "word": "あなた",
+      "reading": "あなた",
+      "romaji": "anata",
+      "category": "pro",
+      "vocab_id": "afdf384f68",
+      "examples": []
+    },
+    {
+      "id": "wc-f871c8d46994",
+      "word": "君",
+      "reading": "きみ",
+      "romaji": "kimi",
+      "category": "pro",
+      "vocab_id": "ed36e1d3a7",
+      "examples": []
+    },
+    {
+      "id": "wc-c3882ccf1e27",
+      "word": "彼",
+      "reading": "かれ",
+      "romaji": "kare",
+      "category": "pro",
+      "vocab_id": "0963c50b58",
+      "examples": []
+    },
+    {
+      "id": "wc-951c5ba12004",
+      "word": "彼女",
+      "reading": "かのじょ",
+      "romaji": "kanojo",
+      "category": "pro",
+      "vocab_id": "be3dacfc93",
+      "examples": []
+    },
+    {
+      "id": "wc-a27f7dcf6e54",
+      "word": "これ",
+      "reading": "これ",
+      "romaji": "kore",
+      "category": "pro",
+      "vocab_id": "6313cc9cb5",
+      "examples": []
+    },
+    {
+      "id": "wc-efb4ef354a64",
+      "word": "それ",
+      "reading": "それ",
+      "romaji": "sore",
+      "category": "pro",
+      "vocab_id": "79d922e359",
+      "examples": []
+    },
+    {
+      "id": "wc-b87412b58250",
+      "word": "あれ",
+      "reading": "あれ",
+      "romaji": "are",
+      "category": "pro",
+      "vocab_id": "d727a76b22",
+      "examples": []
+    },
+    {
+      "id": "wc-6f679cb26fcb",
+      "word": "誰",
+      "reading": "だれ",
+      "romaji": "dare",
+      "category": "pro",
+      "vocab_id": "3d2ca62c5f",
+      "examples": []
+    },
+    {
+      "id": "wc-70794023c312",
+      "word": "何",
+      "reading": "なに",
+      "romaji": "nani",
+      "category": "pro",
+      "vocab_id": "9d47958486",
+      "examples": []
+    },
+    {
+      "id": "wc-dbac40e9873f",
+      "word": "どこ",
+      "reading": "どこ",
+      "romaji": "doko",
+      "category": "pro",
+      "vocab_id": "ad884a3b70",
+      "examples": []
+    },
+    {
+      "id": "wc-a20aab301daa",
+      "word": "こちら",
+      "reading": "こちら",
+      "romaji": "kochira",
+      "category": "pro",
+      "vocab_id": "e9e492c68a",
+      "examples": []
+    },
+    {
+      "id": "wc-4de3889b9e51",
+      "word": "みんな",
+      "reading": "みんな",
+      "romaji": "minna",
+      "category": "pro",
+      "vocab_id": "2676514561",
+      "examples": []
+    },
+    {
+      "id": "wc-c7a7ff5539a8",
+      "word": "〜枚",
+      "reading": "まい",
+      "romaji": "mai",
+      "category": "num",
+      "vocab_id": "e7ecb4b0a9",
+      "examples": []
+    },
+    {
+      "id": "wc-de6cf0b1694b",
+      "word": "〜本",
+      "reading": "ほん",
+      "romaji": "hon",
+      "category": "num",
+      "examples": [
+        "鉛筆を二本買った。",
+        "ビールを一本飲んだ。",
+        "木が何本ありますか？"
+      ]
+    },
+    {
+      "id": "wc-130b00a8fa3f",
+      "word": "〜冊",
+      "reading": "さつ",
+      "romaji": "satsu",
+      "category": "num",
+      "vocab_id": "5d038b3b98",
+      "examples": []
+    },
+    {
+      "id": "wc-98f4eaac3811",
+      "word": "〜台",
+      "reading": "だい",
+      "romaji": "dai",
+      "category": "num",
+      "examples": [
+        "車を一台買った。",
+        "テレビが二台ある。",
+        "パソコンが何台必要？"
+      ]
+    },
+    {
+      "id": "wc-c25af0352f35",
+      "word": "〜匹",
+      "reading": "ひき",
+      "romaji": "hiki",
+      "category": "num",
+      "vocab_id": "fd5a222e6e",
+      "examples": []
+    },
+    {
+      "id": "wc-9fde0bfa8872",
+      "word": "〜人",
+      "reading": "にん",
+      "romaji": "nin",
+      "category": "num",
+      "examples": [
+        "三人で来ました。",
+        "一人で行きます。",
+        "何人いますか？"
+      ]
+    },
+    {
+      "id": "wc-8493bcd3eeb2",
+      "word": "〜個",
+      "reading": "こ",
+      "romaji": "ko",
+      "category": "num",
+      "vocab_id": "56ffead6fe",
+      "examples": []
+    },
+    {
+      "id": "wc-af7bcbc7d8a4",
+      "word": "〜回",
+      "reading": "かい",
+      "romaji": "kai",
+      "category": "num",
+      "vocab_id": "d630014a3f",
+      "examples": []
+    },
+    {
+      "id": "wc-03b37b0798e0",
+      "word": "〜階",
+      "reading": "かい",
+      "romaji": "kai2",
+      "category": "num",
+      "vocab_id": "e8f22989ca",
+      "examples": []
+    },
+    {
+      "id": "wc-b8d393b85946",
+      "word": "一つ",
+      "reading": "ひとつ",
+      "romaji": "hitotsu",
+      "category": "num",
+      "vocab_id": "537f8af3d6",
+      "examples": []
+    },
+    {
+      "id": "wc-40822f058d21",
+      "word": "この",
+      "reading": "この",
+      "romaji": "kono",
+      "category": "rent",
+      "vocab_id": "bd3a2ad2ad",
+      "examples": []
+    },
+    {
+      "id": "wc-12324f332855",
+      "word": "その",
+      "reading": "その",
+      "romaji": "sono",
+      "category": "rent",
+      "vocab_id": "cb1c02a574",
+      "examples": []
+    },
+    {
+      "id": "wc-c226690367d8",
+      "word": "あの",
+      "reading": "あの",
+      "romaji": "ano",
+      "category": "rent",
+      "vocab_id": "ac4706068b",
+      "examples": []
+    },
+    {
+      "id": "wc-417844345775",
+      "word": "どの",
+      "reading": "どの",
+      "romaji": "dono",
+      "category": "rent",
+      "vocab_id": "cd4b8c6381",
+      "examples": []
+    },
+    {
+      "id": "wc-ae9642ac9482",
+      "word": "大きな",
+      "reading": "おおきな",
+      "romaji": "ookina",
+      "category": "rent",
+      "vocab_id": "3a2de0afca",
+      "examples": []
+    },
+    {
+      "id": "wc-d2dbfa4a8088",
+      "word": "小さな",
+      "reading": "ちいさな",
+      "romaji": "chiisana",
+      "category": "rent",
+      "vocab_id": "38a8411ec3",
+      "examples": []
+    },
+    {
+      "id": "wc-38a0e691da63",
+      "word": "ある（連体）",
+      "reading": "ある",
+      "romaji": "aru",
+      "category": "rent",
+      "examples": [
+        "ある日、彼が来た。",
+        "ある意味では正しい。",
+        "ある人がこう言った。"
+      ]
+    },
+    {
+      "id": "wc-2e20b213b818",
+      "word": "いわゆる",
+      "reading": "いわゆる",
+      "romaji": "iwayuru",
+      "category": "rent",
+      "vocab_id": "92270be892",
+      "examples": []
+    },
+    {
+      "id": "wc-8f97fe6f1d1e",
+      "word": "とても",
+      "reading": "とても",
+      "romaji": "totemo",
+      "category": "adv",
+      "vocab_id": "a3679ee665",
+      "examples": []
+    },
+    {
+      "id": "wc-7f8521f2966a",
+      "word": "もっと",
+      "reading": "もっと",
+      "romaji": "motto",
+      "category": "adv",
+      "vocab_id": "a8f5f4c59e",
+      "examples": []
+    },
+    {
+      "id": "wc-7edb5f781d57",
+      "word": "少し",
+      "reading": "すこし",
+      "romaji": "sukoshi",
+      "category": "adv",
+      "vocab_id": "c373555102",
+      "examples": []
+    },
+    {
+      "id": "wc-c0e709ad2196",
+      "word": "たくさん",
+      "reading": "たくさん",
+      "romaji": "takusan",
+      "category": "adv",
+      "vocab_id": "a7c72d9bb1",
+      "examples": []
+    },
+    {
+      "id": "wc-8a34c9bb3916",
+      "word": "もう",
+      "reading": "もう",
+      "romaji": "mou",
+      "category": "adv",
+      "vocab_id": "c5b7ad76fd",
+      "examples": []
+    },
+    {
+      "id": "wc-8360fc59a2e1",
+      "word": "まだ",
+      "reading": "まだ",
+      "romaji": "mada",
+      "category": "adv",
+      "vocab_id": "6a7163f5f7",
+      "examples": []
+    },
+    {
+      "id": "wc-44bb5bfeda75",
+      "word": "ちょっと",
+      "reading": "ちょっと",
+      "romaji": "chotto",
+      "category": "adv",
+      "vocab_id": "602fdffbf2",
+      "examples": []
+    },
+    {
+      "id": "wc-5ef55a3e0717",
+      "word": "ゆっくり",
+      "reading": "ゆっくり",
+      "romaji": "yukkuri",
+      "category": "adv",
+      "vocab_id": "ccd27b3d04",
+      "examples": []
+    },
+    {
+      "id": "wc-84c886996853",
+      "word": "全然",
+      "reading": "ぜんぜん",
+      "romaji": "zenzen",
+      "category": "adv",
+      "vocab_id": "ba20bc66d0",
+      "examples": []
+    },
+    {
+      "id": "wc-4cdf0625c98a",
+      "word": "なかなか",
+      "reading": "なかなか",
+      "romaji": "nakanaka",
+      "category": "adv",
+      "vocab_id": "d3b3911a79",
+      "examples": []
+    },
+    {
+      "id": "wc-abb7fb51c443",
+      "word": "きっと",
+      "reading": "きっと",
+      "romaji": "kitto",
+      "category": "adv",
+      "vocab_id": "b284605582",
+      "examples": []
+    },
+    {
+      "id": "wc-a8685d6bff0b",
+      "word": "やっと",
+      "reading": "やっと",
+      "romaji": "yatto",
+      "category": "adv",
+      "vocab_id": "f2a77c1c6d",
+      "examples": []
+    },
+    {
+      "id": "wc-f856d7d293ee",
+      "word": "ぜひ",
+      "reading": "ぜひ",
+      "romaji": "zehi",
+      "category": "adv",
+      "vocab_id": "bdf6b26213",
+      "examples": []
+    },
+    {
+      "id": "wc-eb18b995876b",
+      "word": "もちろん",
+      "reading": "もちろん",
+      "romaji": "mochiron",
+      "category": "adv",
+      "vocab_id": "a695a20c52",
+      "examples": []
+    },
+    {
+      "id": "wc-30b33d669e21",
+      "word": "絶対に",
+      "reading": "ぜったいに",
+      "romaji": "zettai ni",
+      "category": "adv",
+      "examples": [
+        "絶対に負けない。",
+        "絶対に行く！",
+        "絶対に忘れないよ。"
+      ]
+    },
+    {
+      "id": "wc-f8fbc0d28c3b",
+      "word": "急に",
+      "reading": "きゅうに",
+      "romaji": "kyuu ni",
+      "category": "adv",
+      "vocab_id": "a6aca833ca",
+      "examples": []
+    },
+    {
+      "id": "wc-25567054d7aa",
+      "word": "さらに",
+      "reading": "さらに",
+      "romaji": "sarani",
+      "category": "adv",
+      "examples": [
+        "状況はさらに悪化した。",
+        "さらに詳しく調べた。",
+        "さらに努力が必要だ。"
+      ]
+    },
+    {
+      "id": "wc-8c7fabaf8039",
+      "word": "もともと",
+      "reading": "もともと",
+      "romaji": "motomoto",
+      "category": "adv",
+      "examples": [
+        "彼はもともと優しい人だ。",
+        "もともとそう思っていた。",
+        "もともとここに住んでいた。"
+      ]
+    },
+    {
+      "id": "wc-7322d24409c2",
+      "word": "そして",
+      "reading": "そして",
+      "romaji": "soshite",
+      "category": "conj",
+      "vocab_id": "1655402893",
+      "examples": []
+    },
+    {
+      "id": "wc-4aaf7dfb5e59",
+      "word": "でも",
+      "reading": "でも",
+      "romaji": "demo",
+      "category": "conj",
+      "vocab_id": "3f71089c32",
+      "examples": []
+    },
+    {
+      "id": "wc-25f824cb6407",
+      "word": "しかし",
+      "reading": "しかし",
+      "romaji": "shikashi",
+      "category": "conj",
+      "vocab_id": "2c41aedcba",
+      "examples": []
+    },
+    {
+      "id": "wc-a53a58ae3831",
+      "word": "だから",
+      "reading": "だから",
+      "romaji": "dakara",
+      "category": "conj",
+      "vocab_id": "ced135c81e",
+      "examples": []
+    },
+    {
+      "id": "wc-5aad50439e4f",
+      "word": "それから",
+      "reading": "それから",
+      "romaji": "sorekara",
+      "category": "conj",
+      "vocab_id": "799b7cabe0",
+      "examples": []
+    },
+    {
+      "id": "wc-b2c624605566",
+      "word": "または",
+      "reading": "または",
+      "romaji": "matawa",
+      "category": "conj",
+      "vocab_id": "0fa3edce9b",
+      "examples": []
+    },
+    {
+      "id": "wc-fb70027adddd",
+      "word": "ところが",
+      "reading": "ところが",
+      "romaji": "tokoroga",
+      "category": "conj",
+      "vocab_id": "4fa73fd5b1",
+      "examples": []
+    },
+    {
+      "id": "wc-88c461fcb356",
+      "word": "それに",
+      "reading": "それに",
+      "romaji": "soreni",
+      "category": "conj",
+      "vocab_id": "074e70b529",
+      "examples": []
+    },
+    {
+      "id": "wc-f41e2b163119",
+      "word": "つまり",
+      "reading": "つまり",
+      "romaji": "tsumari",
+      "category": "conj",
+      "vocab_id": "9a7106c569",
+      "examples": []
+    },
+    {
+      "id": "wc-46c591c4eeb8",
+      "word": "もし",
+      "reading": "もし",
+      "romaji": "moshi",
+      "category": "conj",
+      "vocab_id": "bbaeab9c94",
+      "examples": []
+    },
+    {
+      "id": "wc-5c59ee0d1512",
+      "word": "はい",
+      "reading": "はい",
+      "romaji": "hai",
+      "category": "intj",
+      "vocab_id": "542f39c93d",
+      "examples": []
+    },
+    {
+      "id": "wc-a88b6ef1cc82",
+      "word": "いいえ",
+      "reading": "いいえ",
+      "romaji": "iie",
+      "category": "intj",
+      "vocab_id": "6d4596ae46",
+      "examples": []
+    },
+    {
+      "id": "wc-7ed7bb05208b",
+      "word": "ありがとう",
+      "reading": "ありがとう",
+      "romaji": "arigatou",
+      "category": "intj",
+      "vocab_id": "93461820fe",
+      "examples": []
+    },
+    {
+      "id": "wc-d2c3388ffd6f",
+      "word": "すみません",
+      "reading": "すみません",
+      "romaji": "sumimasen",
+      "category": "intj",
+      "vocab_id": "feae64eac4",
+      "examples": []
+    },
+    {
+      "id": "wc-fa8fabb895be",
+      "word": "ごめんなさい",
+      "reading": "ごめんなさい",
+      "romaji": "gomennasai",
+      "category": "intj",
+      "vocab_id": "4a11eb5fb4",
+      "examples": []
+    },
+    {
+      "id": "wc-89747fecfcc3",
+      "word": "えっ",
+      "reading": "えっ",
+      "romaji": "e",
+      "category": "intj",
+      "examples": [
+        "えっ、もう終わったの？",
+        "えっ、知らなかった！",
+        "えっ、本当ですか？"
+      ]
+    },
+    {
+      "id": "wc-8788120aeeb2",
+      "word": "あ",
+      "reading": "あ",
+      "romaji": "a",
+      "category": "intj",
+      "vocab_id": "4fff6d0441",
+      "examples": []
+    },
+    {
+      "id": "wc-bb1979f4eab9",
+      "word": "さあ",
+      "reading": "さあ",
+      "romaji": "saa",
+      "category": "intj",
+      "vocab_id": "7ba7ba2434",
+      "examples": []
+    },
+    {
+      "id": "wc-e39c0c28968b",
+      "word": "よし",
+      "reading": "よし",
+      "romaji": "yoshi",
+      "category": "intj",
+      "examples": [
+        "よし、頑張るぞ！",
+        "よし、決めた！",
+        "よし、行こう！"
+      ]
+    },
+    {
+      "id": "wc-9ae1695b1afa",
+      "word": "まあ",
+      "reading": "まあ",
+      "romaji": "maa",
+      "category": "intj",
+      "vocab_id": "440279fbf1",
+      "examples": []
+    },
+    {
+      "id": "wc-15293e40fd74",
+      "word": "ます",
+      "reading": "ます",
+      "romaji": "masu",
+      "category": "aux",
+      "grammar_ids": [
+        "masu"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-fc471b9ff8c1",
+      "word": "です",
+      "reading": "です",
+      "romaji": "desu",
+      "category": "aux",
+      "grammar_ids": [
+        "desu"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-3b4da91ab35b",
+      "word": "ない",
+      "reading": "ない",
+      "romaji": "nai",
+      "category": "aux",
+      "grammar_ids": [
+        "nai"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-de1e67f678ae",
+      "word": "た",
+      "reading": "た",
+      "romaji": "ta",
+      "category": "aux",
+      "grammar_ids": [
+        "ta"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-570750ddc5e6",
+      "word": "〜たい",
+      "reading": "たい",
+      "romaji": "tai",
+      "category": "aux",
+      "grammar_ids": [
+        "tai"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-27a3a1b27366",
+      "word": "〜ている",
+      "reading": "ている",
+      "romaji": "te iru",
+      "category": "aux",
+      "grammar_ids": [
+        "te-iru"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-6b80f4fc472b",
+      "word": "〜られる",
+      "reading": "られる",
+      "romaji": "rareru",
+      "category": "aux",
+      "grammar_ids": [
+        "reru-rareru-passive",
+        "eru-rareru-potential"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-392d45dcb5af",
+      "word": "〜れる",
+      "reading": "れる",
+      "romaji": "reru",
+      "category": "aux",
+      "grammar_ids": [
+        "reru-rareru-passive"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-79a6547198ab",
+      "word": "〜させる",
+      "reading": "させる",
+      "romaji": "saseru",
+      "category": "aux",
+      "grammar_ids": [
+        "seru-saseru"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-dba2aaba5545",
+      "word": "〜そうだ",
+      "reading": "そうだ",
+      "romaji": "sou da",
+      "category": "aux",
+      "grammar_ids": [
+        "sou-da-appearance",
+        "sou-da-hearsay"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-fb20433071a7",
+      "word": "〜てしまう",
+      "reading": "てしまう",
+      "romaji": "te shimau",
+      "category": "aux",
+      "grammar_ids": [
+        "te-shimau-chau"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-fa8ceecb738e",
+      "word": "〜かもしれない",
+      "reading": "かもしれない",
+      "romaji": "kamo shirenai",
+      "category": "aux",
+      "grammar_ids": [
+        "kamo-shirenai"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-96b75a859f42",
+      "word": "〜でしょう",
+      "reading": "でしょう",
+      "romaji": "deshou",
+      "category": "aux",
+      "grammar_ids": [
+        "deshou"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-6fe5e7ac4df5",
+      "word": "〜ようだ",
+      "reading": "ようだ",
+      "romaji": "you da",
+      "category": "aux",
+      "grammar_ids": [
+        "you-da"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-2c6347e9c6f6",
+      "word": "は",
+      "reading": "は",
+      "romaji": "wa",
+      "category": "part",
+      "grammar_ids": [
+        "wa"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-a703a18823f1",
+      "word": "が",
+      "reading": "が",
+      "romaji": "ga",
+      "category": "part",
+      "grammar_ids": [
+        "ga-subject",
+        "ga-but"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-3d805e935e2b",
+      "word": "を",
+      "reading": "を",
+      "romaji": "wo",
+      "category": "part",
+      "grammar_ids": [
+        "o"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-778532937cd7",
+      "word": "に",
+      "reading": "に",
+      "romaji": "ni",
+      "category": "part",
+      "grammar_ids": [
+        "ni-destination",
+        "ni-time",
+        "ni-location",
+        "ni-indirect-object",
+        "ni-frequency"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-cdfc7c70f219",
+      "word": "で",
+      "reading": "で",
+      "romaji": "de",
+      "category": "part",
+      "grammar_ids": [
+        "de-place",
+        "de-means"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-3d00c99536b4",
+      "word": "の",
+      "reading": "の",
+      "romaji": "no",
+      "category": "part",
+      "grammar_ids": [
+        "no"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-1272979bd477",
+      "word": "と",
+      "reading": "と",
+      "romaji": "to",
+      "category": "part",
+      "grammar_ids": [
+        "to-and",
+        "to-with"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-724a53cf9ed3",
+      "word": "も",
+      "reading": "も",
+      "romaji": "mo",
+      "category": "part",
+      "grammar_ids": [
+        "mo"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-a08847ef36be",
+      "word": "か",
+      "reading": "か",
+      "romaji": "ka",
+      "category": "part",
+      "grammar_ids": [
+        "ka-question",
+        "ka-or"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-a0e3c709baf1",
+      "word": "ね",
+      "reading": "ね",
+      "romaji": "ne",
+      "category": "part",
+      "grammar_ids": [
+        "ne"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-d1020a6c01fd",
+      "word": "よ",
+      "reading": "よ",
+      "romaji": "yo",
+      "category": "part",
+      "grammar_ids": [
+        "yo"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-90f38aee9b78",
+      "word": "から",
+      "reading": "から",
+      "romaji": "kara",
+      "category": "part",
+      "grammar_ids": [
+        "kara-from",
+        "kara-reason"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-2b762733a331",
+      "word": "まで",
+      "reading": "まで",
+      "romaji": "made",
+      "category": "part",
+      "grammar_ids": [
+        "made"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-0b46232551fd",
+      "word": "より",
+      "reading": "より",
+      "romaji": "yori",
+      "category": "part",
+      "grammar_ids": [
+        "yori"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-ea8d42b17750",
+      "word": "だけ",
+      "reading": "だけ",
+      "romaji": "dake",
+      "category": "part",
+      "grammar_ids": [
+        "dake"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-bc8ee0a62135",
+      "word": "ながら",
+      "reading": "ながら",
+      "romaji": "nagara",
+      "category": "part",
+      "grammar_ids": [
+        "nagara"
+      ],
+      "examples": []
+    },
+    {
+      "id": "wc-8797884a9d0b",
+      "word": "ために",
+      "reading": "ために",
+      "romaji": "tame ni",
+      "category": "exp",
+      "grammar_ids": [
+        "tame-ni"
+      ],
+      "examples": []
+    }
+  ]
+}

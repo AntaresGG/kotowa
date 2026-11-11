@@ -18,6 +18,8 @@ import { DATA_DIR, LEVELS, ROOT, type Level } from './lib/util.ts';
 import type { Chinese } from '../src/index.ts';
 import { POS_SHORT } from './lib/pos.ts';
 import { messages, ui, uiAttr } from './lib/site-i18n.ts';
+import { buildLearningData } from './lib/learning.ts';
+import { learningPages, legacyMigrationPage, MODULE_TITLES } from './lib/learning-pages.ts';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -94,6 +96,17 @@ const vocabPaths = new Map<Vocab, string>();
 const vocabPath = (v: Vocab) => vocabPaths.get(v)!;
 const kanjiPath = (ch: string) => `kanji/${ch}.html`;
 const grammarPath = (g: Grammar) => `grammar/${g.id}.html`;
+const learningData = buildLearningData(allVocab, allGrammar, new Map(allVocab.map(v => [v.id, vocabPath(v)])));
+const lessonsByEntry = new Map<string, { module: keyof typeof MODULE_TITLES; id: string }[]>();
+for (const [module, rows] of Object.entries(learningData)) for (const row of rows) {
+  const keys = [...(row.vocab ? [`vocab:${row.vocab.id}`] : []), ...row.grammar.map(g => `grammar:${g.id}`)];
+  for (const key of keys) lessonsByEntry.set(key, [...(lessonsByEntry.get(key) ?? []), { module: module as keyof typeof MODULE_TITLES, id: row.id }]);
+}
+const lessonLinks = (kind: string, id: string, root: string) => {
+  const related = lessonsByEntry.get(`${kind}:${id}`);
+  return related ? `<h2>${ui('Practice in a lesson')}</h2><div class="chips">${related.map(row =>
+    `<a class="chip" href="${root}learn/${row.module}/#item=${encodeURIComponent(row.id)}">${ui(MODULE_TITLES[row.module])}</a>`).join('')}</div>` : '';
+};
 const absolute = (path: string) => SITE_URL + encodeURI(path.replace(/index\.html$/, ''));
 const isKanjiChar = (ch: string) => /[㐀-䶿一-鿿豈-﫿々]/.test(ch);
 const lvl = (l: Level) => `<span class="lvl ${l}">${l}</span>`;
@@ -169,7 +182,7 @@ export function furigana(word: string, reading: string): string {
 
 const NAV: [string, string][] = [
   ['n5/index.html', 'N5'], ['n4/index.html', 'N4'], ['n3/index.html', 'N3'], ['n2/index.html', 'N2'], ['n1/index.html', 'N1'],
-  ['flashcards.html', 'Flashcards'], ['analyzer.html', 'Analyzer'], ['data.html', 'Data'],
+  ['learn/index.html', 'Foundations'], ['flashcards.html', 'Flashcards'], ['analyzer.html', 'Analyzer'], ['data.html', 'Data'],
 ];
 
 const GITHUB_ICON = `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
@@ -181,6 +194,7 @@ interface Page {
   body: string;
   active?: string;
   scripts?: string[];
+  styles?: string[];
   noindex?: boolean;
 }
 
@@ -190,6 +204,8 @@ const scriptVersions = new Map<string, string>();
 /** Shared receiver faceplate; readings come from the dataset or the active flashcard deck. */
 function silverReceiver(root: string, path: string): string {
   const flashcards = path === 'flashcards.html';
+  const lesson = /^learn\/(kana|verbs|word-classes)\//.test(path);
+  const dynamic = flashcards || lesson;
   const meter = (id: string, label: string, subtitle: string, value: number, maximum: number) => {
     const point = (angle: number, radius: number) => {
       const radians = angle * Math.PI / 180;
@@ -205,9 +221,9 @@ function silverReceiver(root: string, path: string): string {
       return `<text x="${x}" y="${y}" text-anchor="middle">${maximum * i / 5}</text>`;
     }).join('');
     return `<div class="se-meter-unit">
-<div class="se-meter" id="${id}" role="meter" aria-labelledby="${id}-label" aria-valuemin="0" aria-valuemax="${maximum}"${flashcards ? ' aria-valuetext="Loading deck…" data-i18n-aria-valuetext="Loading deck…"' : ` aria-valuenow="${value}"`} data-reading="${flashcards ? '' : value}" style="--needle-angle:${flashcards ? -55 : -55 + value / maximum * 110}deg">
-<svg viewBox="0 0 240 152" aria-hidden="true" focusable="false"><path d="M28.25 81.76 A112 112 0 0 1 211.75 81.76" class="se-meter-arc"/><g class="se-meter-ticks">${ticks}</g><g class="se-meter-numbers">${numbers}</g><text x="120" y="104" text-anchor="middle" class="se-meter-title" data-i18n="${esc(subtitle)}">${subtitle}</text><text x="120" y="120" text-anchor="middle" class="se-meter-subtitle" data-i18n="${flashcards ? 'PROGRESS / %' : 'COLLECTION / COUNT'}">${flashcards ? 'PROGRESS / %' : 'COLLECTION / COUNT'}</text><line x1="120" y1="146" x2="120" y2="37" class="se-needle"/><circle cx="120" cy="146" r="6" class="se-pivot"/></svg>
-</div><div class="se-meter-caption"><span id="${id}-label">${ui(label)}</span><output>${flashcards ? '—' : value.toLocaleString('en-US')}</output></div></div>`;
+<div class="se-meter" id="${id}" role="meter" aria-labelledby="${id}-label" aria-valuemin="0" aria-valuemax="${maximum}"${dynamic ? ' aria-valuetext="Loading…" data-i18n-aria-valuetext="Loading…"' : ` aria-valuenow="${value}"`} data-reading="${dynamic ? '' : value}" style="--needle-angle:${dynamic ? -55 : -55 + value / maximum * 110}deg">
+<svg viewBox="0 0 240 152" aria-hidden="true" focusable="false"><path d="M28.25 81.76 A112 112 0 0 1 211.75 81.76" class="se-meter-arc"/><g class="se-meter-ticks">${ticks}</g><g class="se-meter-numbers">${numbers}</g><text x="120" y="104" text-anchor="middle" class="se-meter-title" data-i18n="${esc(subtitle)}">${subtitle}</text><text x="120" y="120" text-anchor="middle" class="se-meter-subtitle" data-i18n="${dynamic ? 'PROGRESS / %' : 'COLLECTION / COUNT'}">${dynamic ? 'PROGRESS / %' : 'COLLECTION / COUNT'}</text><line x1="120" y1="146" x2="120" y2="37" class="se-needle"/><circle cx="120" cy="146" r="6" class="se-pivot"/></svg>
+</div><div class="se-meter-caption"><span id="${id}-label">${ui(label)}</span><output>${dynamic ? '—' : value.toLocaleString('en-US')}</output></div></div>`;
   };
   const c = meta.counts;
   const vocabularyMax = Math.ceil(c.vocab.total / 5000) * 5000;
@@ -220,7 +236,7 @@ function silverReceiver(root: string, path: string): string {
 <label class="se-dial" for="se-text-size"><span class="se-label">${ui("Text size")}</span><span class="se-dial-scale"><span class="se-knob" aria-hidden="true"></span><input id="se-text-size" type="range" min="0" max="2" step="1" value="1" ${uiAttr("aria-label", "Reading text size")} ${uiAttr("aria-valuetext", "Standard")}></span><output id="se-size-label" for="se-text-size">${ui("Standard")}</output></label>
 <label class="se-furigana"><span class="se-label">${ui("Furigana")}</span><span class="se-toggle"><input type="checkbox" data-furigana ${uiAttr("aria-label", "Show furigana")} checked><span class="se-toggle-lever" aria-hidden="true"></span></span><span class="se-toggle-caption"><i class="se-lamp" aria-hidden="true"></i><span>${ui("FURIGANA")}</span></span></label>
 </div></div>
-<div class="se-meter-pair" id="se-meters" aria-busy="${flashcards}">${meter('se-meter-left', flashcards ? 'Studied · this deck' : 'Vocabulary collection', flashcards ? 'STUDIED' : 'WORDS', c.vocab.total, flashcards ? 100 : vocabularyMax)}${meter('se-meter-right', flashcards ? 'This session' : 'Kanji collection', flashcards ? 'SESSION' : 'KANJI', c.kanji.total, flashcards ? 100 : kanjiMax)}</div>
+<div class="se-meter-pair" id="se-meters" aria-busy="${dynamic}">${meter('se-meter-left', lesson ? 'Studied · this lesson' : flashcards ? 'Studied · this deck' : 'Vocabulary collection', dynamic ? 'STUDIED' : 'WORDS', c.vocab.total, dynamic ? 100 : vocabularyMax)}${meter('se-meter-right', lesson ? 'Quiz accuracy' : flashcards ? 'This session' : 'Kanji collection', lesson ? 'QUIZ' : flashcards ? 'SESSION' : 'KANJI', c.kanji.total, dynamic ? 100 : kanjiMax)}</div>
 <div class="se-source"><span class="se-label">${ui("SOURCE SELECTOR")}</span><div class="se-source-keys"><a href="${root}index.html"${path === 'index.html' ? ' aria-current="page"' : ''}>${ui("Dictionary")}</a><a href="${root}flashcards.html"${flashcards ? ' aria-current="page"' : ''}>${ui("Flashcards")}</a><a href="${root}analyzer.html"${path === 'analyzer.html' ? ' aria-current="page"' : ''}>${ui("Analyze")}</a></div><div class="se-counter"><span class="se-label">${ui("Grammar collection")}</span><output>${String(c.grammar.total).padStart(4, '0')}</output></div><span class="se-label se-serial">${ui("SILVER ERA")} · <span lang="ja">ことばを、少しずつ。</span></span></div>
 </div>
 <div class="se-tuner"><span class="se-label">${ui("JLPT BAND")}</span><div class="se-tuner-track">${LEVEL_NAMES.map((level) => `<a href="${root}${level.toLowerCase()}/index.html"${path.startsWith(level.toLowerCase() + '/') ? ' aria-current="page"' : ''}><i aria-hidden="true"></i>${level}</a>`).join('')}</div><span class="se-label">${ui("N5 BEGINNER → N1 ADVANCED")}</span></div>
@@ -239,6 +255,10 @@ function writePage(p: Page): void {
     const version = scriptVersions.get(s) ?? createHash('sha256').update(readFileSync(join(ROOT, 'site', s))).digest('hex').slice(0, 12);
     scriptVersions.set(s, version);
     return `<script src="${root}${s}?v=${version}" defer></script>`;
+  }).join('');
+  const styles = (p.styles ?? []).map(s => {
+    const version = createHash('sha256').update(readFileSync(join(ROOT, 'site', s))).digest('hex').slice(0, 12);
+    return `<link rel="stylesheet" href="${root}${s}?v=${version}">`;
   }).join('');
   const html = `<!doctype html>
 <html lang="en">
@@ -264,6 +284,7 @@ ${p.noindex ? '<meta name="robots" content="noindex">' : ''}
 <script src="${root}assets/theme.js?v=${THEME_VERSION}"></script>
 <link rel="stylesheet" href="${root}assets/style.css?v=${STYLE_VERSION}">
 <link rel="stylesheet" href="${root}assets/silver-era.css?v=${SILVER_VERSION}">
+${styles}
 ${scripts}
 </head>
 <body data-root="${root}"${p.path === 'flashcards.html' ? ' class="flashcard-page"' : ''}>
@@ -419,6 +440,7 @@ ${kanjiCards ? `<h2>${ui("Kanji")}</h2><div class="kanji-links">${kanjiCards}</d
 <p><a href="https://jisho.org/word/${encodeURIComponent(v.word)}" rel="noopener">Jisho</a>${
           v.jmdict_id ? ` · <a href="https://www.edrdg.org/jmwsgi/entry.py?svc=jmdict&amp;q=${v.jmdict_id}" rel="noopener">JMdict #${v.jmdict_id}</a>` : ''
         } · <a href="${reportUrl('Vocabulary', `${v.word} (${level})`)}" rel="noopener">${ui("Report an error")}</a></p>
+${lessonLinks('vocab', v.id, root)}
 </aside>
 </div>
 ${jsonBlock(v, `import { getVocabById } from 'kotowa';\ngetVocabById('${v.id}'); // ${v.word}`)}
@@ -502,6 +524,7 @@ ${exampleList(g.examples, g)}
 ${g.notes ? `<h2>${ui("Notes")}</h2><p class="note">${esc(g.notes)}</p>` : ''}
 <div class="chips">${g.tags.map((t) => `<span class="chip">#${esc(t)}</span>`).join('')}</div>
 ${related ? `<h2>${ui("Related {level} grammar", { level })}</h2><div class="chips">${related}</div>` : ''}
+${lessonLinks('grammar', g.id, root)}
 <p class="muted" style="margin-top:24px"><a href="${reportUrl('Grammar', `${g.pattern} (${level})`)}" rel="noopener">${ui("Suggest an improvement")}</a></p>
 ${jsonBlock(g, `import { getGrammarById } from 'kotowa';\ngetGrammarById('${g.id}');`)}
 ${pager(root, list[i - 1] && [grammarPath(list[i - 1]), list[i - 1].pattern], list[i + 1] && [grammarPath(list[i + 1]), list[i + 1].pattern])}`,
@@ -616,7 +639,7 @@ function homePage(): void {
 <div class="search" id="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
 <input id="q" type="search" ${uiAttr("placeholder", "Try 肥皂, eat, 食べる, taberu or てもいい")} autocomplete="off" ${uiAttr("aria-label", "Search words, kanji and grammar")}></div>
 <ul class="results" id="results" aria-live="polite"></ul>
-<div class="btn-row quick"><a class="btn" href="n5/index.html">${ui("📚 Start with N5")}</a><a class="btn" href="data.html#anki">${ui("🃏 Anki decks")}</a><a class="btn" href="analyzer.html">${ui("🔍 What level is this text?")}</a><a class="btn" href="flashcards.html">${ui("🔁 Flashcards")}</a></div>
+<div class="btn-row quick"><a class="btn" href="learn/index.html">${ui("Foundations")}</a><a class="btn" href="n5/index.html">${ui("📚 Start with N5")}</a><a class="btn" href="data.html#anki">${ui("🃏 Anki decks")}</a><a class="btn" href="analyzer.html">${ui("🔍 What level is this text?")}</a><a class="btn" href="flashcards.html">${ui("🔁 Flashcards")}</a></div>
 <p class="muted small">${ui("Levels follow")} <a href="https://www.tanos.co.uk/jlpt/" rel="noopener">${ui("Jonathan Waller's community lists")}</a>${ui("; the JLPT has not published official lists since 2010. Based on JMdict and reviewed source updates")}${updated ? ` · ${ui("data updated {date}", { date: updated })}` : ''}.</p>
 <div class="stats">
 <div class="stat"><b>${c.vocab.total.toLocaleString('en-US')}</b><span>${ui("words")}</span></div>
@@ -629,6 +652,7 @@ function homePage(): void {
 <div class="grid grid-5">${levelCards}</div>
 <h2>${ui("Study tools")}</h2>
 <div class="grid grid-3">
+<a class="card level-card" href="learn/index.html"><h3 style="margin-top:0">${ui("Foundations")}</h3><p class="muted">${ui("Start with kana, build word and grammar skills, then review with flashcards.")}</p></a>
 <a class="card level-card" href="flashcards.html"><h3 style="margin-top:0">${ui("🃏 Flashcards")}</h3><p class="muted">${ui("Spaced-repetition review for any level — words, kanji or grammar. Progress saves in your browser.")}</p></a>
 <a class="card level-card" href="analyzer.html"><h3 style="margin-top:0">${ui("🔍 Text analyzer")}</h3><p class="muted">${ui("Paste any Japanese text and see which JLPT level each kanji belongs to.")}</p></a>
 <a class="card level-card" href="data.html"><h3 style="margin-top:0">${ui("📦 Data & API")}</h3><p class="muted">${ui("JSON, CSV, SQLite and Anki downloads, a CDN, and loaders for JavaScript and Python.")}</p></a>
@@ -881,6 +905,19 @@ vocabPages();
 kanjiPages();
 grammarPages();
 toolPages();
+const legacyOrigins = (process.env.LEARNING_LEGACY_ORIGINS ?? '').split(',').filter(Boolean).map(value => {
+  const url = new URL(value.trim());
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
+    throw new Error('LEARNING_LEGACY_ORIGINS must contain HTTP(S) origins only');
+  }
+  return url.origin;
+});
+for (const page of learningPages([...new Set(legacyOrigins)])) writePage(page);
+mkdirSync(join(OUT, 'legacy-migration'), { recursive: true });
+writeFileSync(join(OUT, 'legacy-migration/index.html'), legacyMigrationPage(SITE_URL));
 writeData();
+for (const [module, entries] of Object.entries(learningData)) {
+  writeFileSync(join(OUT, 'data', `learn-${module}.json`), JSON.stringify(entries));
+}
 writeSeo();
 console.log(`Site: ${pages.length} pages -> ${OUT}`);

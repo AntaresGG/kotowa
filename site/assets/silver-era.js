@@ -3,6 +3,7 @@
   'use strict';
   var t = KotowaI18n.t;
   var lastStudy = null;
+  var lastLesson = null;
   var root = document.documentElement;
   var meters = ['se-meter-left', 'se-meter-right'].map(function (id) { return document.getElementById(id); });
   var readings = new Map();
@@ -108,10 +109,31 @@
     lastStudy = event.detail;
     renderStudy(lastStudy);
   });
+  function renderLesson(data) {
+    document.getElementById('se-meters').setAttribute('aria-busy', 'false');
+    var left = data.total ? data.studied / data.total * 100 : 0;
+    reading(meters[0], left, data.title + ':' + data.studied + '/' + data.total,
+      t('{done} / {total} studied', { done: data.studied, total: data.total }));
+    if (data.answered) reading(meters[1], data.correct / data.answered * 100,
+      data.title + ':' + data.correct + '/' + data.answered,
+      t('{correct} / {answered} correct', data));
+    else {
+      meters[1].removeAttribute('aria-valuenow');
+      meters[1].setAttribute('aria-valuetext', t('No quiz answers yet.'));
+      meters[1].parentElement.querySelector('output').textContent = '—';
+      meters[1].dataset.reading = '';
+      readings.delete(meters[1].id);
+      sweep(meters[1], -55, false);
+    }
+    context.removeAttribute('data-i18n');
+    context.textContent = t(data.title) + ' · ' + t('{count} items', { count: data.total });
+  }
+  document.addEventListener('kotowa:lesson', function (event) { lastLesson = event.detail; renderLesson(lastLesson); });
   document.addEventListener('kotowa:language', function () {
     setSize(size.value);
     KotowaI18n.text(panelToggle, panel.hidden ? 'Expand panel' : 'Collapse panel');
     if (lastStudy) renderStudy(lastStudy);
+    if (lastLesson) renderLesson(lastLesson);
   });
   function enterTheme() {
     if (root.dataset.appearance !== 'silver-era' || panel.hidden) {

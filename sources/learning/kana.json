@@ -1,0 +1,1045 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "あ",
+      "word": "あ",
+      "reading": "あ",
+      "romaji": "a",
+      "category": "basic",
+      "hira": "あ",
+      "kata": "ア",
+      "row": "ア行"
+    },
+    {
+      "id": "い",
+      "word": "い",
+      "reading": "い",
+      "romaji": "i",
+      "category": "basic",
+      "hira": "い",
+      "kata": "イ",
+      "row": "ア行"
+    },
+    {
+      "id": "う",
+      "word": "う",
+      "reading": "う",
+      "romaji": "u",
+      "category": "basic",
+      "hira": "う",
+      "kata": "ウ",
+      "row": "ア行"
+    },
+    {
+      "id": "え",
+      "word": "え",
+      "reading": "え",
+      "romaji": "e",
+      "category": "basic",
+      "hira": "え",
+      "kata": "エ",
+      "row": "ア行"
+    },
+    {
+      "id": "お",
+      "word": "お",
+      "reading": "お",
+      "romaji": "o",
+      "category": "basic",
+      "hira": "お",
+      "kata": "オ",
+      "row": "ア行"
+    },
+    {
+      "id": "か",
+      "word": "か",
+      "reading": "か",
+      "romaji": "ka",
+      "category": "basic",
+      "hira": "か",
+      "kata": "カ",
+      "row": "カ行"
+    },
+    {
+      "id": "き",
+      "word": "き",
+      "reading": "き",
+      "romaji": "ki",
+      "category": "basic",
+      "hira": "き",
+      "kata": "キ",
+      "row": "カ行"
+    },
+    {
+      "id": "く",
+      "word": "く",
+      "reading": "く",
+      "romaji": "ku",
+      "category": "basic",
+      "hira": "く",
+      "kata": "ク",
+      "row": "カ行"
+    },
+    {
+      "id": "け",
+      "word": "け",
+      "reading": "け",
+      "romaji": "ke",
+      "category": "basic",
+      "hira": "け",
+      "kata": "ケ",
+      "row": "カ行"
+    },
+    {
+      "id": "こ",
+      "word": "こ",
+      "reading": "こ",
+      "romaji": "ko",
+      "category": "basic",
+      "hira": "こ",
+      "kata": "コ",
+      "row": "カ行"
+    },
+    {
+      "id": "さ",
+      "word": "さ",
+      "reading": "さ",
+      "romaji": "sa",
+      "category": "basic",
+      "hira": "さ",
+      "kata": "サ",
+      "row": "サ行"
+    },
+    {
+      "id": "し",
+      "word": "し",
+      "reading": "し",
+      "romaji": "shi",
+      "category": "basic",
+      "hira": "し",
+      "kata": "シ",
+      "row": "サ行"
+    },
+    {
+      "id": "す",
+      "word": "す",
+      "reading": "す",
+      "romaji": "su",
+      "category": "basic",
+      "hira": "す",
+      "kata": "ス",
+      "row": "サ行"
+    },
+    {
+      "id": "せ",
+      "word": "せ",
+      "reading": "せ",
+      "romaji": "se",
+      "category": "basic",
+      "hira": "せ",
+      "kata": "セ",
+      "row": "サ行"
+    },
+    {
+      "id": "そ",
+      "word": "そ",
+      "reading": "そ",
+      "romaji": "so",
+      "category": "basic",
+      "hira": "そ",
+      "kata": "ソ",
+      "row": "サ行"
+    },
+    {
+      "id": "た",
+      "word": "た",
+      "reading": "た",
+      "romaji": "ta",
+      "category": "basic",
+      "hira": "た",
+      "kata": "タ",
+      "row": "タ行"
+    },
+    {
+      "id": "ち",
+      "word": "ち",
+      "reading": "ち",
+      "romaji": "chi",
+      "category": "basic",
+      "hira": "ち",
+      "kata": "チ",
+      "row": "タ行"
+    },
+    {
+      "id": "つ",
+      "word": "つ",
+      "reading": "つ",
+      "romaji": "tsu",
+      "category": "basic",
+      "hira": "つ",
+      "kata": "ツ",
+      "row": "タ行"
+    },
+    {
+      "id": "て",
+      "word": "て",
+      "reading": "て",
+      "romaji": "te",
+      "category": "basic",
+      "hira": "て",
+      "kata": "テ",
+      "row": "タ行"
+    },
+    {
+      "id": "と",
+      "word": "と",
+      "reading": "と",
+      "romaji": "to",
+      "category": "basic",
+      "hira": "と",
+      "kata": "ト",
+      "row": "タ行"
+    },
+    {
+      "id": "な",
+      "word": "な",
+      "reading": "な",
+      "romaji": "na",
+      "category": "basic",
+      "hira": "な",
+      "kata": "ナ",
+      "row": "ナ行"
+    },
+    {
+      "id": "に",
+      "word": "に",
+      "reading": "に",
+      "romaji": "ni",
+      "category": "basic",
+      "hira": "に",
+      "kata": "ニ",
+      "row": "ナ行"
+    },
+    {
+      "id": "ぬ",
+      "word": "ぬ",
+      "reading": "ぬ",
+      "romaji": "nu",
+      "category": "basic",
+      "hira": "ぬ",
+      "kata": "ヌ",
+      "row": "ナ行"
+    },
+    {
+      "id": "ね",
+      "word": "ね",
+      "reading": "ね",
+      "romaji": "ne",
+      "category": "basic",
+      "hira": "ね",
+      "kata": "ネ",
+      "row": "ナ行"
+    },
+    {
+      "id": "の",
+      "word": "の",
+      "reading": "の",
+      "romaji": "no",
+      "category": "basic",
+      "hira": "の",
+      "kata": "ノ",
+      "row": "ナ行"
+    },
+    {
+      "id": "は",
+      "word": "は",
+      "reading": "は",
+      "romaji": "ha",
+      "category": "basic",
+      "hira": "は",
+      "kata": "ハ",
+      "row": "ハ行"
+    },
+    {
+      "id": "ひ",
+      "word": "ひ",
+      "reading": "ひ",
+      "romaji": "hi",
+      "category": "basic",
+      "hira": "ひ",
+      "kata": "ヒ",
+      "row": "ハ行"
+    },
+    {
+      "id": "ふ",
+      "word": "ふ",
+      "reading": "ふ",
+      "romaji": "fu",
+      "category": "basic",
+      "hira": "ふ",
+      "kata": "フ",
+      "row": "ハ行"
+    },
+    {
+      "id": "へ",
+      "word": "へ",
+      "reading": "へ",
+      "romaji": "he",
+      "category": "basic",
+      "hira": "へ",
+      "kata": "ヘ",
+      "row": "ハ行"
+    },
+    {
+      "id": "ほ",
+      "word": "ほ",
+      "reading": "ほ",
+      "romaji": "ho",
+      "category": "basic",
+      "hira": "ほ",
+      "kata": "ホ",
+      "row": "ハ行"
+    },
+    {
+      "id": "ま",
+      "word": "ま",
+      "reading": "ま",
+      "romaji": "ma",
+      "category": "basic",
+      "hira": "ま",
+      "kata": "マ",
+      "row": "マ行"
+    },
+    {
+      "id": "み",
+      "word": "み",
+      "reading": "み",
+      "romaji": "mi",
+      "category": "basic",
+      "hira": "み",
+      "kata": "ミ",
+      "row": "マ行"
+    },
+    {
+      "id": "む",
+      "word": "む",
+      "reading": "む",
+      "romaji": "mu",
+      "category": "basic",
+      "hira": "む",
+      "kata": "ム",
+      "row": "マ行"
+    },
+    {
+      "id": "め",
+      "word": "め",
+      "reading": "め",
+      "romaji": "me",
+      "category": "basic",
+      "hira": "め",
+      "kata": "メ",
+      "row": "マ行"
+    },
+    {
+      "id": "も",
+      "word": "も",
+      "reading": "も",
+      "romaji": "mo",
+      "category": "basic",
+      "hira": "も",
+      "kata": "モ",
+      "row": "マ行"
+    },
+    {
+      "id": "や",
+      "word": "や",
+      "reading": "や",
+      "romaji": "ya",
+      "category": "basic",
+      "hira": "や",
+      "kata": "ヤ",
+      "row": "ヤ行"
+    },
+    {
+      "id": "ゆ",
+      "word": "ゆ",
+      "reading": "ゆ",
+      "romaji": "yu",
+      "category": "basic",
+      "hira": "ゆ",
+      "kata": "ユ",
+      "row": "ヤ行"
+    },
+    {
+      "id": "よ",
+      "word": "よ",
+      "reading": "よ",
+      "romaji": "yo",
+      "category": "basic",
+      "hira": "よ",
+      "kata": "ヨ",
+      "row": "ヤ行"
+    },
+    {
+      "id": "ら",
+      "word": "ら",
+      "reading": "ら",
+      "romaji": "ra",
+      "category": "basic",
+      "hira": "ら",
+      "kata": "ラ",
+      "row": "ラ行"
+    },
+    {
+      "id": "り",
+      "word": "り",
+      "reading": "り",
+      "romaji": "ri",
+      "category": "basic",
+      "hira": "り",
+      "kata": "リ",
+      "row": "ラ行"
+    },
+    {
+      "id": "る",
+      "word": "る",
+      "reading": "る",
+      "romaji": "ru",
+      "category": "basic",
+      "hira": "る",
+      "kata": "ル",
+      "row": "ラ行"
+    },
+    {
+      "id": "れ",
+      "word": "れ",
+      "reading": "れ",
+      "romaji": "re",
+      "category": "basic",
+      "hira": "れ",
+      "kata": "レ",
+      "row": "ラ行"
+    },
+    {
+      "id": "ろ",
+      "word": "ろ",
+      "reading": "ろ",
+      "romaji": "ro",
+      "category": "basic",
+      "hira": "ろ",
+      "kata": "ロ",
+      "row": "ラ行"
+    },
+    {
+      "id": "わ",
+      "word": "わ",
+      "reading": "わ",
+      "romaji": "wa",
+      "category": "basic",
+      "hira": "わ",
+      "kata": "ワ",
+      "row": "ワ行"
+    },
+    {
+      "id": "を",
+      "word": "を",
+      "reading": "を",
+      "romaji": "o",
+      "category": "basic",
+      "hira": "を",
+      "kata": "ヲ",
+      "row": "ワ行"
+    },
+    {
+      "id": "ん",
+      "word": "ん",
+      "reading": "ん",
+      "romaji": "n",
+      "category": "basic",
+      "hira": "ん",
+      "kata": "ン",
+      "row": "ン"
+    },
+    {
+      "id": "が",
+      "word": "が",
+      "reading": "が",
+      "romaji": "ga",
+      "category": "voiced",
+      "hira": "が",
+      "kata": "ガ",
+      "row": "ガ行"
+    },
+    {
+      "id": "ぎ",
+      "word": "ぎ",
+      "reading": "ぎ",
+      "romaji": "gi",
+      "category": "voiced",
+      "hira": "ぎ",
+      "kata": "ギ",
+      "row": "ガ行"
+    },
+    {
+      "id": "ぐ",
+      "word": "ぐ",
+      "reading": "ぐ",
+      "romaji": "gu",
+      "category": "voiced",
+      "hira": "ぐ",
+      "kata": "グ",
+      "row": "ガ行"
+    },
+    {
+      "id": "げ",
+      "word": "げ",
+      "reading": "げ",
+      "romaji": "ge",
+      "category": "voiced",
+      "hira": "げ",
+      "kata": "ゲ",
+      "row": "ガ行"
+    },
+    {
+      "id": "ご",
+      "word": "ご",
+      "reading": "ご",
+      "romaji": "go",
+      "category": "voiced",
+      "hira": "ご",
+      "kata": "ゴ",
+      "row": "ガ行"
+    },
+    {
+      "id": "ざ",
+      "word": "ざ",
+      "reading": "ざ",
+      "romaji": "za",
+      "category": "voiced",
+      "hira": "ざ",
+      "kata": "ザ",
+      "row": "ザ行"
+    },
+    {
+      "id": "じ",
+      "word": "じ",
+      "reading": "じ",
+      "romaji": "ji",
+      "category": "voiced",
+      "hira": "じ",
+      "kata": "ジ",
+      "row": "ザ行"
+    },
+    {
+      "id": "ず",
+      "word": "ず",
+      "reading": "ず",
+      "romaji": "zu",
+      "category": "voiced",
+      "hira": "ず",
+      "kata": "ズ",
+      "row": "ザ行"
+    },
+    {
+      "id": "ぜ",
+      "word": "ぜ",
+      "reading": "ぜ",
+      "romaji": "ze",
+      "category": "voiced",
+      "hira": "ぜ",
+      "kata": "ゼ",
+      "row": "ザ行"
+    },
+    {
+      "id": "ぞ",
+      "word": "ぞ",
+      "reading": "ぞ",
+      "romaji": "zo",
+      "category": "voiced",
+      "hira": "ぞ",
+      "kata": "ゾ",
+      "row": "ザ行"
+    },
+    {
+      "id": "だ",
+      "word": "だ",
+      "reading": "だ",
+      "romaji": "da",
+      "category": "voiced",
+      "hira": "だ",
+      "kata": "ダ",
+      "row": "ダ行"
+    },
+    {
+      "id": "ぢ",
+      "word": "ぢ",
+      "reading": "ぢ",
+      "romaji": "ji",
+      "category": "voiced",
+      "hira": "ぢ",
+      "kata": "ヂ",
+      "row": "ダ行"
+    },
+    {
+      "id": "づ",
+      "word": "づ",
+      "reading": "づ",
+      "romaji": "zu",
+      "category": "voiced",
+      "hira": "づ",
+      "kata": "ヅ",
+      "row": "ダ行"
+    },
+    {
+      "id": "で",
+      "word": "で",
+      "reading": "で",
+      "romaji": "de",
+      "category": "voiced",
+      "hira": "で",
+      "kata": "デ",
+      "row": "ダ行"
+    },
+    {
+      "id": "ど",
+      "word": "ど",
+      "reading": "ど",
+      "romaji": "do",
+      "category": "voiced",
+      "hira": "ど",
+      "kata": "ド",
+      "row": "ダ行"
+    },
+    {
+      "id": "ば",
+      "word": "ば",
+      "reading": "ば",
+      "romaji": "ba",
+      "category": "voiced",
+      "hira": "ば",
+      "kata": "バ",
+      "row": "バ行"
+    },
+    {
+      "id": "び",
+      "word": "び",
+      "reading": "び",
+      "romaji": "bi",
+      "category": "voiced",
+      "hira": "び",
+      "kata": "ビ",
+      "row": "バ行"
+    },
+    {
+      "id": "ぶ",
+      "word": "ぶ",
+      "reading": "ぶ",
+      "romaji": "bu",
+      "category": "voiced",
+      "hira": "ぶ",
+      "kata": "ブ",
+      "row": "バ行"
+    },
+    {
+      "id": "べ",
+      "word": "べ",
+      "reading": "べ",
+      "romaji": "be",
+      "category": "voiced",
+      "hira": "べ",
+      "kata": "ベ",
+      "row": "バ行"
+    },
+    {
+      "id": "ぼ",
+      "word": "ぼ",
+      "reading": "ぼ",
+      "romaji": "bo",
+      "category": "voiced",
+      "hira": "ぼ",
+      "kata": "ボ",
+      "row": "バ行"
+    },
+    {
+      "id": "ぱ",
+      "word": "ぱ",
+      "reading": "ぱ",
+      "romaji": "pa",
+      "category": "semivoiced",
+      "hira": "ぱ",
+      "kata": "パ",
+      "row": "パ行"
+    },
+    {
+      "id": "ぴ",
+      "word": "ぴ",
+      "reading": "ぴ",
+      "romaji": "pi",
+      "category": "semivoiced",
+      "hira": "ぴ",
+      "kata": "ピ",
+      "row": "パ行"
+    },
+    {
+      "id": "ぷ",
+      "word": "ぷ",
+      "reading": "ぷ",
+      "romaji": "pu",
+      "category": "semivoiced",
+      "hira": "ぷ",
+      "kata": "プ",
+      "row": "パ行"
+    },
+    {
+      "id": "ぺ",
+      "word": "ぺ",
+      "reading": "ぺ",
+      "romaji": "pe",
+      "category": "semivoiced",
+      "hira": "ぺ",
+      "kata": "ペ",
+      "row": "パ行"
+    },
+    {
+      "id": "ぽ",
+      "word": "ぽ",
+      "reading": "ぽ",
+      "romaji": "po",
+      "category": "semivoiced",
+      "hira": "ぽ",
+      "kata": "ポ",
+      "row": "パ行"
+    },
+    {
+      "id": "きゃ",
+      "word": "きゃ",
+      "reading": "きゃ",
+      "romaji": "kya",
+      "category": "combinations",
+      "hira": "きゃ",
+      "kata": "キャ",
+      "row": "キャ行"
+    },
+    {
+      "id": "きゅ",
+      "word": "きゅ",
+      "reading": "きゅ",
+      "romaji": "kyu",
+      "category": "combinations",
+      "hira": "きゅ",
+      "kata": "キュ",
+      "row": "キャ行"
+    },
+    {
+      "id": "きょ",
+      "word": "きょ",
+      "reading": "きょ",
+      "romaji": "kyo",
+      "category": "combinations",
+      "hira": "きょ",
+      "kata": "キョ",
+      "row": "キャ行"
+    },
+    {
+      "id": "しゃ",
+      "word": "しゃ",
+      "reading": "しゃ",
+      "romaji": "sha",
+      "category": "combinations",
+      "hira": "しゃ",
+      "kata": "シャ",
+      "row": "シャ行"
+    },
+    {
+      "id": "しゅ",
+      "word": "しゅ",
+      "reading": "しゅ",
+      "romaji": "shu",
+      "category": "combinations",
+      "hira": "しゅ",
+      "kata": "シュ",
+      "row": "シャ行"
+    },
+    {
+      "id": "しょ",
+      "word": "しょ",
+      "reading": "しょ",
+      "romaji": "sho",
+      "category": "combinations",
+      "hira": "しょ",
+      "kata": "ショ",
+      "row": "シャ行"
+    },
+    {
+      "id": "ちゃ",
+      "word": "ちゃ",
+      "reading": "ちゃ",
+      "romaji": "cha",
+      "category": "combinations",
+      "hira": "ちゃ",
+      "kata": "チャ",
+      "row": "チャ行"
+    },
+    {
+      "id": "ちゅ",
+      "word": "ちゅ",
+      "reading": "ちゅ",
+      "romaji": "chu",
+      "category": "combinations",
+      "hira": "ちゅ",
+      "kata": "チュ",
+      "row": "チャ行"
+    },
+    {
+      "id": "ちょ",
+      "word": "ちょ",
+      "reading": "ちょ",
+      "romaji": "cho",
+      "category": "combinations",
+      "hira": "ちょ",
+      "kata": "チョ",
+      "row": "チャ行"
+    },
+    {
+      "id": "にゃ",
+      "word": "にゃ",
+      "reading": "にゃ",
+      "romaji": "nya",
+      "category": "combinations",
+      "hira": "にゃ",
+      "kata": "ニャ",
+      "row": "ニャ行"
+    },
+    {
+      "id": "にゅ",
+      "word": "にゅ",
+      "reading": "にゅ",
+      "romaji": "nyu",
+      "category": "combinations",
+      "hira": "にゅ",
+      "kata": "ニュ",
+      "row": "ニャ行"
+    },
+    {
+      "id": "にょ",
+      "word": "にょ",
+      "reading": "にょ",
+      "romaji": "nyo",
+      "category": "combinations",
+      "hira": "にょ",
+      "kata": "ニョ",
+      "row": "ニャ行"
+    },
+    {
+      "id": "ひゃ",
+      "word": "ひゃ",
+      "reading": "ひゃ",
+      "romaji": "hya",
+      "category": "combinations",
+      "hira": "ひゃ",
+      "kata": "ヒャ",
+      "row": "ヒャ行"
+    },
+    {
+      "id": "ひゅ",
+      "word": "ひゅ",
+      "reading": "ひゅ",
+      "romaji": "hyu",
+      "category": "combinations",
+      "hira": "ひゅ",
+      "kata": "ヒュ",
+      "row": "ヒャ行"
+    },
+    {
+      "id": "ひょ",
+      "word": "ひょ",
+      "reading": "ひょ",
+      "romaji": "hyo",
+      "category": "combinations",
+      "hira": "ひょ",
+      "kata": "ヒョ",
+      "row": "ヒャ行"
+    },
+    {
+      "id": "みゃ",
+      "word": "みゃ",
+      "reading": "みゃ",
+      "romaji": "mya",
+      "category": "combinations",
+      "hira": "みゃ",
+      "kata": "ミャ",
+      "row": "ミャ行"
+    },
+    {
+      "id": "みゅ",
+      "word": "みゅ",
+      "reading": "みゅ",
+      "romaji": "myu",
+      "category": "combinations",
+      "hira": "みゅ",
+      "kata": "ミュ",
+      "row": "ミャ行"
+    },
+    {
+      "id": "みょ",
+      "word": "みょ",
+      "reading": "みょ",
+      "romaji": "myo",
+      "category": "combinations",
+      "hira": "みょ",
+      "kata": "ミョ",
+      "row": "ミャ行"
+    },
+    {
+      "id": "りゃ",
+      "word": "りゃ",
+      "reading": "りゃ",
+      "romaji": "rya",
+      "category": "combinations",
+      "hira": "りゃ",
+      "kata": "リャ",
+      "row": "リャ行"
+    },
+    {
+      "id": "りゅ",
+      "word": "りゅ",
+      "reading": "りゅ",
+      "romaji": "ryu",
+      "category": "combinations",
+      "hira": "りゅ",
+      "kata": "リュ",
+      "row": "リャ行"
+    },
+    {
+      "id": "りょ",
+      "word": "りょ",
+      "reading": "りょ",
+      "romaji": "ryo",
+      "category": "combinations",
+      "hira": "りょ",
+      "kata": "リョ",
+      "row": "リャ行"
+    },
+    {
+      "id": "ぎゃ",
+      "word": "ぎゃ",
+      "reading": "ぎゃ",
+      "romaji": "gya",
+      "category": "combinations",
+      "hira": "ぎゃ",
+      "kata": "ギャ",
+      "row": "ギャ行"
+    },
+    {
+      "id": "ぎゅ",
+      "word": "ぎゅ",
+      "reading": "ぎゅ",
+      "romaji": "gyu",
+      "category": "combinations",
+      "hira": "ぎゅ",
+      "kata": "ギュ",
+      "row": "ギャ行"
+    },
+    {
+      "id": "ぎょ",
+      "word": "ぎょ",
+      "reading": "ぎょ",
+      "romaji": "gyo",
+      "category": "combinations",
+      "hira": "ぎょ",
+      "kata": "ギョ",
+      "row": "ギャ行"
+    },
+    {
+      "id": "じゃ",
+      "word": "じゃ",
+      "reading": "じゃ",
+      "romaji": "ja",
+      "category": "combinations",
+      "hira": "じゃ",
+      "kata": "ジャ",
+      "row": "ジャ行"
+    },
+    {
+      "id": "じゅ",
+      "word": "じゅ",
+      "reading": "じゅ",
+      "romaji": "ju",
+      "category": "combinations",
+      "hira": "じゅ",
+      "kata": "ジュ",
+      "row": "ジャ行"
+    },
+    {
+      "id": "じょ",
+      "word": "じょ",
+      "reading": "じょ",
+      "romaji": "jo",
+      "category": "combinations",
+      "hira": "じょ",
+      "kata": "ジョ",
+      "row": "ジャ行"
+    },
+    {
+      "id": "びゃ",
+      "word": "びゃ",
+      "reading": "びゃ",
+      "romaji": "bya",
+      "category": "combinations",
+      "hira": "びゃ",
+      "kata": "ビャ",
+      "row": "ビャ行"
+    },
+    {
+      "id": "びゅ",
+      "word": "びゅ",
+      "reading": "びゅ",
+      "romaji": "byu",
+      "category": "combinations",
+      "hira": "びゅ",
+      "kata": "ビュ",
+      "row": "ビャ行"
+    },
+    {
+      "id": "びょ",
+      "word": "びょ",
+      "reading": "びょ",
+      "romaji": "byo",
+      "category": "combinations",
+      "hira": "びょ",
+      "kata": "ビョ",
+      "row": "ビャ行"
+    },
+    {
+      "id": "ぴゃ",
+      "word": "ぴゃ",
+      "reading": "ぴゃ",
+      "romaji": "pya",
+      "category": "combinations",
+      "hira": "ぴゃ",
+      "kata": "ピャ",
+      "row": "ピャ行"
+    },
+    {
+      "id": "ぴゅ",
+      "word": "ぴゅ",
+      "reading": "ぴゅ",
+      "romaji": "pyu",
+      "category": "combinations",
+      "hira": "ぴゅ",
+      "kata": "ピュ",
+      "row": "ピャ行"
+    },
+    {
+      "id": "ぴょ",
+      "word": "ぴょ",
+      "reading": "ぴょ",
+      "romaji": "pyo",
+      "category": "combinations",
+      "hira": "ぴょ",
+      "kata": "ピョ",
+      "row": "ピャ行"
+    }
+  ]
+}

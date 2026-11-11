@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Integrate kana, verb conjugation and word-class lessons into Foundations with shared themes, bilingual controls, dictionary/grammar links and focused review. Reconcile legacy content against canonical Kotowa data; keep lesson progress and quiz totals separate from flashcard scheduling. Add repeatable cross-origin kana progress transfer, JSON backups and guarded Nginx redirects for the original three pages.
+
 - Fit the Silver Era desktop flashcard console to the viewport: align the wooden frame with the bottom edge, scale the receiver with available height, and give remaining space to the full-size study card. Keep the study toolbar and progress beside the card.
 
 - Separate flashcard browsing from self-ratings: Previous (←), Show (↑), Next (→) and Knew it (↓). Keep the full session available for browsing, restore its position after reload, and rate each card only once per session.

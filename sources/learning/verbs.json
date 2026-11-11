@@ -1,0 +1,2129 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "verb-456f4d040d48",
+      "word": "書く",
+      "reading": "かく",
+      "romaji": "kaku",
+      "category": "g1",
+      "vocab_id": "f7c7f35d9e",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-54993c80f536",
+      "word": "読む",
+      "reading": "よむ",
+      "romaji": "yomu",
+      "category": "g1",
+      "vocab_id": "eb7e675902",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c4347c7b09ff",
+      "word": "飲む",
+      "reading": "のむ",
+      "romaji": "nomu",
+      "category": "g1",
+      "vocab_id": "e0bcec9bd9",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-b07fcfa11e7b",
+      "word": "聞く",
+      "reading": "きく",
+      "romaji": "kiku",
+      "category": "g1",
+      "vocab_id": "dc19a213cd",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-7be966306524",
+      "word": "話す",
+      "reading": "はなす",
+      "romaji": "hanasu",
+      "category": "g1",
+      "vocab_id": "9d5bde24ec",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-a89d589c71a1",
+      "word": "行く",
+      "reading": "いく",
+      "romaji": "iku",
+      "category": "g1",
+      "vocab_id": "66e4692df7",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2a84072055ce",
+      "word": "買う",
+      "reading": "かう",
+      "romaji": "kau",
+      "category": "g1",
+      "vocab_id": "bdb125e5c6",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-058e2bc2f410",
+      "word": "会う",
+      "reading": "あう",
+      "romaji": "au",
+      "category": "g1",
+      "vocab_id": "ada066edfd",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-47cdf9333487",
+      "word": "帰る",
+      "reading": "かえる",
+      "romaji": "kaeru",
+      "category": "g1",
+      "vocab_id": "1d22f1d023",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-5b1dcdd4e9db",
+      "word": "待つ",
+      "reading": "まつ",
+      "romaji": "matsu",
+      "category": "g1",
+      "vocab_id": "6a39701228",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c5a834eb75bd",
+      "word": "分かる",
+      "reading": "わかる",
+      "romaji": "wakaru",
+      "category": "g1",
+      "vocab_id": "ecee43eb04",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2f684e2f16f9",
+      "word": "使う",
+      "reading": "つかう",
+      "romaji": "tsukau",
+      "category": "g1",
+      "vocab_id": "c88e0ba104",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-15088bc6abf0",
+      "word": "泳ぐ",
+      "reading": "およぐ",
+      "romaji": "oyogu",
+      "category": "g1",
+      "vocab_id": "3c5bb8f223",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-52c7b62ab5c0",
+      "word": "急ぐ",
+      "reading": "いそぐ",
+      "romaji": "isogu",
+      "category": "g1",
+      "vocab_id": "05b5de61ab",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-59bda800db68",
+      "word": "貸す",
+      "reading": "かす",
+      "romaji": "kasu",
+      "category": "g1",
+      "vocab_id": "1122cac409",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-0843d1e5b34f",
+      "word": "押す",
+      "reading": "おす",
+      "romaji": "osu",
+      "category": "g1",
+      "vocab_id": "ce8facdf69",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-a0de562ed36d",
+      "word": "引く",
+      "reading": "ひく",
+      "romaji": "hiku",
+      "category": "g1",
+      "vocab_id": "5b84039234",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-923536deb576",
+      "word": "歩く",
+      "reading": "あるく",
+      "romaji": "aruku",
+      "category": "g1",
+      "vocab_id": "55f3080ce4",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2d9db83fb443",
+      "word": "走る",
+      "reading": "はしる",
+      "romaji": "hashiru",
+      "category": "g1",
+      "vocab_id": "244e138920",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2c73d594a820",
+      "word": "乗る",
+      "reading": "のる",
+      "romaji": "noru",
+      "category": "g1",
+      "vocab_id": "822c5e11a6",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-94193013e1e5",
+      "word": "降る",
+      "reading": "ふる",
+      "romaji": "furu",
+      "category": "g1",
+      "vocab_id": "5791e248f1",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-cd3782cb8007",
+      "word": "始まる",
+      "reading": "はじまる",
+      "romaji": "hajimaru",
+      "category": "g1",
+      "vocab_id": "8fea1e3f3c",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-f199562c0b68",
+      "word": "終わる",
+      "reading": "おわる",
+      "romaji": "owaru",
+      "category": "g1",
+      "vocab_id": "d7960dc78d",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-dfb96876d558",
+      "word": "送る",
+      "reading": "おくる",
+      "romaji": "okuru",
+      "category": "g1",
+      "vocab_id": "af1dae5588",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c9ace7ee95b2",
+      "word": "作る",
+      "reading": "つくる",
+      "romaji": "tsukuru",
+      "category": "g1",
+      "vocab_id": "6e922a750e",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-dc51f6e0cd08",
+      "word": "撮る",
+      "reading": "とる",
+      "romaji": "toru",
+      "category": "g1",
+      "vocab_id": "4cc27797ba",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-e7f29ff53c7a",
+      "word": "泊まる",
+      "reading": "とまる",
+      "romaji": "tomaru",
+      "category": "g1",
+      "vocab_id": "1200266b8d",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-67b3588a0a8e",
+      "word": "思う",
+      "reading": "おもう",
+      "romaji": "omou",
+      "category": "g1",
+      "vocab_id": "bad913ed8f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-93e6e364dd18",
+      "word": "言う",
+      "reading": "いう",
+      "romaji": "iu",
+      "category": "g1",
+      "vocab_id": "ae0cc00f94",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-06f4bd7e4baf",
+      "word": "遊ぶ",
+      "reading": "あそぶ",
+      "romaji": "asobu",
+      "category": "g1",
+      "vocab_id": "2d55571300",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-561dad961046",
+      "word": "飛ぶ",
+      "reading": "とぶ",
+      "romaji": "tobu",
+      "category": "g1",
+      "vocab_id": "397b682fa7",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-dcef2e907c46",
+      "word": "洗う",
+      "reading": "あらう",
+      "romaji": "arau",
+      "category": "g1",
+      "vocab_id": "f8fa96946f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-80fc23dacf1f",
+      "word": "歌う",
+      "reading": "うたう",
+      "romaji": "utau",
+      "category": "g1",
+      "vocab_id": "3464318c23",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-d00f9fe9e73f",
+      "word": "笑う",
+      "reading": "わらう",
+      "romaji": "warau",
+      "category": "g1",
+      "vocab_id": "327c67b830",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-16b677bd7970",
+      "word": "泣く",
+      "reading": "なく",
+      "romaji": "naku",
+      "category": "g1",
+      "vocab_id": "a777a7ce62",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-6090b0e0ddd8",
+      "word": "弾く",
+      "reading": "ひく",
+      "romaji": "hiku2",
+      "category": "g1",
+      "vocab_id": "23911a0718",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-ad8c5b983b3b",
+      "word": "脱ぐ",
+      "reading": "ぬぐ",
+      "romaji": "nugu",
+      "category": "g1",
+      "vocab_id": "3af80b5b2a",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c6ed599878af",
+      "word": "直す",
+      "reading": "なおす",
+      "romaji": "naosu",
+      "category": "g1",
+      "vocab_id": "8b7b602246",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-99f1b9388a4c",
+      "word": "返す",
+      "reading": "かえす",
+      "romaji": "kaesu",
+      "category": "g1",
+      "vocab_id": "8ea4b03d7f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-f8b64dbde205",
+      "word": "落とす",
+      "reading": "おとす",
+      "romaji": "otosu",
+      "category": "g1",
+      "vocab_id": "f786333cf9",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-d7edc3bdc4bb",
+      "word": "頼む",
+      "reading": "たのむ",
+      "romaji": "tanomu",
+      "category": "g1",
+      "vocab_id": "7e9d38afeb",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2a21d293e2be",
+      "word": "叫ぶ",
+      "reading": "さけぶ",
+      "romaji": "sakebu",
+      "category": "g1",
+      "vocab_id": "af53cba50b",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-d7b943739234",
+      "word": "運ぶ",
+      "reading": "はこぶ",
+      "romaji": "hakobu",
+      "category": "g1",
+      "vocab_id": "2404bdfdb3",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-d0a5ec5c584f",
+      "word": "残る",
+      "reading": "のこる",
+      "romaji": "nokoru",
+      "category": "g1",
+      "vocab_id": "d7f56d8d34",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2cdbbc203812",
+      "word": "太る",
+      "reading": "ふとる",
+      "romaji": "futoru",
+      "category": "g1",
+      "vocab_id": "f6b676e45f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-dd12d549481b",
+      "word": "集まる",
+      "reading": "あつまる",
+      "romaji": "atsumaru",
+      "category": "g1",
+      "vocab_id": "8c98c01eff",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-cf0b44ba1b22",
+      "word": "困る",
+      "reading": "こまる",
+      "romaji": "komaru",
+      "category": "g1",
+      "vocab_id": "61994485cb",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-79d6b5f3ea24",
+      "word": "怒る",
+      "reading": "おこる",
+      "romaji": "okoru",
+      "category": "g1",
+      "vocab_id": "2e0f32c097",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-825098711c78",
+      "word": "喜ぶ",
+      "reading": "よろこぶ",
+      "romaji": "yorokobu",
+      "category": "g1",
+      "vocab_id": "82b0bf966f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-f336c383bdcf",
+      "word": "悩む",
+      "reading": "なやむ",
+      "romaji": "nayamu",
+      "category": "g1",
+      "vocab_id": "7f56822dfc",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-3e9fa9c1d0e0",
+      "word": "働く",
+      "reading": "はたらく",
+      "romaji": "hataraku",
+      "category": "g1",
+      "vocab_id": "9ea671262d",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-0434b1041008",
+      "word": "届く",
+      "reading": "とどく",
+      "romaji": "todoku",
+      "category": "g1",
+      "vocab_id": "37b92c0329",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-90d3227fbe67",
+      "word": "続く",
+      "reading": "つづく",
+      "romaji": "tsuzuku",
+      "category": "g1",
+      "vocab_id": "a1db204b87",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-62f8d0cd12b3",
+      "word": "動く",
+      "reading": "うごく",
+      "romaji": "ugoku",
+      "category": "g1",
+      "vocab_id": "e54d4fef93",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-91e42a161513",
+      "word": "起こる",
+      "reading": "おこる",
+      "romaji": "okoru2",
+      "category": "g1",
+      "vocab_id": "45aa3b4b69",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-d884148914cb",
+      "word": "変わる",
+      "reading": "かわる",
+      "romaji": "kawaru",
+      "category": "g1",
+      "vocab_id": "ec1bdccf03",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-bcef3cb36001",
+      "word": "助かる",
+      "reading": "たすかる",
+      "romaji": "tasukaru",
+      "category": "g1",
+      "vocab_id": "9cae12b7c2",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-0ee61ebaf762",
+      "word": "払う",
+      "reading": "はらう",
+      "romaji": "harau",
+      "category": "g1",
+      "vocab_id": "a6b7fa4afc",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2f81263c6a45",
+      "word": "磨く",
+      "reading": "みがく",
+      "romaji": "migaku",
+      "category": "g1",
+      "vocab_id": "7309a238e8",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-33cfb3672daf",
+      "word": "稼ぐ",
+      "reading": "かせぐ",
+      "romaji": "kasegu",
+      "category": "g1",
+      "vocab_id": "d45fe050fc",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-e37dc2481168",
+      "word": "呼ぶ",
+      "reading": "よぶ",
+      "romaji": "yobu",
+      "category": "g1",
+      "vocab_id": "76f05a0739",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-fecb9b3edec3",
+      "word": "選ぶ",
+      "reading": "えらぶ",
+      "romaji": "erabu",
+      "category": "g1",
+      "vocab_id": "60c9784974",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-d8922018ce26",
+      "word": "謝る",
+      "reading": "あやまる",
+      "romaji": "ayamaru",
+      "category": "g1",
+      "vocab_id": "1056f23586",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-a240d5be0f0f",
+      "word": "疑う",
+      "reading": "うたがう",
+      "romaji": "utagau",
+      "category": "g1",
+      "vocab_id": "60e8b7bc2b",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-49280d5af2b5",
+      "word": "誘う",
+      "reading": "さそう",
+      "romaji": "sasou",
+      "category": "g1",
+      "vocab_id": "5c39a99fa2",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-24fb72dc5bee",
+      "word": "向かう",
+      "reading": "むかう",
+      "romaji": "mukau",
+      "category": "g1",
+      "vocab_id": "6978e278b2",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-dd2734881a9b",
+      "word": "従う",
+      "reading": "したがう",
+      "romaji": "shitagau",
+      "category": "g1",
+      "vocab_id": "658adc9590",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-147206bf8c7e",
+      "word": "曲がる",
+      "reading": "まがる",
+      "romaji": "magaru",
+      "category": "g1",
+      "vocab_id": "ae3e0a705f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-1b9eb0abc1b0",
+      "word": "測る",
+      "reading": "はかる",
+      "romaji": "hakaru",
+      "category": "g1",
+      "vocab_id": "ae280779f0",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-5c6c15935352",
+      "word": "届ける",
+      "reading": "とどける",
+      "romaji": "todokeru",
+      "category": "g2",
+      "vocab_id": "bc1e0c2895",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-2614c10845f0",
+      "word": "拾う",
+      "reading": "ひろう",
+      "romaji": "hirou",
+      "category": "g1",
+      "vocab_id": "a441432c8a",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-5f31165e10d4",
+      "word": "叩く",
+      "reading": "たたく",
+      "romaji": "tataku",
+      "category": "g1",
+      "vocab_id": "44d064efd7",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-bd2ac3a567df",
+      "word": "輝く",
+      "reading": "かがやく",
+      "romaji": "kagayaku",
+      "category": "g1",
+      "vocab_id": "b3f81ac90b",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-2cb8bd7a48fc",
+      "word": "断る",
+      "reading": "ことわる",
+      "romaji": "kotowaru",
+      "category": "g1",
+      "vocab_id": "6cd948ec5d",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-1df4e28a64b4",
+      "word": "迷う",
+      "reading": "まよう",
+      "romaji": "mayou",
+      "category": "g1",
+      "group": "g1",
+      "examples": [
+        "道に迷います。",
+        "どちらにするか迷った。",
+        "迷わず決めよう。"
+      ]
+    },
+    {
+      "id": "verb-aaf330b1fbef",
+      "word": "騒ぐ",
+      "reading": "さわぐ",
+      "romaji": "sawagu",
+      "category": "g1",
+      "vocab_id": "5afe333d1c",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c264dab75e94",
+      "word": "驚く",
+      "reading": "おどろく",
+      "romaji": "odoroku",
+      "category": "g1",
+      "vocab_id": "6d69734463",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-ca1fd54e9fcb",
+      "word": "咲く",
+      "reading": "さく",
+      "romaji": "saku",
+      "category": "g1",
+      "vocab_id": "4c39babf5f",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-13e6e4196871",
+      "word": "進む",
+      "reading": "すすむ",
+      "romaji": "susumu",
+      "category": "g1",
+      "vocab_id": "5c8702fe01",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c1650c6c2bf7",
+      "word": "戻る",
+      "reading": "もどる",
+      "romaji": "modoru",
+      "category": "g1",
+      "vocab_id": "c858640672",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-ae6ff17a2775",
+      "word": "踊る",
+      "reading": "おどる",
+      "romaji": "odoru",
+      "category": "g1",
+      "vocab_id": "3280103eb8",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-20edc822a18d",
+      "word": "迫る",
+      "reading": "せまる",
+      "romaji": "semaru",
+      "category": "g1",
+      "vocab_id": "102e6b2f3d",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-402e5669e52b",
+      "word": "裏切る",
+      "reading": "うらぎる",
+      "romaji": "uragiru",
+      "category": "g1",
+      "vocab_id": "5d48460042",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-389b93c10cec",
+      "word": "積み重ねる",
+      "reading": "つみかさねる",
+      "romaji": "tsumikasaneru",
+      "category": "g2",
+      "group": "g2",
+      "examples": [
+        "経験を積み重ねます。",
+        "日々の努力を積み重ねた。",
+        "一歩一歩積み重ねよう。"
+      ]
+    },
+    {
+      "id": "verb-ea9406b71388",
+      "word": "近づく",
+      "reading": "ちかづく",
+      "romaji": "chikazuku",
+      "category": "g1",
+      "vocab_id": "2aa5332b10",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-fe85c158c3d4",
+      "word": "扱う",
+      "reading": "あつかう",
+      "romaji": "atsukau",
+      "category": "g1",
+      "vocab_id": "c0dfcb262d",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c5db6204bc9c",
+      "word": "食べる",
+      "reading": "たべる",
+      "romaji": "taberu",
+      "category": "g2",
+      "vocab_id": "86f67e2dc3",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-bd3882285d63",
+      "word": "見る",
+      "reading": "みる",
+      "romaji": "miru",
+      "category": "g2",
+      "vocab_id": "85b37b6884",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-f881a4e50dda",
+      "word": "起きる",
+      "reading": "おきる",
+      "romaji": "okiru",
+      "category": "g2",
+      "vocab_id": "248a353e09",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-f1c399a48a28",
+      "word": "寝る",
+      "reading": "ねる",
+      "romaji": "neru",
+      "category": "g2",
+      "vocab_id": "0c6e923ef9",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-372fffef3fc2",
+      "word": "教える",
+      "reading": "おしえる",
+      "romaji": "oshieru",
+      "category": "g2",
+      "vocab_id": "f2fa049fdd",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-a9e1810111e2",
+      "word": "着る",
+      "reading": "きる",
+      "romaji": "kiru",
+      "category": "g2",
+      "vocab_id": "45fbcb8670",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-486b5e271bb8",
+      "word": "出る",
+      "reading": "でる",
+      "romaji": "deru",
+      "category": "g2",
+      "vocab_id": "5ef4f7dde9",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-f3ce2b02dd7c",
+      "word": "忘れる",
+      "reading": "わすれる",
+      "romaji": "wasureru",
+      "category": "g2",
+      "vocab_id": "0ca0de9dea",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-386777450b56",
+      "word": "開ける",
+      "reading": "あける",
+      "romaji": "akeru",
+      "category": "g2",
+      "vocab_id": "321963ed35",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-bec22d4be409",
+      "word": "閉める",
+      "reading": "しめる",
+      "romaji": "shimeru",
+      "category": "g2",
+      "vocab_id": "95827b08e3",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3167e757f4e2",
+      "word": "受ける",
+      "reading": "うける",
+      "romaji": "ukeru",
+      "category": "g2",
+      "vocab_id": "20989c0cb5",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-258ac91dbbf1",
+      "word": "考える",
+      "reading": "かんがえる",
+      "romaji": "kangaeru",
+      "category": "g2",
+      "vocab_id": "cc34f28850",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-ab63359144a0",
+      "word": "覚える",
+      "reading": "おぼえる",
+      "romaji": "oboeru",
+      "category": "g2",
+      "vocab_id": "dad2d16220",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-b3f0d79f8fd8",
+      "word": "続ける",
+      "reading": "つづける",
+      "romaji": "tsuzukeru",
+      "category": "g2",
+      "vocab_id": "d177796b00",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-db9b5b624d3d",
+      "word": "疲れる",
+      "reading": "つかれる",
+      "romaji": "tsukareru",
+      "category": "g2",
+      "vocab_id": "156f17113e",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3188912bd7bf",
+      "word": "集める",
+      "reading": "あつめる",
+      "romaji": "atsumeru",
+      "category": "g2",
+      "vocab_id": "b00801af22",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-bfedd44c2856",
+      "word": "信じる",
+      "reading": "しんじる",
+      "romaji": "shinjiru",
+      "category": "g2",
+      "vocab_id": "c53be2d952",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-698d350a1d73",
+      "word": "生まれる",
+      "reading": "うまれる",
+      "romaji": "umareru",
+      "category": "g2",
+      "vocab_id": "63bc7722fa",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-b779f721da30",
+      "word": "調べる",
+      "reading": "しらべる",
+      "romaji": "shiraberu",
+      "category": "g2",
+      "vocab_id": "beb32f751c",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3f65f1baff91",
+      "word": "浴びる",
+      "reading": "あびる",
+      "romaji": "abiru",
+      "category": "g2",
+      "vocab_id": "a5aceb6426",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-e3bebe51fda2",
+      "word": "落ちる",
+      "reading": "おちる",
+      "romaji": "ochiru",
+      "category": "g2",
+      "vocab_id": "981ee66f59",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-cdfb8c76cb26",
+      "word": "負ける",
+      "reading": "まける",
+      "romaji": "makeru",
+      "category": "g2",
+      "vocab_id": "cb6d7546fb",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-c5b352c643f8",
+      "word": "決める",
+      "reading": "きめる",
+      "romaji": "kimeru",
+      "category": "g2",
+      "vocab_id": "6a98f898ab",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3a86a7eb0b37",
+      "word": "止める",
+      "reading": "とめる",
+      "romaji": "tomeru",
+      "category": "g2",
+      "vocab_id": "3aadcbc234",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-8621076a6680",
+      "word": "答える",
+      "reading": "こたえる",
+      "romaji": "kotaeru",
+      "category": "g2",
+      "vocab_id": "d5d8c608aa",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-b7964f0567ee",
+      "word": "分ける",
+      "reading": "わける",
+      "romaji": "wakeru",
+      "category": "g2",
+      "vocab_id": "1b8be0151e",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-b677bcfbc2d0",
+      "word": "慣れる",
+      "reading": "なれる",
+      "romaji": "nareru",
+      "category": "g2",
+      "vocab_id": "ce2f134cda",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-c9207b4c200e",
+      "word": "褒める",
+      "reading": "ほめる",
+      "romaji": "homeru",
+      "category": "g2",
+      "vocab_id": "9097d5cc39",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-aaaef6789150",
+      "word": "比べる",
+      "reading": "くらべる",
+      "romaji": "kuraberu",
+      "category": "g2",
+      "vocab_id": "5bfe1d2c25",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3abb4c72abd5",
+      "word": "消える",
+      "reading": "きえる",
+      "romaji": "kieru",
+      "category": "g2",
+      "vocab_id": "6030b50276",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-4b76f19316be",
+      "word": "増える",
+      "reading": "ふえる",
+      "romaji": "fueru",
+      "category": "g2",
+      "vocab_id": "59bc2e87aa",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-4679d68a18bc",
+      "word": "溶ける",
+      "reading": "とける",
+      "romaji": "tokeru",
+      "category": "g2",
+      "vocab_id": "4be5e77856",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-f5e5774428f9",
+      "word": "温める",
+      "reading": "あたためる",
+      "romaji": "atatameru",
+      "category": "g2",
+      "vocab_id": "a7a7a09d5d",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-91697edd2e06",
+      "word": "揺れる",
+      "reading": "ゆれる",
+      "romaji": "yureru",
+      "category": "g2",
+      "vocab_id": "fa8716c349",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-7b907cb0e4f3",
+      "word": "見つける",
+      "reading": "みつける",
+      "romaji": "mitsukeru",
+      "category": "g2",
+      "vocab_id": "64f85b7fdf",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-4e8159e420bf",
+      "word": "見せる",
+      "reading": "みせる",
+      "romaji": "miseru",
+      "category": "g2",
+      "vocab_id": "db35a99e28",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-d3197b4a8ab0",
+      "word": "聞こえる",
+      "reading": "きこえる",
+      "romaji": "kikoeru",
+      "category": "g2",
+      "vocab_id": "7225b79db5",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-7f440da765a9",
+      "word": "見える",
+      "reading": "みえる",
+      "romaji": "mieru",
+      "category": "g2",
+      "vocab_id": "0c27b9183f",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-5c6d8bf4018e",
+      "word": "倒れる",
+      "reading": "たおれる",
+      "romaji": "taoreru",
+      "category": "g2",
+      "vocab_id": "23afff6d4b",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-8f1f8accd8a0",
+      "word": "知らせる",
+      "reading": "しらせる",
+      "romaji": "shiraseru",
+      "category": "g2",
+      "vocab_id": "1a680b4cf9",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-fb1e88fc6113",
+      "word": "感じる",
+      "reading": "かんじる",
+      "romaji": "kanjiru",
+      "category": "g2",
+      "vocab_id": "b333744018",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-2bdadea7818a",
+      "word": "数える",
+      "reading": "かぞえる",
+      "romaji": "kazoeru",
+      "category": "g2",
+      "vocab_id": "c3b808e41e",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-72270a615c98",
+      "word": "着替える",
+      "reading": "きがえる",
+      "romaji": "kigaeru",
+      "category": "g2",
+      "group": "g2",
+      "examples": [
+        "制服に着替えます。",
+        "部屋で着替えた。",
+        "すぐ着替えよう。"
+      ]
+    },
+    {
+      "id": "verb-b5b9ad23753d",
+      "word": "起こす",
+      "reading": "おこす",
+      "romaji": "okosu",
+      "category": "g1",
+      "vocab_id": "99de4451f7",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-e7dcf26a60e6",
+      "word": "慌てる",
+      "reading": "あわてる",
+      "romaji": "awateru",
+      "category": "g2",
+      "vocab_id": "dedd8df548",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-4aa0b1a77697",
+      "word": "乗り越える",
+      "reading": "のりこえる",
+      "romaji": "norikoeru",
+      "category": "g2",
+      "group": "g2",
+      "examples": [
+        "困難を乗り越えます。",
+        "試練を乗り越えた。",
+        "一緒に乗り越えよう！"
+      ]
+    },
+    {
+      "id": "verb-b3e1dde04cf0",
+      "word": "諦める",
+      "reading": "あきらめる",
+      "romaji": "akirameru",
+      "category": "g2",
+      "vocab_id": "8ff67241d3",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-ba8cc26191a6",
+      "word": "眺める",
+      "reading": "ながめる",
+      "romaji": "nagameru",
+      "category": "g2",
+      "vocab_id": "402b531dd3",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-4f00bbc7eeab",
+      "word": "甘える",
+      "reading": "あまえる",
+      "romaji": "amaeru",
+      "category": "g2",
+      "vocab_id": "5869bef4e6",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-533849a0eb92",
+      "word": "怠ける",
+      "reading": "なまける",
+      "romaji": "namakeru",
+      "category": "g2",
+      "vocab_id": "6e5fe06358",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-26bf5b565e9a",
+      "word": "震える",
+      "reading": "ふるえる",
+      "romaji": "furueru",
+      "category": "g2",
+      "vocab_id": "29031b2ba5",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-a4d6725229d5",
+      "word": "溢れる",
+      "reading": "あふれる",
+      "romaji": "afureru",
+      "category": "g2",
+      "vocab_id": "3365ac796d",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-e2d497043826",
+      "word": "認める",
+      "reading": "みとめる",
+      "romaji": "mitomeru",
+      "category": "g2",
+      "vocab_id": "e086a9e024",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-c7316235c565",
+      "word": "求める",
+      "reading": "もとめる",
+      "romaji": "motomeru",
+      "category": "g2",
+      "vocab_id": "bd2ba94516",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-b7644fb4dcc3",
+      "word": "迎える",
+      "reading": "むかえる",
+      "romaji": "mukaeru",
+      "category": "g2",
+      "vocab_id": "1687840ea3",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3d06044b4228",
+      "word": "捨てる",
+      "reading": "すてる",
+      "romaji": "suteru",
+      "category": "g2",
+      "vocab_id": "49ac3c55c7",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-ae807891b2d8",
+      "word": "支える",
+      "reading": "ささえる",
+      "romaji": "sasaeru",
+      "category": "g2",
+      "vocab_id": "9923ca40cb",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-7d357e33a0d6",
+      "word": "育てる",
+      "reading": "そだてる",
+      "romaji": "sodateru",
+      "category": "g2",
+      "vocab_id": "ec43853e0f",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-6c6e89d7ca9f",
+      "word": "建てる",
+      "reading": "たてる",
+      "romaji": "tateru",
+      "category": "g2",
+      "vocab_id": "c5741f54d6",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-88aeb2c2fb36",
+      "word": "助ける",
+      "reading": "たすける",
+      "romaji": "tasukeru",
+      "category": "g2",
+      "vocab_id": "76cae35411",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-eeb61b7de8b6",
+      "word": "備える",
+      "reading": "そなえる",
+      "romaji": "sonaeru",
+      "category": "g2",
+      "vocab_id": "0d7bfd0602",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-ff15063ec5c7",
+      "word": "まとめる",
+      "reading": "まとめる",
+      "romaji": "matomeru",
+      "category": "g2",
+      "vocab_id": "270c29cab7",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-179179990b42",
+      "word": "抑える",
+      "reading": "おさえる",
+      "romaji": "osaeru",
+      "category": "g2",
+      "group": "g2",
+      "examples": [
+        "感情を抑えます。",
+        "コストを抑えた。",
+        "欲求を抑えよう。"
+      ]
+    },
+    {
+      "id": "verb-829e97934e3d",
+      "word": "高める",
+      "reading": "たかめる",
+      "romaji": "takameru",
+      "category": "g2",
+      "vocab_id": "bd19220d64",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-3d7e768f6fba",
+      "word": "沈む",
+      "reading": "しずむ",
+      "romaji": "shizumu",
+      "category": "g1",
+      "vocab_id": "0983432238",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-c7ea8101e2dd",
+      "word": "浮かぶ",
+      "reading": "うかぶ",
+      "romaji": "ukabu",
+      "category": "g1",
+      "vocab_id": "155ca82293",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-3a804c7bdb8f",
+      "word": "怖れる",
+      "reading": "おそれる",
+      "romaji": "osoreru",
+      "category": "g2",
+      "vocab_id": "7a8059af14",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-a41b57ced8bf",
+      "word": "触れる",
+      "reading": "ふれる",
+      "romaji": "fureru",
+      "category": "g2",
+      "vocab_id": "42ce4a629d",
+      "group": "g2",
+      "examples": []
+    },
+    {
+      "id": "verb-8a15051a84c6",
+      "word": "する",
+      "reading": "する",
+      "romaji": "suru",
+      "category": "g3",
+      "vocab_id": "c4cdc162d7",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-60735f02e22b",
+      "word": "来る",
+      "reading": "くる",
+      "romaji": "kuru",
+      "category": "g3",
+      "vocab_id": "2e2abd26ca",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-1ec65163999c",
+      "word": "勉強する",
+      "reading": "べんきょうする",
+      "romaji": "benkyou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "65783b95dd",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-252a221211e4",
+      "word": "運動する",
+      "reading": "うんどうする",
+      "romaji": "undou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "47487b1e85",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-503c3df49d87",
+      "word": "料理する",
+      "reading": "りょうりする",
+      "romaji": "ryouri suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "ee85169acd",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-37f7291b1fb1",
+      "word": "電話する",
+      "reading": "でんわする",
+      "romaji": "denwa suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "3c039918ba",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-b839bbfc3046",
+      "word": "旅行する",
+      "reading": "りょこうする",
+      "romaji": "ryokou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "2ba96bef9a",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-f653a55dcb75",
+      "word": "説明する",
+      "reading": "せつめいする",
+      "romaji": "setsumei suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "123ee74d43",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-11d276367457",
+      "word": "確認する",
+      "reading": "かくにんする",
+      "romaji": "kakunin suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "999fa2ee16",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-2970c1f00b96",
+      "word": "紹介する",
+      "reading": "しょうかいする",
+      "romaji": "shoukai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "c151fe4163",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-7573ccd0f2cd",
+      "word": "準備する",
+      "reading": "じゅんびする",
+      "romaji": "junbi suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "6ce523bcb6",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-8a42bec77138",
+      "word": "散歩する",
+      "reading": "さんぽする",
+      "romaji": "sanpo suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "e2695084c9",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-bddae757c177",
+      "word": "連絡する",
+      "reading": "れんらくする",
+      "romaji": "renraku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "6926bbe9d4",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-846fc80684a5",
+      "word": "結婚する",
+      "reading": "けっこんする",
+      "romaji": "kekkon suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "2eb252da72",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-306c19225d82",
+      "word": "卒業する",
+      "reading": "そつぎょうする",
+      "romaji": "sotsugyou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "6a89d1feee",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-113a02f51802",
+      "word": "入学する",
+      "reading": "にゅうがくする",
+      "romaji": "nyuugaku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "433da13afb",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-745de1eee7ad",
+      "word": "利用する",
+      "reading": "りようする",
+      "romaji": "riyou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "977d6bf88c",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-1247c5ee6f0e",
+      "word": "注意する",
+      "reading": "ちゅういする",
+      "romaji": "chuui suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "4e6d200127",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-64b0aa3c628d",
+      "word": "心配する",
+      "reading": "しんぱいする",
+      "romaji": "shinpai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "ff60f2830f",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-39489af8d780",
+      "word": "失敗する",
+      "reading": "しっぱいする",
+      "romaji": "shippai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "a89d2853ea",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-4f6fa1aeed84",
+      "word": "成功する",
+      "reading": "せいこうする",
+      "romaji": "seikou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "99906bc37f",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-1245ba25f5d3",
+      "word": "報告する",
+      "reading": "ほうこくする",
+      "romaji": "houkoku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "88fc5e477e",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-83b971b4c1db",
+      "word": "相談する",
+      "reading": "そうだんする",
+      "romaji": "soudan suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "aa663833e4",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-329bbb544a6c",
+      "word": "参加する",
+      "reading": "さんかする",
+      "romaji": "sanka suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "ce2ba9fec2",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-4d5dd9e3512e",
+      "word": "応援する",
+      "reading": "おうえんする",
+      "romaji": "ouen suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "f4d4c5dfdf",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-5d4ce1b76d85",
+      "word": "期待する",
+      "reading": "きたいする",
+      "romaji": "kitai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "a4974412ed",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-869ae8050280",
+      "word": "感謝する",
+      "reading": "かんしゃする",
+      "romaji": "kansha suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "56f1bac262",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-661f9c21966d",
+      "word": "活動する",
+      "reading": "かつどうする",
+      "romaji": "katsudou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "791cdda968",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-abd64bff7cd0",
+      "word": "申し込む",
+      "reading": "もうしこむ",
+      "romaji": "moushikomu",
+      "category": "g1",
+      "vocab_id": "7b4c98a742",
+      "group": "g1",
+      "examples": []
+    },
+    {
+      "id": "verb-0e1e0d332c8d",
+      "word": "挑戦する",
+      "reading": "ちょうせんする",
+      "romaji": "chousen suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "f132c3c98e",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-c0c817b0600a",
+      "word": "緊張する",
+      "reading": "きんちょうする",
+      "romaji": "kinchou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "9236d54fda",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-4c8c7ea4dfd3",
+      "word": "安心する",
+      "reading": "あんしんする",
+      "romaji": "anshin suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "d06643e4e1",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-61a3602e7ea4",
+      "word": "感動する",
+      "reading": "かんどうする",
+      "romaji": "kandou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "90ae05137c",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-d94de1ba1e68",
+      "word": "満足する",
+      "reading": "まんぞくする",
+      "romaji": "manzoku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "a4f0b205a3",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-639d0d9d6d48",
+      "word": "信頼する",
+      "reading": "しんらいする",
+      "romaji": "shinrai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "60594ade18",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-9864fc61da5c",
+      "word": "研究する",
+      "reading": "けんきゅうする",
+      "romaji": "kenkyuu suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "607f3c4430",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-bc57d9773a92",
+      "word": "発表する",
+      "reading": "はっぴょうする",
+      "romaji": "happyou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "738eff46a4",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-cb39bbaffdbb",
+      "word": "判断する",
+      "reading": "はんだんする",
+      "romaji": "handan suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "3b88931b34",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-9540992d2646",
+      "word": "解決する",
+      "reading": "かいけつする",
+      "romaji": "kaiketsu suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "f25bc9cd9e",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-01b4f3ec919e",
+      "word": "理解する",
+      "reading": "りかいする",
+      "romaji": "rikai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "400fee0ea3",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-60acffa6b1a1",
+      "word": "計画する",
+      "reading": "けいかくする",
+      "romaji": "keikaku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "836311c7d4",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-18f6b2a9519b",
+      "word": "協力する",
+      "reading": "きょうりょくする",
+      "romaji": "kyouryoku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "23ba87bda6",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-0398795e56f0",
+      "word": "反対する",
+      "reading": "はんたいする",
+      "romaji": "hantai suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "d48ed47f5e",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-3676ad356ed0",
+      "word": "賛成する",
+      "reading": "さんせいする",
+      "romaji": "sansei suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "575f9c66e6",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-12af75376cce",
+      "word": "主張する",
+      "reading": "しゅちょうする",
+      "romaji": "shuchou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "21f9e28b1c",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-26d4f4649d89",
+      "word": "対応する",
+      "reading": "たいおうする",
+      "romaji": "taiou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "37bf931e32",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-616840799ab5",
+      "word": "実現する",
+      "reading": "じつげんする",
+      "romaji": "jitsugen suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "1ad20880d6",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-53ad42cf9305",
+      "word": "想像する",
+      "reading": "そうぞうする",
+      "romaji": "souzou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "8597a13b30",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-d3df7aad8079",
+      "word": "記録する",
+      "reading": "きろくする",
+      "romaji": "kiroku suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "3549d49781",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-d407c84e6bc6",
+      "word": "集中する",
+      "reading": "しゅうちゅうする",
+      "romaji": "shuuchuu suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "f427f2ab2d",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-6fb19dac0ba6",
+      "word": "発展する",
+      "reading": "はってんする",
+      "romaji": "hatten suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "b5b2724a2f",
+      "group": "g3",
+      "examples": []
+    },
+    {
+      "id": "verb-bdc47d31aff7",
+      "word": "尊重する",
+      "reading": "そんちょうする",
+      "romaji": "sonchou suru",
+      "category": "g3",
+      "derived_suru": true,
+      "vocab_id": "9429f093fb",
+      "group": "g3",
+      "examples": []
+    }
+  ]
+}
