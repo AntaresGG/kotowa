@@ -160,19 +160,30 @@ def test_silver_desktop_flashcards_fit_without_shrinking_cards(browser, site_url
     }""")
     card = page.locator('#fc-card').bounding_box()
     assert abs(card['width'] - baseline['width']) < 1
-    assert abs(card['height'] - baseline['height']) < 1
+    assert card['height'] >= baseline['height'] - 1
 
     def fits():
+        height = page.viewport_size['height']
         assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
         assert page.evaluate("getComputedStyle(document.documentElement).overflowY !== 'hidden'")
+        frame = page.locator('.study-shell').bounding_box()
+        assert abs(frame['y'] + frame['height'] - height) < 1
         for selector in ('.se-receiver', '#fc-mode', '#fc-level', '#fc-kind', '#fc-shuffle',
                          '#fc-mark', '#fc-card', '#fc-good', '#fc-reset', '#fc-focus-library', '.site-footer'):
             expect(page.locator(selector)).to_be_in_viewport()
             box = page.locator(selector).bounding_box()
-            assert box['y'] >= 0 and box['y'] + box['height'] <= 961, selector
+            assert box['y'] >= 0 and box['y'] + box['height'] <= height + 1, selector
 
     fits()
+    previous_height = card['height']
+    for height in (1080, 1200):
+        page.set_viewport_size({'width': 1920, 'height': height})
+        fits()
+        current_height = page.locator('#fc-card').bounding_box()['height']
+        assert current_height > previous_height
+        previous_height = current_height
+    page.set_viewport_size({'width': 1920, 'height': 960})
     page.locator('.fc-progress-help summary').click()
     fits()
     page.locator('.fc-progress-help summary').click()

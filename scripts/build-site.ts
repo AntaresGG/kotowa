@@ -275,6 +275,7 @@ ${p.path === 'index.html' ? '' : `<form class="hsearch" action="${root}index.htm
 <div class="appearance-picker" role="group" ${uiAttr("aria-label", "Appearance")}><button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" ${uiAttr("aria-label", "Lilac Mist theme")} ${uiAttr("title", "Warm Paper ↔ Lilac Mist")}><span class="theme-thumb" aria-hidden="true"></span><span class="theme-option theme-paper" aria-hidden="true"><i></i>${ui("Warm Paper")}</span><span class="theme-option theme-mist" aria-hidden="true"><i></i>${ui("Lilac Mist")}</span></button><button class="theme-silver" id="theme-silver" type="button" aria-pressed="false" ${uiAttr("title", "SONY Silver Era")}><i aria-hidden="true"></i>${ui("Silver Era")}</button></div>
 <a class="gh-btn" href="${REPO}" rel="noopener">${GITHUB_ICON}<span>${ui("Star on GitHub")}</span></a>
 </div></header>
+${p.path === 'flashcards.html' ? '<div class="study-shell">' : ''}
 <main><div class="wrap">
 ${silverReceiver(root, p.path)}
 <div class="page-content">
@@ -286,6 +287,7 @@ ${p.body}
 ${ui("dictionary data from")} <a href="https://www.edrdg.org/">JMdict &amp; KANJIDIC2 (EDRDG)</a>; ${ui("original examples and sentences from")} <a href="https://tatoeba.org">Tatoeba</a> (CC BY 2.0 FR); ${ui("based on")} <a href="https://github.com/evanclan/OpenJLPT">OpenJLPT</a>;
 ${ui("stroke order from")} <a href="https://kanjivg.tagaini.net/">KanjiVG</a> (CC BY-SA 3.0). ${ui("JLPT levels are unofficial: the JLPT does not publish word lists.")}</p>
 </div></footer>
+${p.path === 'flashcards.html' ? '</div>' : ''}
 </body>
 </html>
 `;

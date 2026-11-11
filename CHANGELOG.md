@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Compact the Silver Era desktop flashcard console: retain the card dimensions, shorten the receiver, arrange study controls in a toolbar and place progress beside the card.
+- Fit the Silver Era desktop flashcard console to the viewport: align the wooden frame with the bottom edge, scale the receiver with available height, and give remaining space to the full-size study card. Keep the study toolbar and progress beside the card.
 
 - Separate flashcard browsing from self-ratings: Previous (←), Show (↑), Next (→) and Knew it (↓). Keep the full session available for browsing, restore its position after reload, and rate each card only once per session.
 
