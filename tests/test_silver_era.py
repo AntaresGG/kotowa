@@ -11,7 +11,7 @@ from test_flashcard_focus import browser, site_url, pytestmark  # noqa: F401
 
 
 def test_silver_theme_controls_and_navigation(browser, site_url):
-    page = browser.new_page(viewport={"width": 1440, "height": 1000})
+    page = browser.new_page(locale="en-US", viewport={"width": 1440, "height": 1000})
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(site_url)
@@ -32,7 +32,7 @@ def test_silver_theme_controls_and_navigation(browser, site_url):
     expect(page.locator('.se-counter output')).to_have_text(str(metadata['counts']['grammar']['total']).zfill(4))
     # The knob changes reading size, persists across pages and stays scoped to this theme.
     page.locator('#se-text-size').press('End')
-    expect(page.locator('#se-size-label')).to_have_text('大')
+    expect(page.locator('#se-size-label')).to_have_text('Large')
     assert float(page.locator('.page-content').evaluate('el => getComputedStyle(el).zoom')) == 1.1
     page.emulate_media(color_scheme='dark', reduced_motion='reduce')
     assert page.locator('html').evaluate('el => getComputedStyle(el).colorScheme') == 'light'
@@ -73,7 +73,7 @@ def test_silver_theme_controls_and_navigation(browser, site_url):
 
 
 def test_silver_flashcard_readings_preserve_progress(browser, site_url):
-    page = browser.new_page()
+    page = browser.new_page(locale="en-US")
     page.goto(site_url + 'flashcards.html')
     expect(page.locator('#fc-front')).not_to_be_empty()
     page.locator('#theme-silver').click()
@@ -107,14 +107,14 @@ def test_silver_flashcard_readings_preserve_progress(browser, site_url):
     # Failed deck requests clear old readings instead of displaying another deck's progress.
     page.route('**/data/kanji-n5.json', lambda route: route.fulfill(status=503, body='Unavailable'))
     page.locator('#fc-kind button[data-v="kanji"]').click()
-    expect(page.locator('#se-context')).to_contain_text('载入失败')
+    expect(page.locator('#se-context')).to_contain_text('could not load')
     expect(page.locator('#se-meter-left')).not_to_have_attribute('aria-valuenow', re.compile('.+'))
     expect(page.locator('#se-meters')).to_have_attribute('aria-busy', 'false')
     page.close()
 
 
 def test_silver_storage_sync_and_blocked_storage(browser, site_url):
-    context = browser.new_context(reduced_motion='reduce')
+    context = browser.new_context(locale='en-US', reduced_motion='reduce')
     first, second = context.new_page(), context.new_page()
     first.goto(site_url)
     second.goto(site_url + 'grammar/te-oku.html')
@@ -124,7 +124,7 @@ def test_silver_storage_sync_and_blocked_storage(browser, site_url):
     expect(second.locator('#se-text-size')).to_have_value('0')
     assert second.locator('.se-needle').evaluate_all('items => items.every(el => el.getAnimations().length === 0)')
     context.close()
-    blocked = browser.new_context()
+    blocked = browser.new_context(locale="en-US")
     blocked.add_init_script("Object.defineProperty(window, 'localStorage', {get() {throw new Error('Storage blocked')}})")
     page = blocked.new_page()
     errors = []

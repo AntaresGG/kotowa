@@ -17,6 +17,7 @@ import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { DATA_DIR, LEVELS, ROOT, type Level } from './lib/util.ts';
 import type { Chinese } from '../src/index.ts';
 import { POS_SHORT } from './lib/pos.ts';
+import { messages, ui, uiAttr } from './lib/site-i18n.ts';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -44,6 +45,9 @@ const REPO = process.env.REPO_URL ?? 'https://github.com/AntaresGG/kotowa';
 const THEME_VERSION = createHash('sha256').update(readFileSync(join(ROOT, 'site/assets/theme.js'))).digest('hex').slice(0, 12);
 const STYLE_VERSION = createHash('sha256').update(readFileSync(join(ROOT, 'site/assets/style.css'))).digest('hex').slice(0, 12);
 const SILVER_VERSION = createHash('sha256').update(readFileSync(join(ROOT, 'site/assets/silver-era.css'))).digest('hex').slice(0, 12);
+const I18N_SCRIPT = readFileSync(join(ROOT, 'site/assets/i18n.js'), 'utf8')
+  .replace('/* LOCALE_MESSAGES */ {}', JSON.stringify(messages).replace(/</g, '\\u003c'));
+const I18N_VERSION = createHash('sha256').update(I18N_SCRIPT).digest('hex').slice(0, 12);
 const LEVEL_NAMES = LEVELS.map((l) => l.level);
 const readJson = <T>(p: string): T => JSON.parse(readFileSync(p, 'utf8'));
 
@@ -201,26 +205,26 @@ function silverReceiver(root: string, path: string): string {
       return `<text x="${x}" y="${y}" text-anchor="middle">${maximum * i / 5}</text>`;
     }).join('');
     return `<div class="se-meter-unit">
-<div class="se-meter" id="${id}" role="meter" aria-labelledby="${id}-label" aria-valuemin="0" aria-valuemax="${maximum}"${flashcards ? ' aria-valuetext="Loading deck"' : ` aria-valuenow="${value}"`} data-reading="${flashcards ? '' : value}" style="--needle-angle:${flashcards ? -55 : -55 + value / maximum * 110}deg">
-<svg viewBox="0 0 240 152" aria-hidden="true" focusable="false"><path d="M28.25 81.76 A112 112 0 0 1 211.75 81.76" class="se-meter-arc"/><g class="se-meter-ticks">${ticks}</g><g class="se-meter-numbers">${numbers}</g><text x="120" y="104" text-anchor="middle" class="se-meter-title">${subtitle}</text><text x="120" y="120" text-anchor="middle" class="se-meter-subtitle">${flashcards ? 'PROGRESS / %' : 'COLLECTION / COUNT'}</text><line x1="120" y1="146" x2="120" y2="37" class="se-needle"/><circle cx="120" cy="146" r="6" class="se-pivot"/></svg>
-</div><div class="se-meter-caption"><span id="${id}-label">${label}</span><output>${flashcards ? '—' : value.toLocaleString('en-US')}</output></div></div>`;
+<div class="se-meter" id="${id}" role="meter" aria-labelledby="${id}-label" aria-valuemin="0" aria-valuemax="${maximum}"${flashcards ? ' aria-valuetext="Loading deck…" data-i18n-aria-valuetext="Loading deck…"' : ` aria-valuenow="${value}"`} data-reading="${flashcards ? '' : value}" style="--needle-angle:${flashcards ? -55 : -55 + value / maximum * 110}deg">
+<svg viewBox="0 0 240 152" aria-hidden="true" focusable="false"><path d="M28.25 81.76 A112 112 0 0 1 211.75 81.76" class="se-meter-arc"/><g class="se-meter-ticks">${ticks}</g><g class="se-meter-numbers">${numbers}</g><text x="120" y="104" text-anchor="middle" class="se-meter-title" data-i18n="${esc(subtitle)}">${subtitle}</text><text x="120" y="120" text-anchor="middle" class="se-meter-subtitle" data-i18n="${flashcards ? 'PROGRESS / %' : 'COLLECTION / COUNT'}">${flashcards ? 'PROGRESS / %' : 'COLLECTION / COUNT'}</text><line x1="120" y1="146" x2="120" y2="37" class="se-needle"/><circle cx="120" cy="146" r="6" class="se-pivot"/></svg>
+</div><div class="se-meter-caption"><span id="${id}-label">${ui(label)}</span><output>${flashcards ? '—' : value.toLocaleString('en-US')}</output></div></div>`;
   };
   const c = meta.counts;
   const vocabularyMax = Math.ceil(c.vocab.total / 5000) * 5000;
   const kanjiMax = Math.ceil(c.kanji.total / 500) * 500;
-  return `<section class="silver-only se-receiver" aria-label="Kotowa learning receiver">
-<div class="se-nameplate"><span>JAPANESE STUDY SYSTEM</span><a href="${root}index.html" aria-label="Kotowa home">KOTOWA <small>词和</small></a><div class="se-nameplate-end"><span class="se-model">N<span>5</span> — N<span>1</span></span><button type="button" class="se-panel-toggle" id="se-panel-toggle" aria-expanded="true" aria-controls="se-faceplate">收起面板</button></div></div>
+  return `<section class="silver-only se-receiver" ${uiAttr("aria-label", "Kotowa learning receiver")}>
+<div class="se-nameplate"><span>${ui("JAPANESE STUDY SYSTEM")}</span><a href="${root}index.html" ${uiAttr("aria-label", "Kotowa home")}>KOTOWA <small>词和</small></a><div class="se-nameplate-end"><span class="se-model">N<span>5</span> — N<span>1</span></span><button type="button" class="se-panel-toggle" id="se-panel-toggle" aria-expanded="true" aria-controls="se-faceplate">${ui("Collapse panel")}</button></div></div>
 <div id="se-faceplate">
 <div class="se-instruments">
-<div class="se-controls"><span class="se-label">READING CONTROL · 阅读调节</span><div class="se-control-pair">
-<label class="se-dial" for="se-text-size"><span class="se-label">字号</span><span class="se-dial-scale"><span class="se-knob" aria-hidden="true"></span><input id="se-text-size" type="range" min="0" max="2" step="1" value="1" aria-label="阅读字号" aria-valuetext="标准"></span><output id="se-size-label" for="se-text-size">标准</output></label>
-<label class="se-furigana"><span class="se-label">振假名</span><span class="se-toggle"><input type="checkbox" data-furigana aria-label="显示振假名" checked><span class="se-toggle-lever" aria-hidden="true"></span></span><span class="se-toggle-caption"><i class="se-lamp" aria-hidden="true"></i><span>FURIGANA</span></span></label>
+<div class="se-controls"><span class="se-label">${ui("READING CONTROL")}</span><div class="se-control-pair">
+<label class="se-dial" for="se-text-size"><span class="se-label">${ui("Text size")}</span><span class="se-dial-scale"><span class="se-knob" aria-hidden="true"></span><input id="se-text-size" type="range" min="0" max="2" step="1" value="1" ${uiAttr("aria-label", "Reading text size")} ${uiAttr("aria-valuetext", "Standard")}></span><output id="se-size-label" for="se-text-size">${ui("Standard")}</output></label>
+<label class="se-furigana"><span class="se-label">${ui("Furigana")}</span><span class="se-toggle"><input type="checkbox" data-furigana ${uiAttr("aria-label", "Show furigana")} checked><span class="se-toggle-lever" aria-hidden="true"></span></span><span class="se-toggle-caption"><i class="se-lamp" aria-hidden="true"></i><span>${ui("FURIGANA")}</span></span></label>
 </div></div>
-<div class="se-meter-pair" id="se-meters" aria-busy="${flashcards}">${meter('se-meter-left', flashcards ? '已学习 · 本牌组' : '词汇收录', flashcards ? 'STUDIED' : 'WORDS', c.vocab.total, flashcards ? 100 : vocabularyMax)}${meter('se-meter-right', flashcards ? '本轮完成' : '汉字收录', flashcards ? 'SESSION' : 'KANJI', c.kanji.total, flashcards ? 100 : kanjiMax)}</div>
-<div class="se-source"><span class="se-label">SOURCE SELECTOR · 学习信源</span><div class="se-source-keys"><a href="${root}index.html"${path === 'index.html' ? ' aria-current="page"' : ''}>词典</a><a href="${root}flashcards.html"${flashcards ? ' aria-current="page"' : ''}>闪卡</a><a href="${root}analyzer.html"${path === 'analyzer.html' ? ' aria-current="page"' : ''}>分析</a></div><div class="se-counter"><span class="se-label">GRAMMAR<br>语法收录</span><output>${String(c.grammar.total).padStart(4, '0')}</output></div><span class="se-label se-serial">SILVER ERA · ことばを、少しずつ。</span></div>
+<div class="se-meter-pair" id="se-meters" aria-busy="${flashcards}">${meter('se-meter-left', flashcards ? 'Studied · this deck' : 'Vocabulary collection', flashcards ? 'STUDIED' : 'WORDS', c.vocab.total, flashcards ? 100 : vocabularyMax)}${meter('se-meter-right', flashcards ? 'This session' : 'Kanji collection', flashcards ? 'SESSION' : 'KANJI', c.kanji.total, flashcards ? 100 : kanjiMax)}</div>
+<div class="se-source"><span class="se-label">${ui("SOURCE SELECTOR")}</span><div class="se-source-keys"><a href="${root}index.html"${path === 'index.html' ? ' aria-current="page"' : ''}>${ui("Dictionary")}</a><a href="${root}flashcards.html"${flashcards ? ' aria-current="page"' : ''}>${ui("Flashcards")}</a><a href="${root}analyzer.html"${path === 'analyzer.html' ? ' aria-current="page"' : ''}>${ui("Analyze")}</a></div><div class="se-counter"><span class="se-label">${ui("Grammar collection")}</span><output>${String(c.grammar.total).padStart(4, '0')}</output></div><span class="se-label se-serial">${ui("SILVER ERA")} · <span lang="ja">ことばを、少しずつ。</span></span></div>
 </div>
-<div class="se-tuner"><span class="se-label">JLPT BAND</span><div class="se-tuner-track">${LEVEL_NAMES.map((level) => `<a href="${root}${level.toLowerCase()}/index.html"${path.startsWith(level.toLowerCase() + '/') ? ' aria-current="page"' : ''}><i aria-hidden="true"></i>${level}</a>`).join('')}</div><span class="se-label">N5 BEGINNER → N1 ADVANCED</span></div>
-<div class="se-fascia-footer"><span>SONY 银色时代</span><span id="se-context">${flashcards ? '正在载入牌组…' : 'VOCABULARY · KANJI · GRAMMAR'}</span></div>
+<div class="se-tuner"><span class="se-label">${ui("JLPT BAND")}</span><div class="se-tuner-track">${LEVEL_NAMES.map((level) => `<a href="${root}${level.toLowerCase()}/index.html"${path.startsWith(level.toLowerCase() + '/') ? ' aria-current="page"' : ''}><i aria-hidden="true"></i>${level}</a>`).join('')}</div><span class="se-label">${ui("N5 BEGINNER → N1 ADVANCED")}</span></div>
+<div class="se-fascia-footer"><span>${ui("SONY Silver Era")}</span><span id="se-context">${flashcards ? ui("Loading deck…") : ui("VOCABULARY · KANJI · GRAMMAR")}</span></div>
 </div>
 </section>`;
 }
@@ -230,7 +234,7 @@ function writePage(p: Page): void {
   // The 404 page is served at arbitrary missing paths, so it needs absolute links.
   const root = p.path === '404.html' ? new URL(SITE_URL).pathname : '../'.repeat(depth);
   const url = absolute(p.path);
-  const nav = NAV.map(([href, label]) => `<a href="${root}${href}"${p.active === href ? ' aria-current="page"' : ''}>${label}</a>`).join('');
+  const nav = NAV.map(([href, label]) => `<a href="${root}${href}"${p.active === href ? ' aria-current="page"' : ''}>${Object.hasOwn(messages, label) ? ui(label) : esc(label)}</a>`).join('');
   const scripts = ['assets/app.js', 'assets/silver-era.js', ...(p.scripts ?? [])].map((s) => {
     const version = scriptVersions.get(s) ?? createHash('sha256').update(readFileSync(join(ROOT, 'site', s))).digest('hex').slice(0, 12);
     scriptVersions.set(s, version);
@@ -256,6 +260,7 @@ ${p.noindex ? '<meta name="robots" content="noindex">' : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#d7263d">
 <link rel="icon" href="${root}assets/favicon.svg" type="image/svg+xml">
+<script src="${root}assets/i18n.js?v=${I18N_VERSION}"></script>
 <script src="${root}assets/theme.js?v=${THEME_VERSION}"></script>
 <link rel="stylesheet" href="${root}assets/style.css?v=${STYLE_VERSION}">
 <link rel="stylesheet" href="${root}assets/silver-era.css?v=${SILVER_VERSION}">
@@ -264,10 +269,11 @@ ${scripts}
 <body data-root="${root}">
 <header class="site-header"><div class="wrap">
 <a class="brand" href="${root}index.html"><img class="brand-mark" src="${root}assets/favicon.svg" width="28" height="28" alt=""><span class="brand-name">Kotowa · 词和</span></a>
-${p.path === 'index.html' ? '' : `<form class="hsearch" action="${root}index.html" role="search"><input type="search" name="q" placeholder="Search words, kanji, grammar…" aria-label="Search"></form>`}
-<nav class="nav" aria-label="Main">${nav}</nav>
-<div class="appearance-picker" role="group" aria-label="外观主题"><button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="紫雾主题 / Lilac Mist" title="暖纸 Warm Paper ↔ 紫雾 Lilac Mist"><span class="theme-thumb" aria-hidden="true"></span><span class="theme-option theme-paper" aria-hidden="true"><i></i>暖纸</span><span class="theme-option theme-mist" aria-hidden="true"><i></i>紫雾</span></button><button class="theme-silver" id="theme-silver" type="button" aria-pressed="false" title="SONY 银色时代"><i aria-hidden="true"></i>银色时代</button></div>
-<a class="gh-btn" href="${REPO}" rel="noopener">${GITHUB_ICON}<span>Star on GitHub</span></a>
+${p.path === 'index.html' ? '' : `<form class="hsearch" action="${root}index.html" role="search"><input type="search" name="q" ${uiAttr("placeholder", "Search words, kanji, grammar…")} ${uiAttr("aria-label", "Search")}></form>`}
+<nav class="nav" ${uiAttr("aria-label", "Main navigation")}>${nav}</nav>
+<label class="language-picker"><span class="sr-only">${ui("Interface language")}</span><select id="language-select" ${uiAttr("aria-label", "Interface language")}><option value="zh-CN" lang="zh-CN">中文</option><option value="en" lang="en" selected>English</option></select></label>
+<div class="appearance-picker" role="group" ${uiAttr("aria-label", "Appearance")}><button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" ${uiAttr("aria-label", "Lilac Mist theme")} ${uiAttr("title", "Warm Paper ↔ Lilac Mist")}><span class="theme-thumb" aria-hidden="true"></span><span class="theme-option theme-paper" aria-hidden="true"><i></i>${ui("Warm Paper")}</span><span class="theme-option theme-mist" aria-hidden="true"><i></i>${ui("Lilac Mist")}</span></button><button class="theme-silver" id="theme-silver" type="button" aria-pressed="false" ${uiAttr("title", "SONY Silver Era")}><i aria-hidden="true"></i>${ui("Silver Era")}</button></div>
+<a class="gh-btn" href="${REPO}" rel="noopener">${GITHUB_ICON}<span>${ui("Star on GitHub")}</span></a>
 </div></header>
 <main><div class="wrap">
 ${silverReceiver(root, p.path)}
@@ -275,10 +281,10 @@ ${silverReceiver(root, p.path)}
 ${p.body}
 </div></div></main>
 <footer class="site-footer"><div class="wrap">
-<p><strong>Kotowa · 词和</strong> — N5–N1 中文日语学习。 <a href="${REPO}">GitHub</a> · <a href="${root}data.html">Download the data</a> · <a href="${REPO}/issues/new/choose">Report an error</a></p>
-<p>Data <a href="${REPO}/blob/main/LICENSE">CC BY-SA 4.0</a>. Level lists by <a href="https://www.tanos.co.uk/jlpt/">Jonathan Waller</a> (CC BY);
-dictionary data from <a href="https://www.edrdg.org/">JMdict &amp; KANJIDIC2 (EDRDG)</a>; original examples and sentences from <a href="https://tatoeba.org">Tatoeba</a> (CC BY 2.0 FR); based on <a href="https://github.com/evanclan/OpenJLPT">OpenJLPT</a>;
-stroke order from <a href="https://kanjivg.tagaini.net/">KanjiVG</a> (CC BY-SA 3.0). JLPT levels are unofficial: the JLPT does not publish word lists.</p>
+<p><strong>Kotowa · 词和</strong> — ${ui("N5–N1 Japanese study.")} <a href="${REPO}">GitHub</a> · <a href="${root}data.html">${ui("Download the data")}</a> · <a href="${REPO}/issues/new/choose">${ui("Report an error")}</a></p>
+<p>${ui("Data")} <a href="${REPO}/blob/main/LICENSE">CC BY-SA 4.0</a>. ${ui("Level lists by")} <a href="https://www.tanos.co.uk/jlpt/">Jonathan Waller</a> (CC BY);
+${ui("dictionary data from")} <a href="https://www.edrdg.org/">JMdict &amp; KANJIDIC2 (EDRDG)</a>; ${ui("original examples and sentences from")} <a href="https://tatoeba.org">Tatoeba</a> (CC BY 2.0 FR); ${ui("based on")} <a href="https://github.com/evanclan/OpenJLPT">OpenJLPT</a>;
+${ui("stroke order from")} <a href="https://kanjivg.tagaini.net/">KanjiVG</a> (CC BY-SA 3.0). ${ui("JLPT levels are unofficial: the JLPT does not publish word lists.")}</p>
 </div></footer>
 </body>
 </html>
@@ -302,8 +308,8 @@ const crumbs = (root: string, items: [string, string?][]) => {
       ...(href ? { item: absolute(href) } : {}),
     })),
   };
-  return `<nav class="crumbs" aria-label="Breadcrumb"><a href="${root}index.html">Home</a>${items
-    .map(([label, href]) => ` › ${href ? `<a href="${root}${href}">${esc(label)}</a>` : esc(label)}`)
+  return `<nav class="crumbs" ${uiAttr("aria-label", "Breadcrumb")}><a href="${root}index.html">${ui("Home")}</a>${items
+    .map(([label, href]) => ` › ${href ? `<a href="${root}${href}">${Object.hasOwn(messages, label) ? ui(label) : esc(label)}</a>` : (Object.hasOwn(messages, label) ? ui(label) : esc(label))}`)
     .join('')}</nav><script type="application/ld+json">${jsonLd(ld)}</script>`;
 };
 
@@ -322,9 +328,9 @@ const rubyHtml = (furigana: string) =>
 
 /** Section heading for example sentences, with a furigana switch when any sentence has furigana. */
 const examplesHeading = (examples: Example[] | undefined) =>
-  `<div class="ex-head"><h2>Examples</h2>${
+  `<div class="ex-head"><h2>${ui("Examples")}</h2>${
     examples?.some((e) => e.furigana)
-      ? '<label class="furi-toggle"><input type="checkbox" data-furigana checked> Furigana</label>'
+      ? '<label class="furi-toggle"><input type="checkbox" data-furigana checked> ' + ui("Furigana") + '</label>'
       : ''
   }</div>`;
 
@@ -336,10 +342,10 @@ const bilingual = (entry: { zh?: Chinese }, english: string) => {
 const chinesePanel = (entry: { zh?: Chinese }) => {
   const zh = usableChinese(entry);
   if (!zh) return '';
-  return '<section lang="zh-CN"><h2>中文释义</h2><p>' + esc(zh.meanings.join('；')) + '</p>'
-    + (zh.formation ? '<h3>接续</h3><p>' + esc(zh.formation) + '</p>' : '')
-    + (zh.explanation ? '<h3>用法</h3><p>' + esc(zh.explanation) + '</p>' : '')
-    + (zh.notes ? '<h3>注意</h3><p>' + esc(zh.notes) + '</p>' : '') + '</section>';
+  return '<section lang="zh-CN"><h2>' + ui("Chinese meanings") + '</h2><p>' + esc(zh.meanings.join('；')) + '</p>'
+    + (zh.formation ? '<h3>' + ui("Chinese formation") + '</h3><p>' + esc(zh.formation) + '</p>' : '')
+    + (zh.explanation ? '<h3>' + ui("Chinese usage") + '</h3><p>' + esc(zh.explanation) + '</p>' : '')
+    + (zh.notes ? '<h3>' + ui("Chinese notes") + '</h3><p>' + esc(zh.notes) + '</p>' : '') + '</section>';
 };
 const chineseExample = (entry: { zh?: Chinese }, ja: string) => usableChinese(entry)?.examples.find(e => e.ja === ja)?.zh;
 
@@ -352,9 +358,9 @@ const exampleList = (examples: Example[] | undefined, entry: { zh?: Chinese } = 
           }</li>`,
         )
         .join('')}</ul>`
-    : '<p class="muted">No example sentence yet.</p>';
+    : '<p class="muted">' + ui("No example sentence yet.") + '</p>';
 
-const jsonBlock = (entry: unknown, snippet: string) => `<details class="json"><summary>Use this entry in code</summary>
+const jsonBlock = (entry: unknown, snippet: string) => `<details class="json"><summary>${ui("Use this entry in code")}</summary>
 <pre><code>${esc(snippet)}</code></pre>
 <pre><code>${esc(JSON.stringify(entry, null, 2))}</code></pre></details>`;
 
@@ -364,7 +370,7 @@ const pager = (root: string, prev?: [string, string], next?: [string, string]) =
 const reportUrl = (kind: string, entry: string) =>
   esc(`${REPO}/issues/new?template=data-error.yml&title=${encodeURIComponent(`Data error: ${entry}`)}&kind=${kind}&entry=${encodeURIComponent(entry)}`);
 
-const speak = (text: string) => `<button class="speak" type="button" data-speak="${esc(text)}" title="Listen" aria-label="Listen">🔊</button>`;
+const speak = (text: string) => `<button class="speak" type="button" data-speak="${esc(text)}" ${uiAttr("title", "Listen")} ${uiAttr("aria-label", "Listen")}>🔊</button>`;
 
 // ---------------------------------------------------------------------------
 // Entry pages
@@ -383,8 +389,8 @@ function vocabPages(): void {
         .map((label) => `<span class="chip">${esc(label)}</span>`)
         .join('');
       const also = [
-        v.other_forms?.length ? `<p class="muted">Also written <span lang="ja">${esc(v.other_forms.join('、'))}</span></p>` : '',
-        v.other_readings?.length ? `<p class="muted">Also read <span lang="ja">${esc(v.other_readings.join('、'))}</span></p>` : '',
+        v.other_forms?.length ? `<p class="muted"> ${ui("Also written")} <span lang="ja">${esc(v.other_forms.join('、'))}</span></p>` : '',
+        v.other_readings?.length ? `<p class="muted"> ${ui("Also read")} <span lang="ja">${esc(v.other_readings.join('、'))}</span></p>` : '',
       ].join('');
       const reading = v.word === v.reading ? '' : `<span class="reading">${esc(v.reading)}</span>`;
       const gloss = v.meanings.slice(0, 3).join('; ');
@@ -406,11 +412,11 @@ ${examplesHeading(v.examples)}
 ${exampleList(v.examples, v)}
 </section>
 <aside>
-${kanjiCards ? `<h2>Kanji</h2><div class="kanji-links">${kanjiCards}</div>` : ''}
-<h2>Look up</h2>
+${kanjiCards ? `<h2>${ui("Kanji")}</h2><div class="kanji-links">${kanjiCards}</div>` : ''}
+<h2>${ui("Look up")}</h2>
 <p><a href="https://jisho.org/word/${encodeURIComponent(v.word)}" rel="noopener">Jisho</a>${
           v.jmdict_id ? ` · <a href="https://www.edrdg.org/jmwsgi/entry.py?svc=jmdict&amp;q=${v.jmdict_id}" rel="noopener">JMdict #${v.jmdict_id}</a>` : ''
-        } · <a href="${reportUrl('Vocabulary', `${v.word} (${level})`)}" rel="noopener">Report an error</a></p>
+        } · <a href="${reportUrl('Vocabulary', `${v.word} (${level})`)}" rel="noopener">${ui("Report an error")}</a></p>
 </aside>
 </div>
 ${jsonBlock(v, `import { getVocabById } from 'kotowa';\ngetVocabById('${v.id}'); // ${v.word}`)}
@@ -442,24 +448,24 @@ function kanjiPages(): void {
 <div class="entry-head"><h1 class="kanji-big" lang="ja">${esc(k.character)}</h1>${lvl(k.level)}</div>
 <ol class="meanings${k.meanings.length === 1 ? ' single' : ''}">${k.meanings.map((m) => `<li>${esc(m)}</li>`).join('')}</ol>
 <dl class="kv">
-<dt>On'yomi</dt><dd>${esc(k.onyomi.join('、') || '—')}</dd>
-<dt>Kun'yomi</dt><dd>${esc(k.kunyomi.join('、') || '—')}</dd>
-<dt>Strokes</dt><dd>${k.strokes ?? '—'}</dd>
-<dt>Radical</dt><dd>${k.radical ? `${esc(k.radical)} <span class="muted">(#${k.radical_number})</span>` : '—'}</dd>
-${k.grade ? `<dt>School grade</dt><dd>${k.grade <= 6 ? k.grade : k.grade === 8 ? 'secondary (jōyō)' : 'jinmeiyō'}</dd>` : ''}
-${k.freq ? `<dt>Frequency</dt><dd>#${k.freq} <span class="muted">in newspapers</span></dd>` : ''}
-${k.nanori?.length ? `<dt>Name readings</dt><dd>${esc(k.nanori.join('、'))}</dd>` : ''}
+<dt>${ui("On'yomi")}</dt><dd>${esc(k.onyomi.join('、') || '—')}</dd>
+<dt>${ui("Kun'yomi")}</dt><dd>${esc(k.kunyomi.join('、') || '—')}</dd>
+<dt>${ui("Strokes")}</dt><dd>${k.strokes ?? '—'}</dd>
+<dt>${ui("Radical")}</dt><dd>${k.radical ? `${esc(k.radical)} <span class="muted">(#${k.radical_number})</span>` : '—'}</dd>
+${k.grade ? `<dt>${ui("School grade")}</dt><dd>${k.grade <= 6 ? k.grade : k.grade === 8 ? ui("secondary (jōyō)") : ui("jinmeiyō")}</dd>` : ''}
+${k.freq ? `<dt>${ui("Frequency")}</dt><dd>#${k.freq} <span class="muted">${ui("in newspapers")}</span></dd>` : ''}
+${k.nanori?.length ? `<dt>${ui("Name readings")}</dt><dd>${esc(k.nanori.join('、'))}</dd>` : ''}
 </dl>
-${k.supplementary ? `<p class="muted" style="font-size:14px">Not in Waller's JLPT lists (which predate the 2010 jōyō revision): placed at ${k.level} because ${k.words?.length ? 'OpenJLPT words at that level use it' : 'the N1 level completes the jōyō kanji'}.</p>` : ''}
+${k.supplementary ? `<p class="muted" style="font-size:14px">${ui(k.words?.length ? "Not in Waller’s JLPT lists (which predate the 2010 jōyō revision): placed at {level} because OpenJLPT words at that level use it." : "Not in Waller’s JLPT lists (which predate the 2010 jōyō revision): placed at {level} to complete the jōyō kanji.", { level: k.level })}</p>` : ''}
 </section>
 <aside>
-<h2>Stroke order</h2>
-<img class="strokes-img" src="https://cdn.jsdelivr.net/gh/KanjiVG/kanjivg@master/kanji/${cp}.svg" alt="Stroke order diagram for ${esc(k.character)}" loading="lazy" width="220" height="220">
-<p class="muted" style="font-size:13px">Diagram: <a href="https://kanjivg.tagaini.net/">KanjiVG</a>, CC BY-SA 3.0</p>
+<h2>${ui("Stroke order")}</h2>
+<img class="strokes-img" src="https://cdn.jsdelivr.net/gh/KanjiVG/kanjivg@master/kanji/${cp}.svg" alt="Stroke order diagram for ${esc(k.character)}" data-i18n-alt="Stroke order diagram for {character}" data-i18n-params="${esc(JSON.stringify({ character: k.character }))}" loading="lazy" width="220" height="220">
+<p class="muted" style="font-size:13px">${ui("Diagram:")} <a href="https://kanjivg.tagaini.net/">KanjiVG</a>, CC BY-SA 3.0</p>
 </aside>
 </div>
-${words ? `<h2>Words with ${esc(k.character)}</h2><table class="list"><tbody>${words}</tbody></table>` : ''}
-<p class="muted" style="margin-top:24px"><a href="https://jisho.org/search/${encodeURIComponent(k.character)}%20%23kanji" rel="noopener">Jisho</a> · <a href="${reportUrl('Kanji', `${k.character} (${level})`)}" rel="noopener">Report an error</a></p>
+${words ? `<h2>${ui("Words with {character}", { character: k.character })}</h2><table class="list"><tbody>${words}</tbody></table>` : ''}
+<p class="muted" style="margin-top:24px"><a href="https://jisho.org/search/${encodeURIComponent(k.character)}%20%23kanji" rel="noopener">Jisho</a> · <a href="${reportUrl('Kanji', `${k.character} (${level})`)}" rel="noopener">${ui("Report an error")}</a></p>
 ${jsonBlock(k, `import { findKanji } from 'kotowa';\nfindKanji('${k.character}');`)}
 ${pager(root, list[i - 1] && [kanjiPath(list[i - 1].character), list[i - 1].character], list[i + 1] && [kanjiPath(list[i + 1].character), list[i + 1].character])}`,
       });
@@ -486,15 +492,15 @@ function grammarPages(): void {
 <div class="entry-head"><h1 class="headword" lang="ja" style="font-size:clamp(34px,6vw,54px)">${esc(g.pattern)}</h1>${lvl(g.level)}</div>
 <div>${g.reading ? `<span class="reading">${esc(g.reading)}</span> ` : ''}<span class="romaji">${esc(g.romaji)}</span></div>
 <p style="font-size:21px;margin:14px 0">${esc(g.meaning)}</p>
-<h2>Formation</h2>
+<h2>${ui("Formation")}</h2>
 <div class="formation">${esc(g.formation)}</div>
 ${chinesePanel(g)}
 ${examplesHeading(g.examples)}
 ${exampleList(g.examples, g)}
-${g.notes ? `<h2>Notes</h2><p class="note">${esc(g.notes)}</p>` : ''}
+${g.notes ? `<h2>${ui("Notes")}</h2><p class="note">${esc(g.notes)}</p>` : ''}
 <div class="chips">${g.tags.map((t) => `<span class="chip">#${esc(t)}</span>`).join('')}</div>
-${related ? `<h2>Related ${level} grammar</h2><div class="chips">${related}</div>` : ''}
-<p class="muted" style="margin-top:24px"><a href="${reportUrl('Grammar', `${g.pattern} (${level})`)}" rel="noopener">Suggest an improvement</a></p>
+${related ? `<h2>${ui("Related {level} grammar", { level })}</h2><div class="chips">${related}</div>` : ''}
+<p class="muted" style="margin-top:24px"><a href="${reportUrl('Grammar', `${g.pattern} (${level})`)}" rel="noopener">${ui("Suggest an improvement")}</a></p>
 ${jsonBlock(g, `import { getGrammarById } from 'kotowa';\ngetGrammarById('${g.id}');`)}
 ${pager(root, list[i - 1] && [grammarPath(list[i - 1]), list[i - 1].pattern], list[i + 1] && [grammarPath(list[i + 1]), list[i + 1].pattern])}`,
       });
@@ -510,10 +516,10 @@ const cdnBase = SITE_URL.replace(/\/$/, '');
 /** Filter box, self-test toggles and download links above a level list. */
 function listTools(lc: string, kind: 'vocab' | 'grammar', target: string, readings: boolean): string {
   return `<div class="list-tools">
-<input class="filter" type="search" placeholder="Filter (kanji, kana, romaji or English)…" data-filter="${target}" aria-label="Filter">
-${kind === 'vocab' ? `<label><input type="checkbox" data-hide="r" data-target="${target}"> Hide readings</label>` : ''}
-<label><input type="checkbox" data-hide="m" data-target="${target}"> Hide meanings</label>
-<span class="dl">Download: <a href="../dataset/csv/${kind}-${lc}.csv">CSV</a> · <a href="../dataset/json/${kind}/${lc}.json">JSON</a> · <a href="../downloads/openjlpt-${lc}-${kind}.apkg">Anki</a></span>
+<input class="filter" type="search" ${uiAttr("placeholder", "Filter (kanji, kana, romaji, Chinese or English)…")} data-filter="${target}" ${uiAttr("aria-label", "Filter")}>
+${kind === 'vocab' ? `<label><input type="checkbox" data-hide="r" data-target="${target}"> ${ui("Hide readings")}</label>` : ''}
+<label><input type="checkbox" data-hide="m" data-target="${target}"> ${ui("Hide meanings")}</label>
+<span class="dl"> ${ui("Download:")} <a href="../dataset/csv/${kind}-${lc}.csv">CSV</a> · <a href="../dataset/json/${kind}/${lc}.json">JSON</a> · <a href="../downloads/openjlpt-${lc}-${kind}.apkg">Anki</a></span>
 </div>`;
 }
 
@@ -540,13 +546,13 @@ function levelPages(): void {
       description: `Everything for the JLPT ${level}: ${plural(v.length, 'vocabulary word')}, ${plural(k.length, 'kanji')} and ${plural(g.length, 'grammar point')} with readings, meanings and example sentences. Free and open data.`,
       body: `${crumbs(root, [[`JLPT ${level}`]])}
 <h1>JLPT ${level} ${lvl(level)}</h1>
-<p class="lead">${levelBlurb[level]}</p>
+<p class="lead">${ui(levelBlurb[level])}</p>
 <div class="grid grid-3" style="margin-top:22px">
-<a class="card level-card" href="vocab.html"><div class="big">${v.length.toLocaleString('en-US')}</div><div>vocabulary words →</div><ul><li lang="ja">${v.slice(0, 6).map((x) => esc(x.word)).join('、')}…</li></ul></a>
-<a class="card level-card" href="kanji.html"><div class="big">${k.length.toLocaleString('en-US')}</div><div>kanji →</div><ul><li lang="ja" style="font-size:22px">${k.slice(0, 10).map((x) => esc(x.character)).join(' ')}</li></ul></a>
-<a class="card level-card" href="grammar.html"><div class="big">${g.length}</div><div>grammar points →</div><ul><li lang="ja">${g.slice(0, 5).map((x) => esc(x.pattern)).join('、')}…</li></ul></a>
+<a class="card level-card" href="vocab.html"><div class="big">${v.length.toLocaleString('en-US')}</div><div>${ui("vocabulary words →")}</div><ul><li lang="ja">${v.slice(0, 6).map((x) => esc(x.word)).join('、')}…</li></ul></a>
+<a class="card level-card" href="kanji.html"><div class="big">${k.length.toLocaleString('en-US')}</div><div>${ui("kanji →")}</div><ul><li lang="ja" style="font-size:22px">${k.slice(0, 10).map((x) => esc(x.character)).join(' ')}</li></ul></a>
+<a class="card level-card" href="grammar.html"><div class="big">${g.length}</div><div>${ui("grammar points →")}</div><ul><li lang="ja">${g.slice(0, 5).map((x) => esc(x.pattern)).join('、')}…</li></ul></a>
 </div>
-<div class="btn-row"><a class="btn primary" href="${root}flashcards.html#${level}">Study ${level} with flashcards</a><a class="btn" href="${root}data.html">Download ${level} as JSON / CSV / Anki</a></div>`,
+<div class="btn-row"><a class="btn primary" href="${root}flashcards.html#${level}">${ui("Study {level} with flashcards", { level })}</a><a class="btn" href="${root}data.html">${ui("Download {level} as JSON / CSV / Anki", { level })}</a></div>`,
     });
 
     writePage({
@@ -555,9 +561,9 @@ function levelPages(): void {
       title: `JLPT ${level} Vocabulary List — all ${v.length.toLocaleString('en-US')} words with readings and meanings`,
       description: `The complete JLPT ${level} vocabulary list: ${plural(v.length, 'word')} with kana readings, romaji, English meanings and example sentences. Free to download as JSON, CSV or SQLite.`,
       body: `${crumbs(root, [[`JLPT ${level}`, `${lc}/index.html`], ['Vocabulary']])}
-<h1>JLPT ${level} vocabulary <span class="muted" style="font-size:0.6em">${v.length.toLocaleString('en-US')} words</span></h1>
+<h1>JLPT ${level} ${ui("Vocabulary")} <span class="muted" style="font-size:0.6em">${ui("{count} words", { count: v.length.toLocaleString('en-US') })}</span></h1>
 ${listTools(lc, 'vocab', '#vlist', true)}
-<table class="list" id="vlist"><thead><tr><th>Word</th><th class="r">Reading</th><th>Meaning</th></tr></thead><tbody>
+<table class="list" id="vlist"><thead><tr><th>${ui("Word")}</th><th class="r">${ui("Reading")}</th><th>${ui("Meaning")}</th></tr></thead><tbody>
 ${v.map((x) => `<tr data-s="${esc(`${x.word} ${x.reading} ${x.romaji} ${x.meanings.join(' ')} ${usableChinese(x)?.meanings.join(' ') ?? ''}`.toLowerCase())}"><td class="w"><a href="${root}${vocabPath(x)}" lang="ja">${esc(x.word)}</a>${x.word === x.reading ? '' : `<span class="r-m" lang="ja">${esc(x.reading)}</span>`}</td><td class="r" lang="ja"><span>${esc(x.reading)}</span></td><td class="m"><span>${esc(truncate(bilingual(x, x.meanings.join('; ')), 130))}</span></td></tr>`).join('\n')}
 </tbody></table>`,
     });
@@ -568,8 +574,8 @@ ${v.map((x) => `<tr data-s="${esc(`${x.word} ${x.reading} ${x.romaji} ${x.meanin
       title: `JLPT ${level} Kanji List — ${k.length} kanji with readings, meanings and stroke order`,
       description: `All ${k.length} JLPT ${level} kanji with on'yomi, kun'yomi, English meanings, stroke counts, radicals, stroke order and example words.`,
       body: `${crumbs(root, [[`JLPT ${level}`, `${lc}/index.html`], ['Kanji']])}
-<h1>JLPT ${level} kanji <span class="muted" style="font-size:0.6em">${k.length}</span></h1>
-<p class="muted">Most frequent first. <a href="../dataset/csv/kanji-${lc}.csv">CSV</a> · <a href="../dataset/json/kanji/${lc}.json">JSON</a> · <a href="${root}downloads/openjlpt-${lc}-kanji.apkg">Anki deck</a></p>
+<h1>JLPT ${level} ${ui("Kanji")} <span class="muted" style="font-size:0.6em">${k.length}</span></h1>
+<p class="muted"> ${ui("Most frequent first.")} <a href="../dataset/csv/kanji-${lc}.csv">CSV</a> · <a href="../dataset/json/kanji/${lc}.json">JSON</a> · <a href="${root}downloads/openjlpt-${lc}-kanji.apkg">${ui("Anki deck")}</a></p>
 <div class="kanji-grid">${k.map((x) => `<a href="${root}${kanjiPath(x.character)}" title="${esc(x.meanings.slice(0, 3).join(', '))}" lang="ja">${esc(x.character)}<small>${esc(x.meanings[0] ?? '')}</small></a>`).join('')}</div>`,
     });
 
@@ -579,7 +585,7 @@ ${v.map((x) => `<tr data-s="${esc(`${x.word} ${x.reading} ${x.romaji} ${x.meanin
       title: `JLPT ${level} Grammar List — ${g.length} grammar points with examples`,
       description: `All ${g.length} JLPT ${level} grammar points with meanings, formation rules, example sentences and usage notes.`,
       body: `${crumbs(root, [[`JLPT ${level}`, `${lc}/index.html`], ['Grammar']])}
-<h1>JLPT ${level} grammar <span class="muted" style="font-size:0.6em">${g.length} points</span></h1>
+<h1>JLPT ${level} ${ui("Grammar")} <span class="muted" style="font-size:0.6em">${ui("{count} points", { count: g.length })}</span></h1>
 ${listTools(lc, 'grammar', '#glist', false)}
 <ul class="gram-list" id="glist">${g.map((x) => `<li data-s="${esc(`${x.pattern} ${x.reading ?? ''} ${x.romaji} ${x.meaning} ${x.tags.join(' ')}`.toLowerCase())}"><a href="${root}${grammarPath(x)}"><span class="p" lang="ja">${esc(x.pattern)}</span><span class="m"><span>${esc(bilingual(x, x.meaning))}</span></span></a></li>`).join('')}</ul>`,
     });
@@ -595,44 +601,44 @@ function homePage(): void {
   const c = meta.counts;
   const updated = meta.sources?.jmdict?.created;
   const levelCards = LEVEL_NAMES.map(
-    (l) => `<a class="card level-card" href="${l.toLowerCase()}/index.html"><div class="lv" style="color:var(--${l.toLowerCase()})">${l}</div><div class="lv-sub">${levelShort[l]}</div><ul>
-<li>${c.vocab[l].toLocaleString('en-US')} words</li><li>${c.kanji[l].toLocaleString('en-US')} kanji</li><li>${c.grammar[l]} grammar points</li></ul></a>`,
+    (l) => `<a class="card level-card" href="${l.toLowerCase()}/index.html"><div class="lv" style="color:var(--${l.toLowerCase()})">${l}</div><div class="lv-sub">${ui(levelShort[l])}</div><ul>
+<li>${ui("{count} words", { count: c.vocab[l].toLocaleString('en-US') })}</li><li>${ui("{count} kanji", { count: c.kanji[l].toLocaleString('en-US') })}</li><li>${ui("{count} grammar points", { count: c.grammar[l] })}</li></ul></a>`,
   ).join('');
   writePage({
     path: 'index.html',
     title: 'Kotowa · 词和 — JLPT N5–N1 vocabulary, kanji and grammar lists, free and open',
     description: `Free, open JLPT dataset and study site: ${c.vocab.total.toLocaleString('en-US')} vocabulary words, ${c.kanji.total.toLocaleString('en-US')} kanji and ${c.grammar.total} grammar points for N5–N1, with example sentences. Search, flashcards, text analyzer, and downloads as JSON, CSV, SQLite and Anki.`,
     body: `<section class="hero">
-<h1>Kotowa · 词和<br><span class="accent">N5–N1 中文日语学习</span></h1>
-<p class="lead">Search ${c.vocab.total.toLocaleString('en-US')} words, ${c.kanji.total.toLocaleString('en-US')} kanji and ${c.grammar.total} grammar points from N5 to N1 — with Chinese vocabulary and grammar explanations, translated examples, and furigana where available. Or grab the whole dataset for your own app.</p>
+<h1>Kotowa · 词和<br><span class="accent">${ui("N5–N1 Japanese study")}</span></h1>
+<p class="lead">${ui("Search {words} words, {kanji} kanji and {grammar} grammar points from N5 to N1 — with Chinese vocabulary and grammar explanations, translated examples, and furigana where available. Or grab the whole dataset for your own app.", { words: c.vocab.total.toLocaleString('en-US'), kanji: c.kanji.total.toLocaleString('en-US'), grammar: c.grammar.total })}</p>
 <div class="search" id="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-<input id="q" type="search" placeholder="试试 肥皂、吃、食べる、taberu 或 てもいい" autocomplete="off" aria-label="Search words, kanji and grammar"></div>
+<input id="q" type="search" ${uiAttr("placeholder", "Try 肥皂, eat, 食べる, taberu or てもいい")} autocomplete="off" ${uiAttr("aria-label", "Search words, kanji and grammar")}></div>
 <ul class="results" id="results" aria-live="polite"></ul>
-<div class="btn-row quick"><a class="btn" href="n5/index.html">📚 Start with N5</a><a class="btn" href="data.html#anki">🃏 Anki decks</a><a class="btn" href="analyzer.html">🔍 What level is this text?</a><a class="btn" href="flashcards.html">🔁 Flashcards</a></div>
-<p class="muted small">Levels follow <a href="https://www.tanos.co.uk/jlpt/" rel="noopener">Jonathan Waller's community lists</a>; the JLPT hasn't published official lists since 2010. Based on JMdict and reviewed source updates${updated ? ` · data updated ${updated}` : ''}.</p>
+<div class="btn-row quick"><a class="btn" href="n5/index.html">${ui("📚 Start with N5")}</a><a class="btn" href="data.html#anki">${ui("🃏 Anki decks")}</a><a class="btn" href="analyzer.html">${ui("🔍 What level is this text?")}</a><a class="btn" href="flashcards.html">${ui("🔁 Flashcards")}</a></div>
+<p class="muted small">${ui("Levels follow")} <a href="https://www.tanos.co.uk/jlpt/" rel="noopener">${ui("Jonathan Waller's community lists")}</a>${ui("; the JLPT has not published official lists since 2010. Based on JMdict and reviewed source updates")}${updated ? ` · ${ui("data updated {date}", { date: updated })}` : ''}.</p>
 <div class="stats">
-<div class="stat"><b>${c.vocab.total.toLocaleString('en-US')}</b><span>words</span></div>
-<div class="stat"><b>${c.kanji.total.toLocaleString('en-US')}</b><span>kanji</span></div>
-<div class="stat"><b>${c.grammar.total}</b><span>grammar points</span></div>
-<div class="stat"><b>5</b><span>levels, N5 → N1</span></div>
+<div class="stat"><b>${c.vocab.total.toLocaleString('en-US')}</b><span>${ui("words")}</span></div>
+<div class="stat"><b>${c.kanji.total.toLocaleString('en-US')}</b><span>${ui("kanji")}</span></div>
+<div class="stat"><b>${c.grammar.total}</b><span>${ui("grammar points")}</span></div>
+<div class="stat"><b>5</b><span>${ui("levels, N5 → N1")}</span></div>
 </div>
 </section>
-<h2>Browse by level</h2>
+<h2>${ui("Browse by level")}</h2>
 <div class="grid grid-5">${levelCards}</div>
-<h2>Study tools</h2>
+<h2>${ui("Study tools")}</h2>
 <div class="grid grid-3">
-<a class="card level-card" href="flashcards.html"><h3 style="margin-top:0">🃏 Flashcards</h3><p class="muted">Spaced-repetition review for any level — words, kanji or grammar. Progress saves in your browser.</p></a>
-<a class="card level-card" href="analyzer.html"><h3 style="margin-top:0">🔍 Text analyzer</h3><p class="muted">Paste any Japanese text and see which JLPT level each kanji belongs to.</p></a>
-<a class="card level-card" href="data.html"><h3 style="margin-top:0">📦 Data &amp; API</h3><p class="muted">JSON, CSV, SQLite and Anki downloads, a CDN, and loaders for JavaScript and Python.</p></a>
+<a class="card level-card" href="flashcards.html"><h3 style="margin-top:0">${ui("🃏 Flashcards")}</h3><p class="muted">${ui("Spaced-repetition review for any level — words, kanji or grammar. Progress saves in your browser.")}</p></a>
+<a class="card level-card" href="analyzer.html"><h3 style="margin-top:0">${ui("🔍 Text analyzer")}</h3><p class="muted">${ui("Paste any Japanese text and see which JLPT level each kanji belongs to.")}</p></a>
+<a class="card level-card" href="data.html"><h3 style="margin-top:0">${ui("📦 Data & API")}</h3><p class="muted">${ui("JSON, CSV, SQLite and Anki downloads, a CDN, and loaders for JavaScript and Python.")}</p></a>
 </div>
-<h2>Built for developers</h2>
-<p class="muted">The same data powers this site and can power your app: free to use, including commercially, under CC BY-SA 4.0.</p>
+<h2>${ui("Built for developers")}</h2>
+<p class="muted">${ui("The same data powers this site and can power your app: free to use, including commercially, under CC BY-SA 4.0.")}</p>
 <pre><code>npm install git+https://github.com/AntaresGG/kotowa.git#main
 
 import { findWord, getGrammar } from 'kotowa';
 findWord('食べる');   // { reading: 'たべる', level: 'N5', pos: ['v1','vt'], examples: [...] }
 getGrammar('N4');     // ${c.grammar.N4} grammar points with examples</code></pre>
-<div class="btn-row"><a class="btn primary" href="${REPO}">${GITHUB_ICON} Kotowa · 词和 on GitHub</a><a class="btn" href="data.html">Get the data</a></div>`,
+<div class="btn-row"><a class="btn primary" href="${REPO}">${GITHUB_ICON} ${ui("Kotowa · 词和 on GitHub")}</a><a class="btn" href="data.html">${ui("Get the data")}</a></div>`,
     scripts: ['assets/search.js'],
   });
 }
@@ -645,60 +651,60 @@ function toolPages(): void {
     description: 'Free JLPT flashcards in your browser: vocabulary, kanji and grammar for N5 to N1 with spaced repetition. No sign-up; progress is saved locally.',
     scripts: ['assets/flashcards.js'],
     body: `<div class="fc">
-<h1>Flashcards</h1>
-<p class="muted">Spaced repetition in your browser. Progress is stored on this device only.</p>
-<div class="seg" id="fc-mode" role="group" aria-label="Study mode"><button type="button" data-v="daily" aria-pressed="true">Daily review</button><button type="button" data-v="focus" aria-pressed="false">★ Focused review</button></div>
+<h1>${ui("Flashcards")}</h1>
+<p class="muted">${ui("Spaced repetition in your browser. Progress is stored on this device only.")}</p>
+<div class="seg" id="fc-mode" role="group" ${uiAttr("aria-label", "Study mode")}><button type="button" data-v="daily" aria-pressed="true">${ui("Daily review")}</button><button type="button" data-v="focus" aria-pressed="false">${ui("★ Focused review")}</button></div>
 <p class="muted" id="fc-mode-help"></p>
 <div class="btn-row" style="justify-content:center">
-<div class="seg" id="fc-level" role="group" aria-label="Level">${LEVEL_NAMES.map((l, i) => `<button type="button" data-v="${l}" aria-pressed="${i === 0}">${l}</button>`).join('')}</div>
-<div class="seg" id="fc-kind" role="group" aria-label="Deck"><button type="button" data-v="vocab" aria-pressed="true">Words</button><button type="button" data-v="kanji" aria-pressed="false">Kanji</button><button type="button" data-v="grammar" aria-pressed="false">Grammar</button></div>
+<div class="seg" id="fc-level" role="group" ${uiAttr("aria-label", "Level")}>${LEVEL_NAMES.map((l, i) => `<button type="button" data-v="${l}" aria-pressed="${i === 0}">${l}</button>`).join('')}</div>
+<div class="seg" id="fc-kind" role="group" ${uiAttr("aria-label", "Deck")}><button type="button" data-v="vocab" aria-pressed="true">${ui("Words")}</button><button type="button" data-v="kanji" aria-pressed="false">${ui("Kanji")}</button><button type="button" data-v="grammar" aria-pressed="false">${ui("Grammar")}</button></div>
 </div>
-<section id="fc-overview" class="fc-overview" aria-label="Study progress" hidden>
-<div class="fc-overview-heading"><strong id="fc-deck-name"></strong><span class="muted">Self-rated progress</span></div>
+<section id="fc-overview" class="fc-overview" ${uiAttr("aria-label", "Study progress")} hidden>
+<div class="fc-overview-heading"><strong id="fc-deck-name"></strong><span class="muted">${ui("Self-rated progress")}</span></div>
 <div class="fc-deck-progress">
-<div class="fc-donut" id="fc-donut" role="img" aria-label="Deck progress"><div aria-hidden="true"><strong id="fc-studied-percent"></strong><span>studied</span></div></div>
+<div class="fc-donut" id="fc-donut" role="img" ${uiAttr("aria-label", "Deck progress")}><div aria-hidden="true"><strong id="fc-studied-percent"></strong><span>${ui("studied")}</span></div></div>
 <div class="fc-deck-breakdown">
-<p class="fc-studied"><strong id="fc-studied"></strong><span class="muted"> / <span id="fc-deck-total"></span> studied</span></p>
+<p class="fc-studied"><strong id="fc-studied"></strong><span class="muted"> / <span id="fc-deck-total"></span> ${ui("studied")}</span></p>
 <dl class="fc-legend">
-<div><dt><i class="fc-dot fc-new" aria-hidden="true"></i>Not started</dt><dd id="fc-new-count"></dd></div>
-<div><dt><i class="fc-dot fc-learning" aria-hidden="true"></i>Learning</dt><dd id="fc-learning-count"></dd></div>
-<div><dt><i class="fc-dot fc-learned" aria-hidden="true"></i>Learned</dt><dd id="fc-learned-count"></dd></div>
+<div><dt><i class="fc-dot fc-new" aria-hidden="true"></i>${ui("Not started")}</dt><dd id="fc-new-count"></dd></div>
+<div><dt><i class="fc-dot fc-learning" aria-hidden="true"></i>${ui("Learning")}</dt><dd id="fc-learning-count"></dd></div>
+<div><dt><i class="fc-dot fc-learned" aria-hidden="true"></i>${ui("Learned")}</dt><dd id="fc-learned-count"></dd></div>
 </dl>
 </div>
 </div>
 <div class="fc-session">
-<div class="fc-session-heading"><strong>This session</strong><span><strong id="fc-remaining"></strong> to review</span></div>
-<div class="fc-progress" id="fc-session-progress" role="progressbar" aria-label="Session completion" aria-valuemin="0" aria-valuemax="100"><div id="fc-bar"></div></div>
+<div class="fc-session-heading"><strong>${ui("This session")}</strong><span><strong id="fc-remaining"></strong> ${ui("to review")}</span></div>
+<div class="fc-progress" id="fc-session-progress" role="progressbar" ${uiAttr("aria-label", "Session completion")} aria-valuemin="0" aria-valuemax="100"><div id="fc-bar"></div></div>
 <p id="fc-session-caption" class="muted"></p>
 </div>
-<details class="fc-progress-help"><summary>What do these numbers mean?</summary>
-<p><strong>To review</strong> is the number of cards left in this session. Daily review includes new cards and due reviews; Focused review includes your saved cards. Again keeps a card in this queue.</p>
-<p><strong>Studied</strong> includes every card rated at least once: Learning + Learned. <strong>Learned</strong> means choosing Knew it at least twice since the last Again. This is self-rated recall, not a quiz result; learned cards still need review.</p>
-<p>These deck totals track daily review only: Again moves a learned card back to Learning. Focused review does not change these totals or your daily schedule. Progress is per deck; each mode resumes its own session when you return today.</p>
+<details class="fc-progress-help"><summary>${ui("What do these numbers mean?")}</summary>
+<p><strong>${ui("To review")}</strong> ${ui("is the number of cards left in this session. Daily review includes new cards and due reviews; Focused review includes your saved cards. Again keeps a card in this queue.")}</p>
+<p><strong>${ui("Studied")}</strong> ${ui("includes every card rated at least once: Learning + Learned.")} <strong>${ui("Learned")}</strong> ${ui("means choosing Knew it at least twice since the last Again. This is self-rated recall, not a quiz result; learned cards still need review.")}</p>
+<p>${ui("These deck totals track daily review only: Again moves a learned card back to Learning. Focused review does not change these totals or your daily schedule. Progress is per deck; each mode resumes its own session when you return today.")}</p>
 </details>
 </section>
-<p><label title="Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly."><input type="checkbox" id="fc-shuffle"> Shuffle</label></p>
-<p class="muted" id="fc-status" role="status">Loading…</p>
-<p><button class="btn" type="button" id="fc-mark" aria-pressed="false" disabled>☆ Save for focused review</button></p>
+<p><label ${uiAttr("title", "Keep the current card and shuffle the remaining cards. New sessions also pick new cards randomly.")}><input type="checkbox" id="fc-shuffle"> ${ui("Shuffle")}</label></p>
+<p class="muted" id="fc-status" role="status">${ui("Loading…")}</p>
+<p><button class="btn" type="button" id="fc-mark" aria-pressed="false" disabled>${ui("☆ Save for focused review")}</button></p>
 <p class="muted" id="fc-focus-message" role="status"></p>
 <div class="card fc-card" id="fc-card" tabindex="0" aria-live="polite"><div class="fc-front" lang="ja" id="fc-front"></div><div class="fc-back" id="fc-back"></div></div>
 <div id="fc-complete" hidden>
 <div class="btn-row" style="justify-content:center">
-<button class="btn primary" type="button" id="fc-next">Continue with next group</button>
-<button class="btn" type="button" id="fc-choose">Choose another deck</button>
-<a class="btn" href="index.html" id="fc-home">Back to home</a>
+<button class="btn primary" type="button" id="fc-next">${ui("Continue with next group")}</button>
+<button class="btn" type="button" id="fc-choose">${ui("Choose another deck")}</button>
+<a class="btn" href="index.html" id="fc-home">${ui("Back to home")}</a>
 </div>
 </div>
 <div class="btn-row" style="justify-content:center">
-<button class="btn" type="button" id="fc-again">✗ Again <span class="kbd">←</span></button>
-<button class="btn" type="button" id="fc-flip">Show <span class="kbd">space</span></button>
-<button class="btn primary" type="button" id="fc-good">✓ Knew it <span class="kbd">→</span></button>
+<button class="btn" type="button" id="fc-again"> ${ui("✗ Again")}<span class="kbd">←</span></button>
+<button class="btn" type="button" id="fc-flip"> ${ui("Show")}<span class="kbd"> ${ui("space")}</span></button>
+<button class="btn primary" type="button" id="fc-good"> ${ui("✓ Knew it")}<span class="kbd">→</span></button>
 </div>
-<p><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">Reset progress for this deck</button></p>
+<p><button class="btn" type="button" id="fc-reset" style="font-size:13px;padding:6px 12px">${ui("Reset progress for this deck")}</button></p>
 <details id="fc-focus-library" class="fc-focus-library" hidden>
-<summary>★ Saved cards in this deck (<span id="fc-focus-count">0</span>)</summary>
-<p class="muted">Use the level and deck selectors to view your saved collection. Stored in this browser only.</p>
-<p id="fc-focus-empty" class="muted">No saved cards yet. Use ☆ above a flashcard to add it.</p>
+<summary>${ui("★ Saved cards in this deck")} (<span id="fc-focus-count">0</span>)</summary>
+<p class="muted">${ui("Use the level and deck selectors to view your saved collection. Stored in this browser only.")}</p>
+<p id="fc-focus-empty" class="muted">${ui("No saved cards yet. Use ☆ above a flashcard to add it.")}</p>
 <ul id="fc-focus-list"></ul>
 </details>
 </div>`,
@@ -710,15 +716,15 @@ function toolPages(): void {
     title: 'What JLPT level is this text? — Japanese kanji level analyzer | Kotowa · 词和',
     description: 'Paste any Japanese text to see the JLPT level (N5–N1) of every kanji, color-coded, with a level breakdown. Free and runs in your browser.',
     scripts: ['assets/analyzer.js'],
-    body: `<h1>What JLPT level is this text?</h1>
-<p class="lead">Paste Japanese text: every kanji is colored by its JLPT level. Click one to look it up.</p>
-<textarea class="analyze" id="text" lang="ja" aria-label="Japanese text">吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。</textarea>
-<div class="legend" style="margin-top:12px">${LEVEL_NAMES.map((l) => `<span class="k-${l}"><i style="background:var(--${l.toLowerCase()})"></i>${l}</span>`).join('')}<span><i style="background:var(--none)"></i>not in JLPT lists</span></div>
+    body: `<h1>${ui("What JLPT level is this text?")}</h1>
+<p class="lead">${ui("Paste Japanese text: every kanji is colored by its JLPT level. Click one to look it up.")}</p>
+<textarea class="analyze" id="text" lang="ja" ${uiAttr("aria-label", "Japanese text")}>吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。</textarea>
+<div class="legend" style="margin-top:12px">${LEVEL_NAMES.map((l) => `<span class="k-${l}"><i style="background:var(--${l.toLowerCase()})"></i>${l}</span>`).join('')}<span><i style="background:var(--none)"></i>${ui("not in JLPT lists")}</span></div>
 <div class="bar" id="bar"></div>
 <p id="summary" class="muted"></p>
 <div class="card"><div class="marked" id="marked" lang="ja"></div></div>
-<div class="btn-row"><button class="btn" type="button" id="share">🔗 Copy link to this analysis</button></div>
-<p class="muted" style="font-size:14px">Levels are also marked by underline: N5 none, N4 dotted, N3 dashed, N2 solid, N1 double. Only kanji are analysed — kana and vocabulary are not.</p>`,
+<div class="btn-row"><button class="btn" type="button" id="share">${ui("🔗 Copy link to this analysis")}</button></div>
+<p class="muted" style="font-size:14px">${ui("Levels are also marked by underline: N5 none, N4 dotted, N3 dashed, N2 solid, N1 double. Only kanji are analysed — kana and vocabulary are not.")}</p>`,
   });
 
   const cdn = SITE_URL.replace(/\/$/, '');
@@ -727,27 +733,27 @@ function toolPages(): void {
     active: 'data.html',
     title: 'Download the JLPT dataset — JSON, CSV, SQLite, Anki | Kotowa · 词和',
     description: 'Download every JLPT N5–N1 word, kanji and grammar point as JSON, CSV or SQLite, or install the loaders from the project repository. CC BY-SA 4.0.',
-    body: `<h1>Data &amp; API</h1>
-<p class="lead">All data is free to use — including commercially — under <a href="${REPO}/blob/main/LICENSE">CC BY-SA 4.0</a>, with attribution to Kotowa, OpenJLPT and the <a href="${REPO}/blob/main/NOTICE.md">upstream sources</a>.</p>
-<h2>Download</h2>
-<table class="list"><thead><tr><th>Level</th><th>Vocabulary</th><th>Kanji</th><th>Grammar</th></tr></thead><tbody>
+    body: `<h1>${ui("Data & API")}</h1>
+<p class="lead">${ui("All data is free to use — including commercially — under")} <a href="${REPO}/blob/main/LICENSE">CC BY-SA 4.0</a>, ${ui("with attribution to Kotowa, OpenJLPT and the")} <a href="${REPO}/blob/main/NOTICE.md">${ui("upstream sources")}</a>.</p>
+<h2>${ui("Download")}</h2>
+<table class="list"><thead><tr><th>${ui("Level")}</th><th>${ui("Vocabulary")}</th><th>${ui("Kanji")}</th><th>${ui("Grammar")}</th></tr></thead><tbody>
 ${LEVEL_NAMES.map((l) => {
   const lc = l.toLowerCase();
   return `<tr><td>${lvl(l)}</td>${(['vocab', 'kanji', 'grammar'] as const).map((k) => `<td><a href="dataset/json/${k}/${lc}.json">JSON</a> · <a href="dataset/csv/${k}-${lc}.csv">CSV</a></td>`).join('')}</tr>`;
 }).join('')}
 </tbody></table>
-<div class="btn-row"><a class="btn primary" href="downloads/openjlpt-data.zip">⬇ Everything: JSON + CSV + SQLite (zip)</a><a class="btn" href="dataset/openjlpt.sqlite">⬇ SQLite database</a></div>
-<p class="muted small">Spreadsheet or pandas? Every CSV loads straight from the CDN: <code>pd.read_csv("${cdn}/dataset/csv/vocab-n5.csv")</code></p>
-<h2 id="anki">Anki decks</h2>
-<p>Ready-made <a href="https://apps.ankiweb.net/">Anki</a> decks with furigana, example sentences and text-to-speech. Re-importing a newer version updates your cards and keeps your review history.</p>
-<table class="list"><thead><tr><th>Level</th><th>Vocabulary</th><th>Kanji</th><th>Grammar</th></tr></thead><tbody>
-${LEVEL_NAMES.map((l) => `<tr><td>${lvl(l)}</td>${(['vocab', 'kanji', 'grammar'] as const).map((k) => `<td><a href="downloads/openjlpt-${l.toLowerCase()}-${k}.apkg">⬇ ${meta.counts[k][l].toLocaleString('en-US')} ${k === 'vocab' ? 'words' : k === 'kanji' ? 'kanji' : 'points'}</a></td>`).join('')}</tr>`).join('')}
+<div class="btn-row"><a class="btn primary" href="downloads/openjlpt-data.zip">${ui("⬇ Everything: JSON + CSV + SQLite (zip)")}</a><a class="btn" href="dataset/openjlpt.sqlite">${ui("⬇ SQLite database")}</a></div>
+<p class="muted small">${ui("Spreadsheet or pandas? Every CSV loads straight from the CDN:")} <code>pd.read_csv("${cdn}/dataset/csv/vocab-n5.csv")</code></p>
+<h2 id="anki">${ui("Anki decks")}</h2>
+<p>${ui("Ready-made")} <a href="https://apps.ankiweb.net/">Anki</a> ${ui("decks with furigana, example sentences and text-to-speech. Re-importing a newer version updates your cards and keeps your review history.")}</p>
+<table class="list"><thead><tr><th>${ui("Level")}</th><th>${ui("Vocabulary")}</th><th>${ui("Kanji")}</th><th>${ui("Grammar")}</th></tr></thead><tbody>
+${LEVEL_NAMES.map((l) => `<tr><td>${lvl(l)}</td>${(['vocab', 'kanji', 'grammar'] as const).map((k) => `<td><a href="downloads/openjlpt-${l.toLowerCase()}-${k}.apkg">⬇ ${ui(k === 'vocab' ? '{count} words' : k === 'kanji' ? '{count} kanji' : '{count} points', { count: meta.counts[k][l].toLocaleString('en-US') })}</a></td>`).join('')}</tr>`).join('')}
 </tbody></table>
-<p><a class="btn primary" href="downloads/openjlpt-complete.apkg">⬇ Everything in one deck (N5–N1)</a></p>
-<h2 id="yomitan">Yomitan dictionary</h2>
-<p>See the JLPT level of any word or kanji right in the <a href="https://yomitan.wiki/">Yomitan</a> pop-up: <a href="downloads/openjlpt-yomitan.zip">⬇ openjlpt-yomitan.zip</a>, then import it in Yomitan's settings → Dictionaries. Yomitan can update it for you when the data is refreshed (Dictionaries → Check for updates).</p>
-<h2>CDN (no install)</h2>
-<p>Fetch the dataset directly from this deployment:</p>
+<p><a class="btn primary" href="downloads/openjlpt-complete.apkg">${ui("⬇ Everything in one deck (N5–N1)")}</a></p>
+<h2 id="yomitan">${ui("Yomitan dictionary")}</h2>
+<p>${ui("See the JLPT level of any word or kanji right in the")} <a href="https://yomitan.wiki/">Yomitan</a> <a href="downloads/openjlpt-yomitan.zip">⬇ openjlpt-yomitan.zip</a>, ${ui("then import it in Yomitan settings → Dictionaries. When data is refreshed, use Dictionaries → Check for updates.")}</p>
+<h2>${ui("CDN (no install)")}</h2>
+<p>${ui("Fetch the dataset directly from this deployment:")}</p>
 <pre><code>const n5 = await fetch('${cdn}/dataset/json/vocab/n5.json').then(r =&gt; r.json());</code></pre>
 <h2>JavaScript / TypeScript</h2>
 <pre><code>npm install git+https://github.com/AntaresGG/kotowa.git#main
@@ -770,8 +776,8 @@ query("SELECT word, reading FROM vocab WHERE level = 'N5' LIMIT 5")</code></pre>
 SELECT v.word, v.reading, v.level
 FROM vocab_fts f JOIN vocab v ON v.rowid = f.rowid
 WHERE vocab_fts MATCH 'weather';</code></pre>
-<h2>Schema</h2>
-<p>Every file is validated in CI against <a href="${REPO}/tree/main/schema">JSON Schemas</a>. See the <a href="${REPO}#readme">README</a> for field-by-field documentation.</p>
+<h2>${ui("Schema")}</h2>
+<p>${ui("Every file is validated in CI against")} <a href="${REPO}/tree/main/schema">JSON Schemas</a>. ${ui("See the")} <a href="${REPO}#readme">README</a> ${ui("for field-by-field documentation.")}</p>
 <script type="application/ld+json">${jsonLd({
   '@context': 'https://schema.org',
   '@type': 'Dataset',
@@ -809,7 +815,7 @@ WHERE vocab_fts MATCH 'weather';</code></pre>
     title: 'Page not found | Kotowa · 词和',
     description: 'Page not found.',
     noindex: true,
-    body: `<h1>Page not found</h1><p class="lead">That page doesn't exist. Try the <a href="${new URL(SITE_URL).pathname}">search on the home page</a>.</p>`,
+    body: `<h1>${ui("Page not found")}</h1><p class="lead">${ui("That page does not exist. Try the")} <a href="${new URL(SITE_URL).pathname}">${ui("search on the home page")}</a>.</p>`,
   });
 }
 
@@ -855,6 +861,7 @@ function writeSeo(): void {
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 cpSync(join(ROOT, 'site', 'assets'), join(OUT, 'assets'), { recursive: true });
+writeFileSync(join(OUT, 'assets/i18n.js'), I18N_SCRIPT);
 cpSync(DATA_DIR, join(OUT, 'dataset'), { recursive: true });
 cpSync(join(ROOT, 'assets', 'kotowa-social.png'), join(OUT, 'assets', 'kotowa-social.png'));
 homePage();

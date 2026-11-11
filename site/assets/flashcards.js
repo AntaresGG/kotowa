@@ -1,6 +1,8 @@
 // Flashcards with a small Leitner-style spaced-repetition schedule, stored in localStorage.
 (function () {
   'use strict';
+  var I18n = KotowaI18n;
+  var t = I18n.t;
   var BOXES = [0, 1, 3, 7, 16, 35]; // days until the next review, per box
   var DAY = 86400000;
   var state = { level: 'N5', kind: 'vocab', mode: 'daily', deck: [], queue: [], progress: {}, current: null, flipped: false, done: 0, shuffle: false };
@@ -27,10 +29,10 @@
     var marked = !!state.current && focusIds().includes(state.current[0]);
     $('fc-mark').disabled = !state.current;
     $('fc-mark').setAttribute('aria-pressed', String(marked));
-    $('fc-mark').textContent = marked ? '★ Saved for focused review' : '☆ Save for focused review';
+    I18n.text($('fc-mark'), marked ? '★ Saved for focused review' : '☆ Save for focused review');
     $('fc-focus-list').innerHTML = rows.map(function (row) {
       return '<li><a href="' + esc(OpenJLPT.root() + row[row.length - 1]) + '" target="_blank" rel="noopener" lang="ja">' + esc(row[1]) + '</a>' +
-        '<button type="button" class="btn" data-remove="' + esc(row[0]) + '" aria-label="Remove ' + esc(row[1]) + ' from focused review">Remove</button></li>';
+        '<button type="button" class="btn" data-remove="' + esc(row[0]) + '" aria-label="' + esc(t('Remove {word} from focused review', { word: row[1] })) + '">' + I18n.html('Remove') + '</button></li>';
     }).join('');
     $('fc-focus-empty').hidden = rows.length > 0;
   }
@@ -41,9 +43,9 @@
     try {
       localStorage.setItem(focusKey, JSON.stringify(focus));
       if (state.mode === 'daily') localStorage.removeItem(storageKey() + ':focus-session');
-      $('fc-focus-message').textContent = removing ? 'Removed from focused review.' : 'Saved for focused review.';
+      I18n.text($('fc-focus-message'), removing ? 'Removed from focused review.' : 'Saved for focused review.');
     } catch (e) {
-      $('fc-focus-message').textContent = 'Browser storage is unavailable. Changes will last only while this page stays open.';
+      I18n.text($('fc-focus-message'), "Browser storage is unavailable. Changes will last only while this page stays open.");
     }
     if (state.mode === 'focus' && removing) {
       state.queue = state.queue.filter(function (row) { return row[0] !== id; });
@@ -89,6 +91,13 @@
   }
   function $(id) { return document.getElementById(id); }
 
+  function renderMode() {
+    I18n.text($('fc-next'), state.mode === 'focus' ? 'Practice saved cards again' : 'Continue with next group');
+    I18n.text($('fc-mode-help'), state.mode === 'focus'
+      ? 'Practice all saved cards in this deck anytime. Ratings here do not change your spaced-repetition schedule. Cards stay saved until you remove them.'
+      : 'New cards and due reviews. Save any card for extra practice in Focused review.');
+  }
+
   function start(newSession) {
     var request = ++requestId;
     document.dispatchEvent(new CustomEvent('kotowa:study', { detail: { loading: true } }));
@@ -100,16 +109,14 @@
     $('fc-complete').hidden = true;
     ['fc-again', 'fc-flip', 'fc-good', 'fc-mark'].forEach(function (id) { $(id).disabled = true; });
     $('fc-focus-library').hidden = true;
-    $('fc-focus-message').textContent = '';
+    I18n.text($('fc-focus-message'), '');
     $('fc-reset').hidden = state.mode === 'focus';
-    $('fc-next').textContent = state.mode === 'focus' ? 'Practice saved cards again' : 'Continue with next group';
-    $('fc-mode-help').textContent = state.mode === 'focus'
-      ? 'Practice all saved cards in this deck anytime. Ratings here do not change your spaced-repetition schedule. Cards stay saved until you remove them.'
-      : 'New cards and due reviews. Save any card for extra practice in Focused review.';
+    renderMode();
     $('fc-card').classList.remove('flipped');
     $('fc-front').textContent = '';
+    $('fc-back').removeAttribute('data-i18n');
     $('fc-back').textContent = '';
-    $('fc-status').textContent = 'Loading…';
+    I18n.text($('fc-status'), 'Loading…');
     fetch(OpenJLPT.root() + 'data/' + state.kind + '-' + state.level.toLowerCase() + '.json')
       .then(function (r) { if (!r.ok) throw new Error('Could not load deck'); return r.json(); })
       .then(function (rows) {
@@ -145,7 +152,7 @@
         next();
       }).catch(function () {
         if (request === requestId) {
-          $('fc-status').textContent = 'Unable to load this deck. Select it again to retry.';
+          I18n.text($('fc-status'), "Unable to load this deck. Select it again to retry.");
           document.dispatchEvent(new CustomEvent('kotowa:study', { detail: { error: true } }));
         }
       });
@@ -181,10 +188,10 @@
     if (remaining === undefined) remaining = state.queue.length;
     var sessionTotal = state.done + remaining;
     var sessionPercent = sessionTotal ? state.done / sessionTotal * 100 : 100;
-    var deckName = state.level + ' ' + ({ vocab: 'words', kanji: 'kanji', grammar: 'grammar' })[state.kind];
+    var deckName = state.level + ' ' + t(({ vocab: 'words', kanji: 'kanji', grammar: 'grammar' })[state.kind]);
     $('fc-overview').hidden = false;
     $('fc-status').classList.add('sr-only');
-    $('fc-status').textContent = deckName + ' · ' + remaining + ' to review · ' + studied + ' studied · ' + learned + ' / ' + deckTotal + ' learned';
+    I18n.text($('fc-status'), '{deck} · {remaining} to review · {studied} studied · {learned} / {total} learned', { deck: deckName, remaining: remaining, studied: studied, learned: learned, total: deckTotal });
     $('fc-deck-name').textContent = deckName;
     $('fc-studied').textContent = studied;
     $('fc-deck-total').textContent = deckTotal;
@@ -194,12 +201,12 @@
     $('fc-learned-count').textContent = learned;
     $('fc-donut').style.setProperty('--learned-end', learnedPercent + '%');
     $('fc-donut').style.setProperty('--studied-end', studiedPercent + '%');
-    $('fc-donut').setAttribute('aria-label', fresh + ' not started, ' + learning + ' learning, ' + learned + ' learned; ' + studied + ' of ' + deckTotal + ' studied');
+    $('fc-donut').setAttribute('aria-label', t('{fresh} not started, {learning} learning, {learned} learned; {studied} of {total} studied', { fresh: fresh, learning: learning, learned: learned, studied: studied, total: deckTotal }));
     $('fc-remaining').textContent = remaining;
     $('fc-bar').style.width = sessionPercent + '%';
     $('fc-session-progress').setAttribute('aria-valuenow', String(Math.round(sessionPercent)));
-    $('fc-session-progress').setAttribute('aria-valuetext', state.done + ' completed, ' + remaining + ' remaining');
-    $('fc-session-caption').textContent = state.done + ' / ' + sessionTotal + ' completed' + (remaining ? (state.mode === 'focus' ? ' · Focused review' : ' · New cards + due reviews') : ' · Session complete');
+    $('fc-session-progress').setAttribute('aria-valuetext', t('{done} completed, {remaining} remaining', { done: state.done, remaining: remaining }));
+    I18n.text($('fc-session-caption'), '{done} / {total} completed · {mode}', { done: state.done, total: sessionTotal, mode: t(remaining ? (state.mode === 'focus' ? 'Focused review' : 'New cards + due reviews') : 'Session complete') });
     document.dispatchEvent(new CustomEvent('kotowa:study', { detail: {
       studied: studied, total: deckTotal, done: state.done, sessionTotal: sessionTotal,
       studiedPercent: studiedPercent, sessionPercent: sessionPercent,
@@ -224,35 +231,36 @@
       });
       $('fc-next').disabled = !available;
       $('fc-front').innerHTML = '🎉';
-      $('fc-back').textContent = available
+      I18n.text($('fc-back'), available
         ? 'Session complete! Continue with the next group, or choose another deck.'
-        : 'Session complete! Come back later for due reviews, or choose another deck.';
+        : 'Session complete! Come back later for due reviews, or choose another deck.');
       if (state.mode === 'focus') {
         $('fc-front').textContent = available ? '🎉' : '☆';
-        $('fc-back').textContent = available ? 'Session complete! Your cards stay saved. Practice them again anytime.' : 'No saved cards in this deck. Save cards during daily review, or choose another deck.';
+        I18n.text($('fc-back'), available ? 'Session complete! Your cards stay saved. Practice them again anytime.' : 'No saved cards in this deck. Save cards during daily review, or choose another deck.');
       }
       $('fc-card').classList.add('flipped');
       return;
     }
+    $('fc-back').removeAttribute('data-i18n');
     var link = esc(OpenJLPT.root() + row[row.length - 1]);
     if (state.kind === 'vocab') {
       $('fc-front').textContent = row[1];
       $('fc-back').innerHTML = '<div class="reading">' + esc(row[2]) + ' <span class="romaji">' + esc(row[3]) + '</span></div>' +
         '<div class="meaning">' + esc(row[4]) + '</div>' +
         (row[5] ? '<div class="ex">' + ruby(row[5]) + '<br><span style="font-family:system-ui">' + esc(row[6]) + '</span></div>' : '') +
-        '<p><a href="' + link + '" target="_blank" rel="noopener">details ↗</a></p>';
+        '<p><a href="' + link + '" target="_blank" rel="noopener">' + I18n.html('details ↗') + '</a></p>';
     } else if (state.kind === 'kanji') {
       $('fc-front').textContent = row[1];
       $('fc-back').innerHTML = '<div class="meaning">' + esc(row[4]) + '</div>' +
         '<div class="reading" style="font-size:18px">' + esc(row[2]) + (row[3] ? ' · ' + esc(row[3]) : '') + '</div>' +
         (row[5] ? '<div class="ex">' + esc(row[5]) + '</div>' : '') +
-        '<p><a href="' + link + '" target="_blank" rel="noopener">details ↗</a></p>';
+        '<p><a href="' + link + '" target="_blank" rel="noopener">' + I18n.html('details ↗') + '</a></p>';
     } else {
       $('fc-front').textContent = row[1];
       $('fc-front').style.fontSize = 'clamp(32px, 8vw, 52px)';
       $('fc-back').innerHTML = '<div class="meaning">' + esc(row[3]) + '</div>' +
         (row[4] ? '<div class="ex">' + esc(row[4]) + '<br><span style="font-family:system-ui">' + esc(row[5]) + '</span></div>' : '') +
-        '<p><a href="' + link + '" target="_blank" rel="noopener">details ↗</a></p>';
+        '<p><a href="' + link + '" target="_blank" rel="noopener">' + I18n.html('details ↗') + '</a></p>';
     }
     if (state.kind !== 'grammar') $('fc-front').style.fontSize = '';
   }
@@ -290,6 +298,12 @@
       start();
     });
   }
+
+  document.addEventListener('kotowa:language', function () {
+    renderMode();
+    renderFocus();
+    if (!$('fc-overview').hidden) renderProgress(state.queue.length + (state.current ? 1 : 0));
+  });
 
   document.addEventListener('DOMContentLoaded', function () {
     try { state.shuffle = localStorage.getItem('openjlpt:fc:shuffle') === 'true'; } catch (e) { /* default order */ }
@@ -330,7 +344,7 @@
       $('fc-level').scrollIntoView({ block: 'center' });
     });
     $('fc-reset').addEventListener('click', function () {
-      if (confirm('Reset progress for this deck?')) {
+      if (confirm(t('Reset progress for this deck?'))) {
         state.progress = {}; saveProgress();
         try { localStorage.removeItem(storageKey() + ':session'); } catch (e) { /* private mode */ }
         start();

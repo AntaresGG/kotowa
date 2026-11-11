@@ -50,7 +50,7 @@ def browser():
 def test_focused_collection_and_independent_sessions(browser, site_url):
     from playwright.sync_api import expect
 
-    page = browser.new_page()
+    page = browser.new_page(locale="en-US")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(f"{site_url}flashcards.html")
@@ -150,7 +150,7 @@ def test_focused_collection_and_independent_sessions(browser, site_url):
 def test_focus_storage_fallback(browser, site_url, storage):
     from playwright.sync_api import expect
 
-    page = browser.new_page()
+    page = browser.new_page(locale="en-US")
     if storage == "blocked":
         page.add_init_script("Object.defineProperty(window, 'localStorage', {get() {throw new Error('Storage blocked')}})")
     else:
@@ -170,7 +170,7 @@ def test_focus_storage_fallback(browser, site_url, storage):
 def test_remove_queued_and_completed_cards(browser, site_url):
     from playwright.sync_api import expect
 
-    page = browser.new_page()
+    page = browser.new_page(locale="en-US")
     page.goto(f"{site_url}flashcards.html")
     cards = page.request.get(f"{site_url}data/vocab-n5.json").json()[:3]
     page.evaluate("""cards => {

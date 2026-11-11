@@ -1,6 +1,8 @@
 // Colour every kanji in a text by its JLPT level and summarise the mix.
 (function () {
   'use strict';
+  var I18n = KotowaI18n;
+  var t = I18n.t;
   var LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
   var levels = null;
   var KANJI = /[㐀-䶿一-鿿豈-﫿々]/;
@@ -11,6 +13,7 @@
 
   function analyze() {
     var text = document.getElementById('text').value;
+    document.getElementById('summary').removeAttribute('data-i18n');
     var counts = { N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, none: 0 };
     var unique = {};
     var html = '';
@@ -21,29 +24,29 @@
       var lvl = levels[ch] || 'none';
       if (!unique[ch]) { unique[ch] = true; counts[lvl]++; }
       html += lvl === 'none'
-        ? '<span class="k-none" title="Not in the JLPT kanji lists">' + esc(ch) + '</span>'
+        ? '<span class="k-none" title="' + esc(t('Not in the JLPT kanji lists')) + '">' + esc(ch) + '</span>'
         : '<a class="k-' + lvl + '" href="' + root + 'kanji/' + encodeURIComponent(ch) + '.html" title="' + lvl + '">' + esc(ch) + '</a>';
     }
-    document.getElementById('marked').innerHTML = html || '<span class="muted">Paste some Japanese text above.</span>';
+    document.getElementById('marked').innerHTML = html || '<span class="muted">' + I18n.html('Paste some Japanese text above.') + '</span>';
 
     var total = 0;
     for (var k in counts) total += counts[k];
     var bar = '';
     LEVELS.concat(['none']).forEach(function (l) {
-      if (counts[l]) bar += '<span style="width:' + (counts[l] / total) * 100 + '%;background:var(--' + (l === 'none' ? 'none' : l.toLowerCase()) + ')" title="' + l + ': ' + counts[l] + '"></span>';
+      if (counts[l]) bar += '<span style="width:' + (counts[l] / total) * 100 + '%;background:var(--' + (l === 'none' ? 'none' : l.toLowerCase()) + ')" title="' + (l === 'none' ? esc(t('other')) : l) + ': ' + counts[l] + '"></span>';
     });
     document.getElementById('bar').innerHTML = bar;
 
-    if (!total) { document.getElementById('summary').textContent = 'No kanji found.'; return; }
+    if (!total) { I18n.text(document.getElementById('summary'), 'No kanji found.'); return; }
     // Smallest level that covers at least 90% of the distinct kanji.
     var covered = 0, estimate = 'N1+';
     for (var j = 0; j < LEVELS.length; j++) {
       covered += counts[LEVELS[j]];
       if (covered / total >= 0.9) { estimate = LEVELS[j]; break; }
     }
-    document.getElementById('summary').innerHTML = '<strong>' + total + '</strong> distinct kanji · ' +
-      LEVELS.map(function (l) { return l + ': ' + counts[l]; }).join(' · ') + ' · other: ' + counts.none +
-      '<br>Kanji level: <strong>' + estimate + '</strong> <span class="muted">(the easiest level covering 90% of the kanji)</span>';
+    document.getElementById('summary').innerHTML = I18n.html('{count} distinct kanji', { count: total }) + ' · ' +
+      LEVELS.map(function (l) { return l + ': ' + counts[l]; }).join(' · ') + ' · ' + esc(t('other')) + ': ' + counts.none +
+      '<br>' + I18n.html('Kanji level: {level}', { level: estimate }) + ' <span class="muted">' + I18n.html('(the easiest level covering 90% of the kanji)') + '</span>';
   }
 
   function shareUrl() {
@@ -53,6 +56,10 @@
     url.searchParams.set('t', document.getElementById('text').value.slice(0, 1500));
     return url.toString();
   }
+
+  document.addEventListener('kotowa:language', function () {
+    if (levels) analyze();
+  });
 
   document.addEventListener('DOMContentLoaded', function () {
     var input = document.getElementById('text');
@@ -65,9 +72,11 @@
         history.replaceState(null, '', url);
         if (navigator.clipboard) {
           navigator.clipboard.writeText(url).then(function () {
-            share.textContent = '✓ Link copied';
-            setTimeout(function () { share.textContent = '🔗 Copy link to this analysis'; }, 2000);
-          });
+            I18n.text(share, '✓ Link copied');
+            setTimeout(function () { I18n.text(share, '🔗 Copy link to this analysis'); }, 2000);
+          }).catch(function () { I18n.text(share, 'Could not copy. Copy the URL from the address bar.'); });
+        } else {
+          I18n.text(share, 'Copy the URL from the address bar.');
         }
       });
     }

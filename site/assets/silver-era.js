@@ -1,12 +1,14 @@
 // Presentation and reading controls for the Silver Era receiver. Study data stays in flashcards.js.
 (function () {
   'use strict';
+  var t = KotowaI18n.t;
+  var lastStudy = null;
   var root = document.documentElement;
   var meters = ['se-meter-left', 'se-meter-right'].map(function (id) { return document.getElementById(id); });
   var readings = new Map();
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var size = document.getElementById('se-text-size');
-  var sizes = ['小', '标准', '大'];
+  var sizes = ['Small', 'Standard', 'Large'];
   var sizeKey = 'kotowa:silver:text-size';
   var panelKey = 'kotowa:silver:panel';
   var panel = document.getElementById('se-faceplate');
@@ -17,8 +19,9 @@
   function setSize(value) {
     var index = ['0', '1', '2'].includes(String(value)) ? Number(value) : 1;
     size.value = String(index);
-    size.setAttribute('aria-valuetext', sizes[index]);
-    document.getElementById('se-size-label').textContent = sizes[index];
+    size.setAttribute('aria-valuetext', t(sizes[index]));
+    size.removeAttribute('data-i18n-aria-valuetext');
+    KotowaI18n.text(document.getElementById('se-size-label'), sizes[index]);
     root.dataset.silverSize = String(index);
     root.style.setProperty('--se-dial-angle', (index - 1) * 42 + 'deg');
   }
@@ -30,7 +33,7 @@
   function setPanel(value) {
     panel.hidden = value === 'closed';
     panelToggle.setAttribute('aria-expanded', String(!panel.hidden));
-    panelToggle.textContent = panel.hidden ? '展开面板' : '收起面板';
+    KotowaI18n.text(panelToggle, panel.hidden ? 'Expand panel' : 'Collapse panel');
     enterTheme();
   }
   try { setPanel(localStorage.getItem(panelKey)); } catch (e) { setPanel('open'); }
@@ -65,6 +68,7 @@
     var maximum = Number(meter.getAttribute('aria-valuemax'));
     var ratio = Math.max(0, Math.min(1, value / maximum));
     meter.setAttribute('aria-valuenow', String(Math.round(value * 10) / 10));
+    meter.removeAttribute('data-i18n-aria-valuetext');
     meter.setAttribute('aria-valuetext', description);
     meter.dataset.reading = String(value);
     meter.parentElement.querySelector('output').textContent = maximum === 100
@@ -74,29 +78,40 @@
   }
   function clearMeters(message, loading) {
     document.getElementById('se-meters').setAttribute('aria-busy', String(loading));
+    context.removeAttribute('data-i18n');
     context.textContent = message;
     meters.forEach(function (meter) {
       readings.delete(meter.id);
       meter.dataset.reading = '';
       meter.removeAttribute('aria-valuenow');
+      meter.removeAttribute('data-i18n-aria-valuetext');
       meter.setAttribute('aria-valuetext', message);
       meter.parentElement.querySelector('output').textContent = '—';
       sweep(meter, -55, false);
     });
   }
-  document.addEventListener('kotowa:study', function (event) {
-    var data = event.detail;
+  function renderStudy(data) {
     if (data.loading || data.error) {
-      clearMeters(data.error ? '牌组载入失败，请重新选择牌组' : '正在载入牌组…', !!data.loading);
+      clearMeters(t(data.error ? 'Deck could not load. Please select it again.' : 'Loading deck…'), !!data.loading);
       return;
     }
     document.getElementById('se-meters').setAttribute('aria-busy', 'false');
     // Signatures include raw counts, so a changed reading still sweeps when rounded percentages match.
     reading(meters[0], data.studiedPercent, data.deck + ':' + data.studied + '/' + data.total,
-      data.studied + ' of ' + data.total + ' studied (self-rated)');
+      t('{studied} of {total} studied (self-rated)', { studied: data.studied, total: data.total }));
     reading(meters[1], data.sessionPercent, data.deck + ':' + data.mode + ':' + data.done + '/' + data.sessionTotal,
-      data.done + ' of ' + data.sessionTotal + ' completed this session');
-    context.textContent = data.deck + ' · ' + data.total + ' cards · ' + (data.mode === 'focus' ? 'Focused review' : 'Daily review');
+      t('{done} of {total} completed this session', { done: data.done, total: data.sessionTotal }));
+    context.removeAttribute('data-i18n');
+    context.textContent = t('{deck} · {total} cards · {mode}', { deck: data.deck, total: data.total, mode: t(data.mode === 'focus' ? 'Focused review' : 'Daily review') });
+  }
+  document.addEventListener('kotowa:study', function (event) {
+    lastStudy = event.detail;
+    renderStudy(lastStudy);
+  });
+  document.addEventListener('kotowa:language', function () {
+    setSize(size.value);
+    KotowaI18n.text(panelToggle, panel.hidden ? 'Expand panel' : 'Collapse panel');
+    if (lastStudy) renderStudy(lastStudy);
   });
   function enterTheme() {
     if (root.dataset.appearance !== 'silver-era' || panel.hidden) {

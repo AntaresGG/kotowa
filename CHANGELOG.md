@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add Chinese/English interface switching across navigation, search, flashcards, text analysis, downloads and appearance controls. Follow the browser language initially, remember explicit choices and sync tabs without changing study progress or learning content.
+
 - Add a browser-local focused-review collection: toggle saved cards from either flashcard face, browse and remove cards by level/deck, and practice them anytime with resumable sessions independent of the daily spaced-repetition schedule.
 
 - Rename the product and repository to Kotowa · 词和 (`AntaresGG/kotowa`), with updated website branding, metadata and documentation. Distribution names become `kotowa`; add the `kotowa` CLI while retaining the `openjlpt` alias and Python import. Browser storage keys, Anki IDs, dictionary identity and legacy export filenames remain compatible.

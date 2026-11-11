@@ -22,6 +22,7 @@ Full dataset totals and Chinese coverage are different. Entries without Chinese 
 Snapshot checked on 2026-10-28 against the repository [JSON data](data/json) and the [quality report](data/quality-report.json). The dataset also contains 2,383 kanji. All N5–N1 vocabulary and grammar are now covered in Chinese, including translations of every example. Chinese kanji meanings and a fully Chinese interface are outside this snapshot's completed scope.
 
 - Chinese search, spaced-repetition flashcards, saved progress across deck switches and reloads, and persistent shuffle mode.
+- Chinese/English interface switching in the header, including buttons, help text and live tool messages. The initial language follows your browser; explicit choices persist across pages and sync between tabs on the same origin. Learning content and study progress stay intact.
 - JSON, CSV and SQLite exports; bilingual Anki decks preserving note IDs. Yomitan exports provide JLPT-level metadata, not definitions.
 - Original English fields and stable IDs remain available through JavaScript/TypeScript and Python APIs.
 - Chinese content was AI-authored and reviewed by Codex under owner authorization, not independently reviewed by a human. Review hashes and provenance remain in maintenance data. Stale Chinese content falls back to English in learning views and exports.

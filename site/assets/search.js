@@ -1,6 +1,7 @@
 // Home-page search over words, kanji and grammar (loads data/search.json on first use).
 (function () {
   'use strict';
+  var t = KotowaI18n.t;
   var index = null;
   var loading = null;
   var LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -53,14 +54,18 @@
       if (s) hits.push([s, LEVELS.indexOf(index[i].row[6]), i]);
     }
     hits.sort(function (a, b) { return b[0] - a[0] || a[1] - b[1] || a[2] - b[2]; });
-    if (!hits.length) { out.innerHTML = '<li class="muted" style="padding:10px 12px">No results.</li>'; return; }
+    if (!hits.length) { out.innerHTML = '<li class="muted" style="padding:10px 12px">' + KotowaI18n.html('No results.') + '</li>'; return; }
     out.innerHTML = hits.slice(0, 12).map(function (h) {
       var r = index[h[2]].row;
       var reading = r[0] !== 'k' && r[3] && r[3] !== r[2] ? '<span class="r">' + esc(r[3]) + '</span>' : '';
       return '<li><a href="' + esc(OpenJLPT.root() + r[1]) + '"><span class="w" lang="ja">' + esc(r[2]) + reading +
-        '</span><span class="m"><span class="kind">' + KIND[r[0]] + '</span>' + esc((r[8] ? r[8] + ' / ' : '') + r[5]) + '</span><span class="lvl ' + r[6] + '">' + r[6] + '</span></a></li>';
+        '</span><span class="m"><span class="kind">' + esc(t(KIND[r[0]])) + '</span>' + esc((r[8] ? r[8] + ' / ' : '') + r[5]) + '</span><span class="lvl ' + r[6] + '">' + r[6] + '</span></a></li>';
     }).join('');
   }
+
+  document.addEventListener('kotowa:language', function () {
+    if (index) render(document.getElementById('q').value);
+  });
 
   document.addEventListener('DOMContentLoaded', function () {
     var input = document.getElementById('q');

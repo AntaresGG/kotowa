@@ -42,7 +42,7 @@ def test_site_chinese_search_downloads_and_mobile():
                 kwargs["executable_path"] = os.environ["OPENJLPT_CHROMIUM"]
             browser = pw.chromium.launch(**kwargs)
             try:
-                page = browser.new_page()
+                page = browser.new_page(locale="en-US")
                 errors = []
                 page.on("pageerror", lambda error: errors.append(str(error)))
                 page.goto("http://127.0.0.1:8765/")
@@ -97,7 +97,7 @@ def test_site_chinese_search_downloads_and_mobile():
                 page.evaluate("localStorage.setItem('kotowa:appearance', 'invalid')")
                 page.reload()
                 sync.expect(page.locator('#theme-switch')).to_have_attribute('aria-checked', 'false')
-                blocked = browser.new_context()
+                blocked = browser.new_context(locale="en-US")
                 blocked.add_init_script("Object.defineProperty(window, 'localStorage', {get() {throw new Error('Storage blocked')}})")
                 blocked_page = blocked.new_page()
                 blocked_page.goto('http://127.0.0.1:8765/')

@@ -63,6 +63,7 @@ a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .jp, [lang='ja'] { font-family: var(--jp); }
 img { max-width: 100%; }
+:not(pre) > code { overflow-wrap: anywhere; }
 
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
 
@@ -80,6 +81,17 @@ img { max-width: 100%; }
 .brand-mark {
   display: block; width: 28px; height: 28px; flex: 0 0 28px;
 }
+.language-picker { display: inline-flex; flex: 0 0 auto; margin-left: auto; }
+.language-picker select {
+  max-width: 108px; height: 38px; padding: 0 8px;
+  border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); background: var(--surface); font: inherit; font-size: 14px; cursor: pointer;
+}
+.language-picker select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* A separate navigation row leaves room for both languages and appearance controls. */
+.site-header .wrap { flex-wrap: wrap; height: auto; min-height: 56px; padding-block: 8px; }
+.site-header .nav { order: 3; flex: 1 1 100%; width: 100%; margin: 0; flex-wrap: wrap; }
+:root:lang(en) .appearance-picker .theme-switch { width: 184px; }
 .nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; flex: 0 0 auto; }
 .nav a { color: var(--muted); padding: 6px 10px; border-radius: 8px; white-space: nowrap; font-size: 15px; }
 .nav a:hover, .nav a[aria-current='page'] { color: var(--text); background: var(--surface-2); text-decoration: none; }
